@@ -287,17 +287,21 @@ class MaterialsDesigner extends mix(React.Component).with(FullscreenComponentMix
                                         />
                                     </Grid>
                                 )}
-                                <JupyterLiteSessionDrawer
-                                    materials={this.props.materials}
-                                    show={this.state.isVisibleJupyterLiteSessionDrawer}
-                                    onUpdate={(...args) => {
-                                        this.props.onAdd(...args);
-                                    }}
-                                    onHide={() => {
-                                        this.setState({ isVisibleJupyterLiteSessionDrawer: false });
-                                    }}
-                                    containerRef={this.containerRef}
-                                />
+                                {this.state.isVisibleJupyterLiteSessionDrawer && (
+                                    <JupyterLiteSessionDrawer
+                                        materials={this.props.materials}
+                                        show={this.state.isVisibleJupyterLiteSessionDrawer}
+                                        onMaterialsUpdate={(...args) => {
+                                            this.props.onAdd(...args);
+                                        }}
+                                        onHide={() => {
+                                            this.setState({
+                                                isVisibleJupyterLiteSessionDrawer: false,
+                                            });
+                                        }}
+                                        containerRef={this.containerRef}
+                                    />
+                                )}
                             </Grid>
                         </Box>
                         <EditorSelectionInfo />
