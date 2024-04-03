@@ -1,4 +1,3 @@
-/** eslint-disable-next-line react/no-unused-prop-types * */
 import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
@@ -11,12 +10,12 @@ export interface BaseJupyterLiteProps {
     title?: string;
     containerRef?: React.RefObject<HTMLDivElement>;
 }
-declare class BaseJupyterLiteSessionComponent extends React.Component<BaseJupyterLiteProps> {
+declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Component<P & BaseJupyterLiteProps, S> {
     messageHandler: MessageHandler;
     DEFAULT_NOTEBOOK_PATH: string;
     componentDidMount(): void;
-    componentDidUpdate(prevProps: BaseJupyterLiteProps): void;
-    returnSelectedMaterials: () => import("@mat3ra/made/dist/js/types").MaterialJSON[];
+    getMaterialsForMessage: () => import("@mat3ra/made/dist/js/types").MaterialJSON[];
+    getMaterialsToUse: () => (P & BaseJupyterLiteProps)["materials"];
     validateMaterialConfigs: (configs: MaterialSchema[]) => {
         validatedMaterials: ({
             _json: import("@mat3ra/made/dist/js/material").MaterialSchemaJSON;
@@ -211,5 +210,6 @@ declare class BaseJupyterLiteSessionComponent extends React.Component<BaseJupyte
         validationErrors: string[];
     };
     handleSetMaterials: (data: any) => void;
+    renderJupyterLiteSession: () => import("react/jsx-runtime").JSX.Element;
 }
 export default BaseJupyterLiteSessionComponent;

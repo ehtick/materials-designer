@@ -1,6 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
-import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { darkScrollbar } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -9,14 +8,18 @@ import { theme } from "../../../../settings";
 import BaseJupyterLiteSessionComponent from "../../../include/jupyterlite/BaseJupyterLiteComponent";
 import MaterialsSelector from "./MaterialsSelector";
 class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
-    constructor() {
-        super(...arguments);
+    constructor(props) {
+        super(props);
+        this.handleSubmit = () => {
+            const { newMaterials } = this.state;
+            this.props.onMaterialsUpdate(newMaterials);
+        };
+        this.getMaterialsToUse = () => {
+            return this.state.selectedMaterials;
+        };
         this.state = {
             selectedMaterials: [this.props.materials[0]],
             newMaterials: [],
-        };
-        this.handleSubmit = () => {
-            this.props.onMaterialsUpdate(this.state.newMaterials);
         };
     }
     componentDidUpdate(prevProps) {
@@ -35,7 +38,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
                             overflow: "hidden",
                         }, children: _jsx(Paper, { sx: {
                                 height: "100%",
-                            }, children: _jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH }) }) }), _jsx(Grid, { item: true, container: true, xs: 12, md: 4, alignItems: "center", children: _jsxs(Typography, { variant: "subtitle1", children: ["Output Materials (", _jsx("code", { children: "materials_out" }), ")"] }) }), _jsx(Grid, { item: true, xs: 12, md: 8, children: _jsx(MaterialsSelector, { materials: newMaterials, selectedMaterials: newMaterials, setSelectedMaterials: (newMaterials) => this.setState({ newMaterials }) }) })] }) }));
+                            }, children: this.renderJupyterLiteSession() }) }), _jsx(Grid, { item: true, container: true, xs: 12, md: 4, alignItems: "center", children: _jsxs(Typography, { variant: "subtitle1", children: ["Output Materials (", _jsx("code", { children: "materials_out" }), ")"] }) }), _jsx(Grid, { item: true, xs: 12, md: 8, children: _jsx(MaterialsSelector, { materials: newMaterials, selectedMaterials: newMaterials, setSelectedMaterials: (newMaterials) => this.setState({ newMaterials }) }) })] }) }));
     }
 }
 export default JupyterLiteTransformationDialog;

@@ -1,5 +1,5 @@
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
-import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
+import { Made } from "@mat3ra/made";
 import { darkScrollbar } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -12,11 +12,22 @@ import BaseJupyterLiteSessionComponent, {
 } from "../../../include/jupyterlite/BaseJupyterLiteComponent";
 import MaterialsSelector from "./MaterialsSelector";
 
-class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
-    state = {
-        selectedMaterials: [this.props.materials[0]],
-        newMaterials: [],
-    };
+interface JupyterLiteTransformationDialogState {
+    selectedMaterials: Made.Material[];
+    newMaterials: Made.Material[];
+}
+
+class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
+    BaseJupyterLiteProps,
+    JupyterLiteTransformationDialogState
+> {
+    constructor(props: BaseJupyterLiteProps) {
+        super(props);
+        this.state = {
+            selectedMaterials: [this.props.materials[0]],
+            newMaterials: [],
+        };
+    }
 
     componentDidUpdate(prevProps: BaseJupyterLiteProps) {
         if (prevProps.materials !== this.props.materials) {
@@ -25,7 +36,12 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
     }
 
     handleSubmit = () => {
-        this.props.onMaterialsUpdate(this.state.newMaterials);
+        const { newMaterials } = this.state;
+        this.props.onMaterialsUpdate(newMaterials);
+    };
+
+    getMaterialsToUse = () => {
+        return this.state.selectedMaterials;
     };
 
     render() {
@@ -82,7 +98,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
                                 height: "100%",
                             }}
                         >
-                            <JupyterLiteSession defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH} />
+                            {this.renderJupyterLiteSession()}
                         </Paper>
                     </Grid>
                     <Grid item container xs={12} md={4} alignItems="center">

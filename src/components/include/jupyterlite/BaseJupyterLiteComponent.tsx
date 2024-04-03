@@ -1,5 +1,5 @@
-/** eslint-disable-next-line react/no-unused-prop-types * */
 import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
+import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
@@ -19,7 +19,10 @@ export interface BaseJupyterLiteProps {
     containerRef?: React.RefObject<HTMLDivElement>;
 }
 
-class BaseJupyterLiteSessionComponent extends React.Component<BaseJupyterLiteProps> {
+class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Component<
+    P & BaseJupyterLiteProps,
+    S
+> {
     messageHandler = new MessageHandler();
 
     // eslint-disable-next-line react/no-unused-class-component-methods
@@ -27,16 +30,17 @@ class BaseJupyterLiteSessionComponent extends React.Component<BaseJupyterLitePro
 
     componentDidMount() {
         this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
-        this.messageHandler.addHandlers("get-data", [this.returnSelectedMaterials]);
+        this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
     }
 
-    componentDidUpdate(prevProps: BaseJupyterLiteProps) {
-        this.messageHandler.sendData(this.returnSelectedMaterials());
-    }
-
-    returnSelectedMaterials = () => {
-        const { materials } = this.props;
+    getMaterialsForMessage = () => {
+        const materials = this.getMaterialsToUse();
         return materials.map((material) => material.toJSON());
+    };
+
+    getMaterialsToUse = () => {
+        const { materials } = this.props;
+        return materials;
     };
 
     validateMaterialConfigs = (configs: MaterialSchema[]) => {
@@ -67,6 +71,14 @@ class BaseJupyterLiteSessionComponent extends React.Component<BaseJupyterLitePro
             enqueueSnackbar("Invalid material data received", { variant: "error" });
         }
     };
+
+    // eslint-disable-next-line react/no-unused-class-component-methods
+    renderJupyterLiteSession = () => (
+        <JupyterLiteSession
+            defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
+            messageHandler={this.messageHandler}
+        />
+    );
 }
 
 export default BaseJupyterLiteSessionComponent;

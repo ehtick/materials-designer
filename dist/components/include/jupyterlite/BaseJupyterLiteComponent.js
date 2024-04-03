@@ -1,5 +1,6 @@
-/** eslint-disable-next-line react/no-unused-prop-types * */
+import { jsx as _jsx } from "react/jsx-runtime";
 import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
+import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
@@ -9,9 +10,13 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         this.messageHandler = new MessageHandler();
         // eslint-disable-next-line react/no-unused-class-component-methods
         this.DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
-        this.returnSelectedMaterials = () => {
-            const { materials } = this.props;
+        this.getMaterialsForMessage = () => {
+            const materials = this.getMaterialsToUse();
             return materials.map((material) => material.toJSON());
+        };
+        this.getMaterialsToUse = () => {
+            const { materials } = this.props;
+            return materials;
         };
         this.validateMaterialConfigs = (configs) => {
             const validationErrors = [];
@@ -42,13 +47,12 @@ class BaseJupyterLiteSessionComponent extends React.Component {
                 enqueueSnackbar("Invalid material data received", { variant: "error" });
             }
         };
+        // eslint-disable-next-line react/no-unused-class-component-methods
+        this.renderJupyterLiteSession = () => (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandler: this.messageHandler }));
     }
     componentDidMount() {
         this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
-        this.messageHandler.addHandlers("get-data", [this.returnSelectedMaterials]);
-    }
-    componentDidUpdate(prevProps) {
-        this.messageHandler.sendData(this.returnSelectedMaterials());
+        this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
     }
 }
 export default BaseJupyterLiteSessionComponent;
