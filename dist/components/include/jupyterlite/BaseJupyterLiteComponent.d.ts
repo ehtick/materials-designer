@@ -213,6 +213,7 @@ declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends Reac
         validationErrors: string[];
     };
     handleSetMaterials: (data: any) => void;
+    setMaterials: (materials: Made.Material[]) => void;
     render(): import("react/jsx-runtime").JSX.Element;
 }
 export default BaseJupyterLiteSessionComponent;

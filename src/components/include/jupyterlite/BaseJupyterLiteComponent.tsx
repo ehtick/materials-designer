@@ -77,14 +77,18 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         const configs = data.materials as MaterialSchema[];
         if (Array.isArray(configs)) {
             const { validatedMaterials, validationErrors } = this.validateMaterialConfigs(configs);
-            const { onMaterialsUpdate } = this.props;
-            onMaterialsUpdate(validatedMaterials);
+            this.setMaterials(validatedMaterials);
             validationErrors.forEach((errorMessage) => {
                 enqueueSnackbar(errorMessage, { variant: "error" });
             });
         } else {
             enqueueSnackbar("Invalid material data received", { variant: "error" });
         }
+    };
+
+    setMaterials = (materials: Made.Material[]): void => {
+        const { onMaterialsUpdate } = this.props;
+        onMaterialsUpdate(materials);
     };
 
     render() {

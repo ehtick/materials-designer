@@ -8,6 +8,7 @@ declare class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComp
     constructor(props: BaseJupyterLiteProps);
     componentDidUpdate(prevProps: BaseJupyterLiteProps, prevState: JupyterLiteTransformationDialogState): void;
     handleSubmit: () => void;
+    setMaterials: (newMaterials: Made.Material[]) => void;
     getMaterialsToUse: () => ({
         _json: import("@mat3ra/made/dist/js/material").MaterialSchemaJSON;
         toJSON(): import("@mat3ra/made/dist/js/types").MaterialJSON;

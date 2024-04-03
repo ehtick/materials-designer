@@ -40,15 +40,15 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
         if (prevState.selectedMaterials !== this.state.selectedMaterials) {
             this.sendMaterials();
         }
-
-        if (prevState.newMaterials !== this.state.newMaterials) {
-            this.props.onMaterialsUpdate(this.state.newMaterials);
-        }
     }
 
     handleSubmit = () => {
         const { newMaterials } = this.state;
         this.props.onMaterialsUpdate(newMaterials);
+    };
+
+    setMaterials = (newMaterials: Made.Material[]) => {
+        this.setState({ newMaterials });
     };
 
     getMaterialsToUse = () => {

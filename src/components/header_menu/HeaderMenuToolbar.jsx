@@ -509,7 +509,7 @@ class HeaderMenuToolbar extends React.Component {
                     show={showJupyterLiteTransformation}
                     materials={materials}
                     onHide={() => this.setState({ showJupyterLiteTransformation: false })}
-                    onSubmit={(...args) => {
+                    onMaterialsUpdate={(...args) => {
                         onAdd(...args);
                         this.setState({ showJupyterLiteTransformation: false });
                     }}

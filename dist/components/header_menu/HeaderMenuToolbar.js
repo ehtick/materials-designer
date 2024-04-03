@@ -152,7 +152,7 @@ class HeaderMenuToolbar extends React.Component {
                     } }), _jsx(PythonTransformation, { show: showPythonTransformation, materials: materials, onHide: () => this.setState({ showPythonTransformation: false }), onSubmit: (...args) => {
                         onAdd(...args);
                         this.setState({ showPythonTransformation: false });
-                    } }), _jsx(JupyterLiteTransformation, { title: "JupyterLite Transformation", show: showJupyterLiteTransformation, materials: materials, onHide: () => this.setState({ showJupyterLiteTransformation: false }), onSubmit: (...args) => {
+                    } }), _jsx(JupyterLiteTransformation, { title: "JupyterLite Transformation", show: showJupyterLiteTransformation, materials: materials, onHide: () => this.setState({ showJupyterLiteTransformation: false }), onMaterialsUpdate: (...args) => {
                         onAdd(...args);
                         this.setState({ showJupyterLiteTransformation: false });
                     } })] }));

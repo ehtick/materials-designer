@@ -40,8 +40,7 @@ class BaseJupyterLiteSessionComponent extends React.Component {
             const configs = data.materials;
             if (Array.isArray(configs)) {
                 const { validatedMaterials, validationErrors } = this.validateMaterialConfigs(configs);
-                const { onMaterialsUpdate } = this.props;
-                onMaterialsUpdate(validatedMaterials);
+                this.setMaterials(validatedMaterials);
                 validationErrors.forEach((errorMessage) => {
                     enqueueSnackbar(errorMessage, { variant: "error" });
                 });
@@ -49,6 +48,10 @@ class BaseJupyterLiteSessionComponent extends React.Component {
             else {
                 enqueueSnackbar("Invalid material data received", { variant: "error" });
             }
+        };
+        this.setMaterials = (materials) => {
+            const { onMaterialsUpdate } = this.props;
+            onMaterialsUpdate(materials);
         };
     }
     componentDidMount() {

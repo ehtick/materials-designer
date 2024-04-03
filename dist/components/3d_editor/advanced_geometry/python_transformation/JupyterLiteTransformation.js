@@ -14,6 +14,9 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
             const { newMaterials } = this.state;
             this.props.onMaterialsUpdate(newMaterials);
         };
+        this.setMaterials = (newMaterials) => {
+            this.setState({ newMaterials });
+        };
         this.getMaterialsToUse = () => {
             return this.state.selectedMaterials;
         };
@@ -28,9 +31,6 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
         }
         if (prevState.selectedMaterials !== this.state.selectedMaterials) {
             this.sendMaterials();
-        }
-        if (prevState.newMaterials !== this.state.newMaterials) {
-            this.props.onMaterialsUpdate(this.state.newMaterials);
         }
     }
     render() {
