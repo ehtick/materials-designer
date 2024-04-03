@@ -29,9 +29,20 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
         };
     }
 
-    componentDidUpdate(prevProps: BaseJupyterLiteProps) {
+    componentDidUpdate(
+        prevProps: BaseJupyterLiteProps,
+        prevState: JupyterLiteTransformationDialogState,
+    ) {
         if (prevProps.materials !== this.props.materials) {
-            this.setState({ selectedMaterials: [this.props.materials[0]], newMaterials: [] });
+            this.setState({ selectedMaterials: [this.props.materials[0]] });
+        }
+
+        if (prevState.selectedMaterials !== this.state.selectedMaterials) {
+            this.sendMaterials();
+        }
+
+        if (prevState.newMaterials !== this.state.newMaterials) {
+            this.props.onMaterialsUpdate(this.state.newMaterials);
         }
     }
 
@@ -98,7 +109,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
                                 height: "100%",
                             }}
                         >
-                            {this.renderJupyterLiteSession()}
+                            {super.render()}
                         </Paper>
                     </Grid>
                     <Grid item container xs={12} md={4} alignItems="center">

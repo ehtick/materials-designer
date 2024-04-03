@@ -8,8 +8,11 @@ class BaseJupyterLiteSessionComponent extends React.Component {
     constructor() {
         super(...arguments);
         this.messageHandler = new MessageHandler();
-        // eslint-disable-next-line react/no-unused-class-component-methods
         this.DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
+        this.sendMaterials = () => {
+            const materialsData = this.getMaterialsForMessage();
+            this.messageHandler.sendData(materialsData);
+        };
         this.getMaterialsForMessage = () => {
             const materials = this.getMaterialsToUse();
             return materials.map((material) => material.toJSON());
@@ -47,12 +50,22 @@ class BaseJupyterLiteSessionComponent extends React.Component {
                 enqueueSnackbar("Invalid material data received", { variant: "error" });
             }
         };
-        // eslint-disable-next-line react/no-unused-class-component-methods
-        this.renderJupyterLiteSession = () => (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandler: this.messageHandler }));
     }
     componentDidMount() {
         this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
         this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
+    }
+    componentDidUpdate(prevProps, prevState) {
+        const { materials } = this.props;
+        if (prevProps.materials !== materials) {
+            this.sendMaterials();
+        }
+    }
+    componentWillUnmount() {
+        this.messageHandler.destroy();
+    }
+    render() {
+        return (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandler: this.messageHandler }));
     }
 }
 export default BaseJupyterLiteSessionComponent;

@@ -25,13 +25,28 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
 > {
     messageHandler = new MessageHandler();
 
-    // eslint-disable-next-line react/no-unused-class-component-methods
     DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
 
     componentDidMount() {
         this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
         this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
     }
+
+    componentDidUpdate(prevProps: P & BaseJupyterLiteProps, prevState: S) {
+        const { materials } = this.props;
+        if (prevProps.materials !== materials) {
+            this.sendMaterials();
+        }
+    }
+
+    componentWillUnmount() {
+        this.messageHandler.destroy();
+    }
+
+    sendMaterials = () => {
+        const materialsData = this.getMaterialsForMessage();
+        this.messageHandler.sendData(materialsData);
+    };
 
     getMaterialsForMessage = () => {
         const materials = this.getMaterialsToUse();
@@ -72,13 +87,14 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         }
     };
 
-    // eslint-disable-next-line react/no-unused-class-component-methods
-    renderJupyterLiteSession = () => (
-        <JupyterLiteSession
-            defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
-            messageHandler={this.messageHandler}
-        />
-    );
+    render() {
+        return (
+            <JupyterLiteSession
+                defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
+                messageHandler={this.messageHandler}
+            />
+        );
+    }
 }
 
 export default BaseJupyterLiteSessionComponent;

@@ -10,7 +10,7 @@ class JupyterLiteSessionDrawer extends BaseJupyterLiteSessionComponent {
         return (
             <div style={{ display: show ? "block" : "none" }}>
                 <ResizableDrawer open={show} onClose={onHide} containerRef={containerRef}>
-                    {this.renderJupyterLiteSession()}
+                    {super.render()}
                 </ResizableDrawer>
             </div>
         );

@@ -4,7 +4,7 @@ import BaseJupyterLiteSessionComponent from "../include/jupyterlite/BaseJupyterL
 class JupyterLiteSessionDrawer extends BaseJupyterLiteSessionComponent {
     render() {
         const { show, onHide, containerRef } = this.props;
-        return (_jsx("div", { style: { display: show ? "block" : "none" }, children: _jsx(ResizableDrawer, { open: show, onClose: onHide, containerRef: containerRef, children: this.renderJupyterLiteSession() }) }));
+        return (_jsx("div", { style: { display: show ? "block" : "none" }, children: _jsx(ResizableDrawer, { open: show, onClose: onHide, containerRef: containerRef, children: super.render() }) }));
     }
 }
 export default JupyterLiteSessionDrawer;

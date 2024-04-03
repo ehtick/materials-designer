@@ -14,6 +14,9 @@ declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends Reac
     messageHandler: MessageHandler;
     DEFAULT_NOTEBOOK_PATH: string;
     componentDidMount(): void;
+    componentDidUpdate(prevProps: P & BaseJupyterLiteProps, prevState: S): void;
+    componentWillUnmount(): void;
+    sendMaterials: () => void;
     getMaterialsForMessage: () => import("@mat3ra/made/dist/js/types").MaterialJSON[];
     getMaterialsToUse: () => (P & BaseJupyterLiteProps)["materials"];
     validateMaterialConfigs: (configs: MaterialSchema[]) => {
@@ -210,6 +213,6 @@ declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends Reac
         validationErrors: string[];
     };
     handleSetMaterials: (data: any) => void;
-    renderJupyterLiteSession: () => import("react/jsx-runtime").JSX.Element;
+    render(): import("react/jsx-runtime").JSX.Element;
 }
 export default BaseJupyterLiteSessionComponent;
