@@ -11,11 +11,7 @@ class JupyterLiteSessionDrawer extends BaseJupyterLiteSessionComponent {
         return (
             <div style={{ display: show ? "block" : "none" }}>
                 <ResizableDrawer open={show} onClose={onHide} containerRef={containerRef}>
-                    <JupyterLiteSession
-                        originURL="https://jupyterlite.mat3ra.com"
-                        defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
-                        messageHandler={this.messageHandler}
-                    />
+                    <JupyterLiteSession defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH} />
                 </ResizableDrawer>
             </div>
         );

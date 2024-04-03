@@ -35,7 +35,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
                             overflow: "hidden",
                         }, children: _jsx(Paper, { sx: {
                                 height: "100%",
-                            }, children: _jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandler: this.messageHandler }) }) }), _jsx(Grid, { item: true, container: true, xs: 12, md: 4, alignItems: "center", children: _jsxs(Typography, { variant: "subtitle1", children: ["Output Materials (", _jsx("code", { children: "materials_out" }), ")"] }) }), _jsx(Grid, { item: true, xs: 12, md: 8, children: _jsx(MaterialsSelector, { materials: newMaterials, selectedMaterials: newMaterials, setSelectedMaterials: (newMaterials) => this.setState({ newMaterials }) }) })] }) }));
+                            }, children: _jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH }) }) }), _jsx(Grid, { item: true, container: true, xs: 12, md: 4, alignItems: "center", children: _jsxs(Typography, { variant: "subtitle1", children: ["Output Materials (", _jsx("code", { children: "materials_out" }), ")"] }) }), _jsx(Grid, { item: true, xs: 12, md: 8, children: _jsx(MaterialsSelector, { materials: newMaterials, selectedMaterials: newMaterials, setSelectedMaterials: (newMaterials) => this.setState({ newMaterials }) }) })] }) }));
     }
 }
 export default JupyterLiteTransformationDialog;

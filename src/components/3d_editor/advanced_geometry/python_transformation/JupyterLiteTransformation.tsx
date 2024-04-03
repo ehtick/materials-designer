@@ -82,10 +82,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
                                 height: "100%",
                             }}
                         >
-                            <JupyterLiteSession
-                                defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
-                                messageHandler={this.messageHandler}
-                            />
+                            <JupyterLiteSession defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH} />
                         </Paper>
                     </Grid>
                     <Grid item container xs={12} md={4} alignItems="center">

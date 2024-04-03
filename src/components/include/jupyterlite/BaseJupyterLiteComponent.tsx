@@ -6,6 +6,7 @@ import { enqueueSnackbar } from "notistack";
 import React from "react";
 
 export interface BaseJupyterLiteProps {
+    // eslint-disable-next-line react/no-unused-prop-types
     materials: Made.Material[];
     // eslint-disable-next-line react/no-unused-prop-types
     show: boolean;
