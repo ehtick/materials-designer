@@ -5,11 +5,13 @@ import BaseJupyterLiteSessionComponent from "../include/jupyterlite/BaseJupyterL
 
 class JupyterLiteSessionDrawer extends BaseJupyterLiteSessionComponent {
     render() {
+        // TODO: fix drawer sticking to the MD container and pass the ref to the resizable drawer then
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { show, onHide, containerRef } = this.props;
 
         return (
             <div style={{ display: show ? "block" : "none" }}>
-                <ResizableDrawer open={show} onClose={onHide} containerRef={containerRef}>
+                <ResizableDrawer open={show} onClose={onHide}>
                     {super.render()}
                 </ResizableDrawer>
             </div>

@@ -3,8 +3,10 @@ import ResizableDrawer from "@exabyte-io/cove.js/dist/mui/components/custom/resi
 import BaseJupyterLiteSessionComponent from "../include/jupyterlite/BaseJupyterLiteComponent";
 class JupyterLiteSessionDrawer extends BaseJupyterLiteSessionComponent {
     render() {
+        // TODO: fix drawer sticking to the MD container and pass the ref to the resizable drawer then
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { show, onHide, containerRef } = this.props;
-        return (_jsx("div", { style: { display: show ? "block" : "none" }, children: _jsx(ResizableDrawer, { open: show, onClose: onHide, containerRef: containerRef, children: super.render() }) }));
+        return (_jsx("div", { style: { display: show ? "block" : "none" }, children: _jsx(ResizableDrawer, { open: show, onClose: onHide, children: super.render() }) }));
     }
 }
 export default JupyterLiteSessionDrawer;
