@@ -1,115 +1,63 @@
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
-import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
-import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
-import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import { darkScrollbar } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { enqueueSnackbar } from "notistack";
 import React from "react";
 
 import { theme } from "../../../../settings";
+import BaseJupyterLiteSessionComponent, {
+    BaseJupyterLiteProps,
+} from "../../../include/jupyterlite/BaseJupyterLiteComponent";
 import MaterialsSelector from "./MaterialsSelector";
 
-interface JupyterLiteTransformationProps {
-    title: string;
-    materials: Made.Material[];
-    show: boolean;
-    onSubmit: (newMaterials: Made.Material[]) => void;
-    onHide: () => void;
-}
-
-interface JupyterLiteTransformationState {
-    materials: Made.Material[];
+interface JupyterLiteTransformationDialogState {
     selectedMaterials: Made.Material[];
     newMaterials: Made.Material[];
 }
 
-const DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
-
-class JupyterLiteTransformation extends React.Component<
-    JupyterLiteTransformationProps,
-    JupyterLiteTransformationState
+class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
+    BaseJupyterLiteProps,
+    JupyterLiteTransformationDialogState
 > {
-    messageHandler = new MessageHandler();
-
-    constructor(props: JupyterLiteTransformationProps) {
+    constructor(props: BaseJupyterLiteProps) {
         super(props);
         this.state = {
-            materials: props.materials,
-            selectedMaterials: [props.materials[0]],
+            selectedMaterials: [this.props.materials[0]],
             newMaterials: [],
         };
     }
 
-    componentDidMount() {
-        this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
-        this.messageHandler.addHandlers("get-data", [this.returnSelectedMaterials]);
+    componentDidUpdate(
+        prevProps: BaseJupyterLiteProps,
+        prevState: JupyterLiteTransformationDialogState,
+    ) {
+        if (prevProps.materials !== this.props.materials) {
+            this.setState({ selectedMaterials: [this.props.materials[0]] });
+        }
+
+        if (prevState.selectedMaterials !== this.state.selectedMaterials) {
+            this.sendMaterials();
+        }
     }
 
-    componentDidUpdate(prevProps: JupyterLiteTransformationProps) {
-        const { materials } = this.props;
-        if (prevProps.materials !== materials) {
-            // eslint-disable-next-line react/no-did-update-set-state
-            this.setState({ materials });
-        }
-        this.messageHandler.sendData(this.returnSelectedMaterials());
-    }
-
-    returnSelectedMaterials = () => {
-        const { selectedMaterials } = this.state;
-        return selectedMaterials.map((material) => material.toJSON());
-    };
-
-    validateMaterialConfigs = (configs: MaterialSchema[]) => {
-        const validationErrors: string[] = [];
-        const validatedMaterials = configs.reduce((validMaterials, config) => {
-            try {
-                const material = new Made.Material(config);
-                material.validate();
-                validMaterials.push(material);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (e: any) {
-                validationErrors.push(
-                    `Failed to create material ${config.name}: ${JSON.stringify(
-                        e.details.error[0],
-                    )}`,
-                );
-            }
-            return validMaterials;
-        }, [] as Made.Material[]);
-        return { validatedMaterials, validationErrors };
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    handleSetMaterials = (data: any) => {
-        const configs = data.materials as MaterialSchema[];
-        if (Array.isArray(configs)) {
-            const { validatedMaterials, validationErrors } = this.validateMaterialConfigs(configs);
-
-            this.setState({ newMaterials: validatedMaterials });
-
-            validationErrors.forEach((errorMessage) => {
-                enqueueSnackbar(errorMessage, { variant: "error" });
-            });
-        } else {
-            enqueueSnackbar("Invalid material data received", { variant: "error" });
-        }
-    };
-
-    handleSubmit = async () => {
-        const { onSubmit, materials } = this.props;
+    handleSubmit = () => {
         const { newMaterials } = this.state;
+        this.props.onMaterialsUpdate(newMaterials);
+    };
 
-        onSubmit(newMaterials);
-        this.setState({ selectedMaterials: [materials[0]], newMaterials: [] });
+    setMaterials = (newMaterials: Made.Material[]) => {
+        this.setState({ newMaterials });
+    };
+
+    getMaterialsToUse = () => {
+        return this.state.selectedMaterials;
     };
 
     render() {
-        const { materials, selectedMaterials, newMaterials } = this.state;
-        const { title, show, onHide } = this.props;
+        const { title, show, onHide, materials } = this.props;
+        const { selectedMaterials, newMaterials } = this.state;
 
         return (
             <Dialog
@@ -161,10 +109,7 @@ class JupyterLiteTransformation extends React.Component<
                                 height: "100%",
                             }}
                         >
-                            <JupyterLiteSession
-                                defaultNotebookPath={DEFAULT_NOTEBOOK_PATH}
-                                messageHandler={this.messageHandler}
-                            />
+                            {super.render()}
                         </Paper>
                     </Grid>
                     <Grid item container xs={12} md={4} alignItems="center">
@@ -185,4 +130,4 @@ class JupyterLiteTransformation extends React.Component<
     }
 }
 
-export default JupyterLiteTransformation;
+export default JupyterLiteTransformationDialog;
