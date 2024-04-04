@@ -1,5 +1,4 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
 import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
@@ -7,11 +6,12 @@ import React from "react";
 class BaseJupyterLiteSessionComponent extends React.Component {
     constructor() {
         super(...arguments);
-        this.messageHandler = new MessageHandler();
         this.DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
+        this.jupyterLiteSessionRef = React.createRef();
         this.sendMaterials = () => {
+            var _a;
             const materialsData = this.getMaterialsForMessage();
-            this.messageHandler.sendData(materialsData);
+            (_a = this.jupyterLiteSessionRef.current) === null || _a === void 0 ? void 0 : _a.sendData({ materials: materialsData });
         };
         this.getMaterialsForMessage = () => {
             const materials = this.getMaterialsToUse();
@@ -54,21 +54,23 @@ class BaseJupyterLiteSessionComponent extends React.Component {
             onMaterialsUpdate(materials);
         };
     }
-    componentDidMount() {
-        this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
-        this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
-    }
     componentDidUpdate(prevProps, prevState) {
         const { materials } = this.props;
         if (prevProps.materials !== materials) {
             this.sendMaterials();
         }
     }
-    componentWillUnmount() {
-        this.messageHandler.destroy();
-    }
     render() {
-        return (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandler: this.messageHandler }));
+        return (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: [
+                {
+                    action: "set-data",
+                    handlers: [this.handleSetMaterials],
+                },
+                {
+                    action: "get-data",
+                    handlers: [this.getMaterialsForMessage],
+                },
+            ], ref: this.jupyterLiteSessionRef }));
     }
 }
 export default BaseJupyterLiteSessionComponent;
