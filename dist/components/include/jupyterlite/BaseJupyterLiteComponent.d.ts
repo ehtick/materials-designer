@@ -1,4 +1,4 @@
-import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
+import JupyterLiteSession, { IMessageHandlerConfigItem } from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import React from "react";
@@ -211,6 +211,7 @@ declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends Reac
         validationErrors: string[];
     };
     handleSetMaterials: (data: any) => void;
+    messageHandlerConfigs: IMessageHandlerConfigItem[];
     setMaterials: (materials: Made.Material[]) => void;
     render(): import("react/jsx-runtime").JSX.Element;
 }

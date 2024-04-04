@@ -49,6 +49,17 @@ class BaseJupyterLiteSessionComponent extends React.Component {
                 enqueueSnackbar("Invalid material data received", { variant: "error" });
             }
         };
+        // eslint-disable-next-line react/sort-comp
+        this.messageHandlerConfigs = [
+            {
+                action: "set-data",
+                handlers: [this.handleSetMaterials],
+            },
+            {
+                action: "get-data",
+                handlers: [this.getMaterialsForMessage],
+            },
+        ];
         this.setMaterials = (materials) => {
             const { onMaterialsUpdate } = this.props;
             onMaterialsUpdate(materials);
@@ -61,16 +72,7 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         }
     }
     render() {
-        return (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: [
-                {
-                    action: "set-data",
-                    handlers: [this.handleSetMaterials],
-                },
-                {
-                    action: "get-data",
-                    handlers: [this.getMaterialsForMessage],
-                },
-            ], ref: this.jupyterLiteSessionRef }));
+        return (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: this.messageHandlerConfigs, ref: this.jupyterLiteSessionRef }));
     }
 }
 export default BaseJupyterLiteSessionComponent;

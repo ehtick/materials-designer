@@ -1,4 +1,6 @@
-import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
+import JupyterLiteSession, {
+    IMessageHandlerConfigItem,
+} from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
@@ -76,6 +78,18 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         }
     };
 
+    // eslint-disable-next-line react/sort-comp
+    messageHandlerConfigs: IMessageHandlerConfigItem[] = [
+        {
+            action: "set-data",
+            handlers: [this.handleSetMaterials],
+        },
+        {
+            action: "get-data",
+            handlers: [this.getMaterialsForMessage],
+        },
+    ];
+
     setMaterials = (materials: Made.Material[]): void => {
         const { onMaterialsUpdate } = this.props;
         onMaterialsUpdate(materials);
@@ -85,16 +99,7 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         return (
             <JupyterLiteSession
                 defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
-                messageHandlerConfigs={[
-                    {
-                        action: "set-data",
-                        handlers: [this.handleSetMaterials],
-                    },
-                    {
-                        action: "get-data",
-                        handlers: [this.getMaterialsForMessage],
-                    },
-                ]}
+                messageHandlerConfigs={this.messageHandlerConfigs}
                 ref={this.jupyterLiteSessionRef}
             />
         );
