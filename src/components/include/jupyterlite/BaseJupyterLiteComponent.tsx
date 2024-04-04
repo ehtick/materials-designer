@@ -37,7 +37,7 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
 
     sendMaterials = () => {
         const materialsData = this.getMaterialsForMessage();
-        this.jupyterLiteSessionRef.current?.sendData({ materials: materialsData });
+        this.jupyterLiteSessionRef.current?.sendData(materialsData);
     };
 
     getMaterialsForMessage = () => {

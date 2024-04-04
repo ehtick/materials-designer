@@ -11,7 +11,7 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         this.sendMaterials = () => {
             var _a;
             const materialsData = this.getMaterialsForMessage();
-            (_a = this.jupyterLiteSessionRef.current) === null || _a === void 0 ? void 0 : _a.sendData({ materials: materialsData });
+            (_a = this.jupyterLiteSessionRef.current) === null || _a === void 0 ? void 0 : _a.sendData(materialsData);
         };
         this.getMaterialsForMessage = () => {
             const materials = this.getMaterialsToUse();
