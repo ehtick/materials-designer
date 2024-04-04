@@ -1,4 +1,3 @@
-import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
 import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
@@ -23,14 +22,9 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
     P & BaseJupyterLiteProps,
     S
 > {
-    messageHandler = new MessageHandler();
-
     DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
 
-    componentDidMount() {
-        this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
-        this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
-    }
+    jupyterLiteSessionRef = React.createRef<JupyterLiteSession>();
 
     componentDidUpdate(prevProps: P & BaseJupyterLiteProps, prevState: S) {
         const { materials } = this.props;
@@ -39,13 +33,9 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         }
     }
 
-    componentWillUnmount() {
-        this.messageHandler.destroy();
-    }
-
     sendMaterials = () => {
         const materialsData = this.getMaterialsForMessage();
-        this.messageHandler.sendData(materialsData);
+        this.jupyterLiteSessionRef.current?.sendData({ materials: materialsData });
     };
 
     getMaterialsForMessage = () => {
@@ -95,7 +85,17 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         return (
             <JupyterLiteSession
                 defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
-                messageHandler={this.messageHandler}
+                messageHandlerConfigs={[
+                    {
+                        action: "set-data",
+                        handlers: [this.handleSetMaterials],
+                    },
+                    {
+                        action: "get-data",
+                        handlers: [this.getMaterialsForMessage],
+                    },
+                ]}
+                ref={this.jupyterLiteSessionRef}
             />
         );
     }
