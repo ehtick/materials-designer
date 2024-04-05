@@ -15,16 +15,29 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
 
 
     # Change code
-   When I change value in the cell "In [3]" to:
+    When I change value in the cell "In [3]" to:
     """
     INTERFACE_PARAMETERS = {
     "DISTANCE_Z": 3.0,  # in Angstroms
     "MAX_AREA": 50,  # in Angstroms^2
 }
     """
-   Then I see the value changed in the cell "In [3]"
+    Then I see the value in the cell "In [3]":
+    """
+    INTERFACE_PARAMETERS = {
+    "DISTANCE_Z": 3.0,  # in Angstroms
+    "MAX_AREA": 50,  # in Angstroms^2
+}
+    """
 
     # Run
-
     When I Run all cells
-    Then I see
+    And I click the Submit button
+    Then material with following data exists in state
+      | path              | index   |
+      | si-interface.json | $INT{2} |
+
+
+    # Reset the materials list
+    And I delete materials with index "2"
+    And I delete materials with index "2"
