@@ -1,4 +1,5 @@
 import JupyterLiteSession, {
+    ActionEnum,
     IMessageHandlerConfigItem,
 } from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
@@ -81,11 +82,11 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
     // eslint-disable-next-line react/sort-comp
     messageHandlerConfigs: IMessageHandlerConfigItem[] = [
         {
-            action: "set-data",
+            action: ActionEnum.SetData,
             handlers: [this.handleSetMaterials],
         },
         {
-            action: "get-data",
+            action: ActionEnum.GetData,
             handlers: [this.getMaterialsForMessage],
         },
     ];
