@@ -5,6 +5,7 @@ import DefaultImportModalDialogWidget from "./DefaultImportModalDialogWidget";
 import HeaderMenuWidget from "./HeaderMenuWidget";
 import { InterpolatedSetDialogWidget } from "./InterpolatedSetDialogWidget";
 import { ItemsListWidget } from "./ItemsListWidget";
+import JupyterLiteSession from "./JupyterLiteSession";
 import JupyterLiteTransformationDialogWidget from "./JupyterLiteTransformationDialogWidget";
 import PythonTransformationDialogWidget from "./PythonTransformationDialogWidget";
 import { SourceEditorWidget } from "./SourceEditorWidget";
@@ -37,6 +38,8 @@ export default class MaterialDesignerWidget extends Widget {
 
     jupyterLiteTransformationDialog: JupyterLiteTransformationDialogWidget;
 
+    jupyterLiteSession: JupyterLiteSession;
+
     standataDialog: StandataDialogWidget;
 
     constructor(selector: string) {
@@ -52,6 +55,7 @@ export default class MaterialDesignerWidget extends Widget {
         this.defaultImportModalDialog = new DefaultImportModalDialogWidget();
         this.pythonTransformationDialog = new PythonTransformationDialogWidget();
         this.jupyterLiteTransformationDialog = new JupyterLiteTransformationDialogWidget();
+        this.jupyterLiteSession = new JupyterLiteSession();
         this.standataDialog = new StandataDialogWidget();
     }
 
