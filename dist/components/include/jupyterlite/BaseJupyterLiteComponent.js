@@ -1,5 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import JupyterLiteSession, { ActionEnum, } from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
+import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
+import { Action } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
@@ -52,11 +53,11 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         // eslint-disable-next-line react/sort-comp
         this.messageHandlerConfigs = [
             {
-                action: ActionEnum.SetData,
+                action: Action.setData,
                 handlers: [this.handleSetMaterials],
             },
             {
-                action: ActionEnum.GetData,
+                action: Action.getData,
                 handlers: [this.getMaterialsForMessage],
             },
         ];
