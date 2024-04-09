@@ -7,7 +7,7 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     # Open
     When I open JupyterLite Transformation dialog
     Then I see JupyterLite Transformation dialog
-    And I see "Introduction.ipynb" file opened
+    And I see file "Introduction.ipynb" opened
 
     # Open notebook
     When I click on "1.1. Interface creation with Zur and McGill Superlattice (ZSL) algorithm" link
