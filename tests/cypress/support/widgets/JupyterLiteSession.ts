@@ -14,14 +14,14 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForVisible() {
-        return cy.getIframeBody("#jupyter-lite-iframe").find("#main").should("exist");
+        return cy.getIframeBody(selectors.wrapper).find(selectors.main).should("exist");
     }
 
     checkFileOpened(fileName: string) {
         return cy
-            .getIframeBody("#jupyter-lite-iframe")
-            .find("#main")
-            .find(`li[title="Name: ${fileName}"]`)
+            .getIframeBody(selectors.wrapper)
+            .find(selectors.main)
+            .find(`li[title*='${fileName}']`)
             .should("exist");
     }
 }
