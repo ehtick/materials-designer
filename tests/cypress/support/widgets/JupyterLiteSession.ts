@@ -3,6 +3,7 @@ import Widget from "./Widget";
 const selectors = {
     wrapper: "iframe#jupyter-lite-iframe",
     main: "#main",
+    notebook: ".jp-Notebook",
 };
 
 export default class JupyterLiteSession extends Widget {
@@ -23,5 +24,14 @@ export default class JupyterLiteSession extends Widget {
             .find(selectors.main)
             .find(`li[title*='${fileName}']`)
             .should("exist");
+    }
+
+    clickOnLink(link: string) {
+        return cy
+            .getIframeBody(selectors.wrapper)
+            .find(selectors.notebook)
+            .contains(link)
+            .scrollIntoView()
+            .click();
     }
 }
