@@ -1,7 +1,7 @@
 import Widget from "./Widget";
 
 const selectors = {
-    wrapper: "#jupyter-lite-iframe",
+    wrapper: "iframe#jupyter-lite-iframe",
     main: "#main",
 };
 
@@ -13,9 +13,20 @@ export default class JupyterLiteSession extends Widget {
         this.wrappedSelectors = this.getWrappedSelectors(selectors);
     }
 
-    waitForVisible() {
-        cy.wait(10000);
-        cy.getIframeBody("#jupyter-lite-iframe");
-        // .find(".jp-LabShell").should("be.visible");
+    waitForVisible(timeout: BrowserTimeout) {
+        return cy
+            .get("#jupyter-lite-iframe", { log: true, timeout: 20000 })
+            .iframe()
+            .get("body #main")
+            .should("exist");
+    }
+
+    checkFileOpened(fileName: string) {
+        return cy
+            .get("#jupyter-lite-iframe", { log: true, timeout: 20000 })
+            .iframe()
+            .get("body #main")
+            .find(`li[title="Name: ${fileName}"]`)
+            .should("exist");
     }
 }
