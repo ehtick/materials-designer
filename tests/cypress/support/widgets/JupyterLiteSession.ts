@@ -42,7 +42,15 @@ export default class JupyterLiteSession extends Widget {
             .find(selectors.notebook)
             .find(selectors.cellIn)
             .eq(cellIndex)
-            .type(code);
+            .find(".CodeMirror")
+            .then((element) => {
+                const codeMirrorInstance = element[0].CodeMirror;
+                if (codeMirrorInstance) {
+                    codeMirrorInstance.setValue(code);
+                } else {
+                    throw new Error("Unable to access CodeMirror instance.");
+                }
+            });
     }
 
     getCodeFromCell(cellIndex: number): Cypress.Chainable<string> {
