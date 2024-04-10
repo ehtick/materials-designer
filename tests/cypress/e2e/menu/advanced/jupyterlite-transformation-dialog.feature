@@ -11,18 +11,18 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
 
     # Open notebook
     When I click on "1.1. Interface creation with Zur and McGill Superlattice (ZSL) algorithm" link
-    Then I see "create_interface_with_min_strain_zsl.ipynb" file opened
+    Then I see file "create_interface_with_min_strain_zsl.ipynb" opened
 
 
     # Change code
-    When I change value in the cell "In [3]" to:
+    When I set code in the cell "3" to:
     """
     INTERFACE_PARAMETERS = {
     "DISTANCE_Z": 3.0,  # in Angstroms
     "MAX_AREA": 50,  # in Angstroms^2
 }
     """
-    Then I see the value in the cell "In [3]":
+    Then I see code in the cell "3" is:
     """
     INTERFACE_PARAMETERS = {
     "DISTANCE_Z": 3.0,  # in Angstroms
