@@ -4,6 +4,7 @@ const selectors = {
     wrapper: "iframe#jupyter-lite-iframe",
     main: "#main",
     notebook: ".jp-Notebook",
+    cellIn: `.jp-Cell-inputWrapper .jp-InputArea-editor`,
 };
 
 export default class JupyterLiteSession extends Widget {
@@ -33,5 +34,23 @@ export default class JupyterLiteSession extends Widget {
             .contains(link)
             .scrollIntoView()
             .click();
+    }
+
+    setCodeInCell(cellIndex: number, code: string) {
+        return cy
+            .getIframeBody(selectors.wrapper)
+            .find(selectors.notebook)
+            .find(selectors.cellIn)
+            .eq(cellIndex)
+            .type(code);
+    }
+
+    getCodeFromCell(cellIndex: number): Cypress.Chainable<string> {
+        return cy
+            .getIframeBody(selectors.wrapper)
+            .find(selectors.notebook)
+            .find(selectors.cellIn)
+            .eq(cellIndex)
+            .invoke("text");
     }
 }
