@@ -4,6 +4,6 @@ import MaterialDesignerPage from "../widgets/MaterialDesignerPage";
 
 When("I submit materials", () => {
     const { jupyterLiteTransformationDialog } = new MaterialDesignerPage().designerWidget;
-    jupyterLiteTransformationDialog.selectMaterialsOut(0);
+    jupyterLiteTransformationDialog.selectMaterialsOut(1);
     jupyterLiteTransformationDialog.submit();
 });

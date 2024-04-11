@@ -5,6 +5,7 @@ const selectors = {
     main: "#main",
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell-inputWrapper .jp-InputArea-editor`,
+    menuItem: 'li[role="menuitem"]',
     runTab: 'li[role="menuitem"] > div:contains("Run")',
     runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
 };
@@ -69,14 +70,12 @@ export default class JupyterLiteSession extends Widget {
 
     clickMenuTab(tabName: string) {
         return cy
-            .getIframeBody(selectors.wrapper) // Assuming this is the correct selector for the iframe
-            .contains('li[role="menuitem"]', tabName) // Find the li with the specific text
-            .click() // Click the li element to open the dropdown if necessary
+            .getIframeBody(selectors.wrapper)
+            .contains(selectors.menuItem, tabName)
+            .click()
             .then(($li) => {
                 if ($li.find(".lm-Menu").length > 0) {
-                    // Check if there is a dropdown menu
-                    // If the clicked tab has a dropdown menu, wait until the menu is visible
-                    cy.contains('li[role="menuitem"]', tabName).should("be.visible").click(); // Click the actual menu item now that the dropdown is visible
+                    cy.contains(selectors.menuItem, tabName).should("be.visible").click();
                 }
             });
     }
