@@ -49,7 +49,7 @@ Cypress.Commands.add("getIframeBody", (iframeSelector: string) => {
     cy.log("Getting iframe body for selector:", iframeSelector);
 
     return cy
-        .get(iframeSelector, { log: true, timeout: 10000 })
+        .get(iframeSelector, { log: true, timeout: 20000 })
         .should(($iframe) => {
             // Ensure the iframe's window object is available
             expect($iframe.contents().find("body")).to.exist;

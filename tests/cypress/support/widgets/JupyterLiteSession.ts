@@ -18,7 +18,10 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForVisible() {
-        return cy.getIframeBody(selectors.wrapper).find(selectors.main).should("exist");
+        return cy
+            .getIframeBody(selectors.wrapper)
+            .find(selectors.main, { timeout: 10000 })
+            .should("exist");
     }
 
     checkFileOpened(fileName: string) {
