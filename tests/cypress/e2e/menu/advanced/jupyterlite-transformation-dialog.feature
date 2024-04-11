@@ -49,7 +49,7 @@ USE_CONVENTIONAL_CELL = True
 
     # Run
     When I Run All Cells
-    And I click the Submit button
+    And I submit materials
     Then material with following data exists in state
       | path              | index   |
       | si-interface.json | $INT{2} |

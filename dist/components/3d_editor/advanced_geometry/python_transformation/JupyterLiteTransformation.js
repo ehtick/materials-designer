@@ -44,7 +44,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent {
                             overflow: "hidden",
                         }, children: _jsx(Paper, { sx: {
                                 height: "100%",
-                            }, children: super.render() }) }), _jsx(Grid, { item: true, container: true, xs: 12, md: 4, alignItems: "center", children: _jsxs(Typography, { variant: "subtitle1", children: ["Output Materials (", _jsx("code", { children: "materials_out" }), ")"] }) }), _jsx(Grid, { item: true, xs: 12, md: 8, children: _jsx(MaterialsSelector, { materials: newMaterials, selectedMaterials: newMaterials, setSelectedMaterials: (newMaterials) => this.setState({ newMaterials }) }) })] }) }));
+                            }, children: super.render() }) }), _jsx(Grid, { item: true, container: true, xs: 12, md: 4, alignItems: "center", children: _jsxs(Typography, { variant: "subtitle1", children: ["Output Materials (", _jsx("code", { children: "materials_out" }), ")"] }) }), _jsx(Grid, { item: true, xs: 12, md: 8, children: _jsx(MaterialsSelector, { materials: newMaterials, selectedMaterials: newMaterials, setSelectedMaterials: (newMaterials) => this.setState({ newMaterials }), testId: "materials-out-selector" }) })] }) }));
     }
 }
 export default JupyterLiteTransformationDialog;

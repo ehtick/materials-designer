@@ -3,8 +3,12 @@ import Widget from "./Widget";
 const selectors = {
     wrapper: "#jupyterlite-transformation-dialog",
     dialog: "div[role='dialog']",
-    materialsSelector: "[data-tid='materials-selector']",
-    materialsSelectorItem: (index: number) => `[data-tid='select-material']:nth-of-type(${index})`,
+    materialsInSelector: "[data-tid='materials-in-selector']",
+    materialsInSelectorItem: (index: number) =>
+        `[data-tid='materials-in-selector']:nth-of-type(${index})`,
+    materialsOutSelector: "[data-tid='materials-out-selector']",
+    materialsOutSelectorItem: (index: number) =>
+        `[data-tid='materials-out-selector']:nth-of-type(${index})`,
     submitButton: "#jupyter-lite-transformation-dialog-submit-button",
 };
 
@@ -16,9 +20,15 @@ export default class JupyterLiteTransformationDialog extends Widget {
         this.wrappedSelectors = this.getWrappedSelectors(selectors);
     }
 
-    selectMaterial(index: number) {
-        this.browser.click(this.wrappedSelectors.materialsSelector);
-        this.browser.click(selectors.materialsSelectorItem(index));
+    selectMaterialsIn(index: number) {
+        this.browser.click(this.wrappedSelectors.materialsInSelector);
+        this.browser.click(selectors.materialsInSelectorItem(index));
+    }
+
+    selectMaterialsOut(index: number) {
+        this.browser.click(this.wrappedSelectors.materialsOutSelector);
+        this.browser.waitForVisible(selectors.materialsOutSelectorItem(index), "lg");
+        this.browser.click(selectors.materialsOutSelectorItem(index));
     }
 
     submit() {
