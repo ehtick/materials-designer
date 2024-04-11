@@ -57,4 +57,3 @@ USE_CONVENTIONAL_CELL = True
 
     # Reset the materials list
     And I delete materials with index "2"
-    And I delete materials with index "2"
