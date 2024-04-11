@@ -72,11 +72,7 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         }
     }
     render() {
-        return (_jsx(JupyterLiteSession
-        // originURL="http://localhost:8000"
-        , { 
-            // originURL="http://localhost:8000"
-            defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: this.messageHandlerConfigs, ref: this.jupyterLiteSessionRef }));
+        return (_jsx(JupyterLiteSession, { originURL: "http://localhost:8001", defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: this.messageHandlerConfigs, ref: this.jupyterLiteSessionRef }));
     }
 }
 export default BaseJupyterLiteSessionComponent;

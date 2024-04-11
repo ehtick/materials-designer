@@ -20,7 +20,7 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
 SUBSTRATE_PARAMETERS = {
     "MATERIAL_INDEX": 0,
     "MILLER_INDICES": (1, 1, 1),
-    "THICKNESS": 3,
+    "THICKNESS": 1,
 }
 
 LAYER_PARAMETERS = {
