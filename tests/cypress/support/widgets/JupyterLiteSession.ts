@@ -80,6 +80,14 @@ export default class JupyterLiteSession extends Widget {
             });
     }
 
+    getStatusText() {
+        return this.browser
+            .iframe(selectors.wrapper, "lg")
+            .getElementText(
+                '[title="Change kernel for create_interface_with_min_strain_zsl.ipynb"]',
+            );
+    }
+
     waitForKernelIdle(timeout = 120000) {
         return cy
             .getIframeBody(selectors.wrapper)
