@@ -17,12 +17,29 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     # Change code
     When I set code in the cell "3" to:
     """
+SUBSTRATE_PARAMETERS = {
+    "MATERIAL_INDEX": 0,
+    "MILLER_INDICES": (1, 1, 1),
+    "THICKNESS": 3,
+}
+
+LAYER_PARAMETERS = {
+    "MATERIAL_INDEX": 0,
+    "MILLER_INDICES": (1, 1, 1),
+    "THICKNESS": 1,
+}
+
+USE_CONVENTIONAL_CELL = True
+    """
+
+    When I set code in the cell "5" to:
+    """
     INTERFACE_PARAMETERS = {
     "DISTANCE_Z": 3.0,  # in Angstroms
     "MAX_AREA": 50,  # in Angstroms^2
 }
     """
-    Then I see code in the cell "3" is:
+    Then I see code in the cell "5" is:
     """
     INTERFACE_PARAMETERS = {
     "DISTANCE_Z": 3.0,  # in Angstroms
@@ -31,7 +48,7 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     """
 
     # Run
-    When I Run all cells
+    When I Run All Cells
     And I click the Submit button
     Then material with following data exists in state
       | path              | index   |
