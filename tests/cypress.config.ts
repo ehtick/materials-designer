@@ -7,6 +7,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
     e2e: {
         specPattern: "cypress/e2e/**/*.feature",
+        // Reduce security to allow cross-origin JS execution in iframes
         chromeWebSecurity: false,
         // Due to https://github.com/cypress-io/cypress/issues/22040 in GitHub Actions
         // supportFile: false,

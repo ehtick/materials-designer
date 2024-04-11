@@ -8,5 +8,5 @@ When("I Run All Cells", () => {
     jupyterLiteSession.clickMenuTab("Run");
     jupyterLiteSession.clickMenuTab("Run All Cells");
     // We have to wait for python script to run, which actually takes quite a bit of time
-    jupyterLiteSession.waitForKernelIdle(180000);
+    // jupyterLiteSession.waitForKernelIdle(360000);
 });

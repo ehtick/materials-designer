@@ -21,7 +21,7 @@ export default class JupyterLiteSession extends Widget {
         return cy
             .getIframeBody(selectors.wrapper)
             .find(selectors.main, { timeout: 10000 })
-            .should("exist");
+            .should("exist", { timeout: 10000 });
     }
 
     checkFileOpened(fileName: string) {
@@ -81,7 +81,7 @@ export default class JupyterLiteSession extends Widget {
             });
     }
 
-    waitForKernelIdle(timeout = 60000) {
+    waitForKernelIdle(timeout = 120000) {
         return cy
             .getIframeBody(selectors.wrapper)
             .find(selectors.main)

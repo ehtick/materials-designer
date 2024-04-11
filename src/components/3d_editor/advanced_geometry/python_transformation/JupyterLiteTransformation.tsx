@@ -122,6 +122,7 @@ class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
                             materials={newMaterials}
                             selectedMaterials={newMaterials}
                             setSelectedMaterials={(newMaterials) => this.setState({ newMaterials })}
+                            testId="materials-out-selector"
                         />
                     </Grid>
                 </Grid>
