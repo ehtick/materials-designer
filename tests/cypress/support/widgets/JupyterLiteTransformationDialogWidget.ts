@@ -9,7 +9,7 @@ const selectors = {
     materialsOutSelector: "[data-tid='materials-out-selector']",
     materialsOutSelectorItem: (index: number) =>
         `[data-tid='materials-out-selector']:nth-of-type(${index})`,
-    submitButton: "#jupyter-lite-transformation-dialog-submit-button",
+    submitButton: "#jupyterlite-transformation-dialog-submit-button",
 };
 
 export default class JupyterLiteTransformationDialog extends Widget {
