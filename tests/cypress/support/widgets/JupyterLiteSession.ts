@@ -19,18 +19,13 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForVisible() {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find(selectors.main, { timeout: 10000 })
-            .should("exist", { timeout: 10000 });
+        return this.browser.iframe(selectors.wrapper, "md").waitForVisible(selectors.main, "md");
     }
 
     checkFileOpened(fileName: string) {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find(selectors.main)
-            .find(`li[title*='${fileName}']`)
-            .should("exist");
+        return this.browser
+            .iframe(selectors.wrapper, "md")
+            .waitForVisible(`li[title*='${fileName}']`);
     }
 
     clickOnLink(link: string) {
