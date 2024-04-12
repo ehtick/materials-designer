@@ -1,6 +1,6 @@
 import { When } from "@badeball/cypress-cucumber-preprocessor";
 
-import MaterialDesignerPage from "../widgets/MaterialDesignerPage";
+import MaterialDesignerPage from "../../widgets/MaterialDesignerPage";
 
 function normalizeText(code: string) {
     return code.replace(/\s/g, "");

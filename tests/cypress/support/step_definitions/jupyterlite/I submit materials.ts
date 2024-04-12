@@ -1,6 +1,6 @@
 import { When } from "@badeball/cypress-cucumber-preprocessor";
 
-import MaterialDesignerPage from "../widgets/MaterialDesignerPage";
+import MaterialDesignerPage from "../../widgets/MaterialDesignerPage";
 
 When("I submit materials", () => {
     const { jupyterLiteTransformationDialog } = new MaterialDesignerPage().designerWidget;
