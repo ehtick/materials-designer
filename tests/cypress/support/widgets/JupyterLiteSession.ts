@@ -88,41 +88,47 @@ export default class JupyterLiteSession extends Widget {
             .invoke("text");
     }
 
+    isKernelIdle(): Cypress.Chainable<boolean> {
+        return this.getKernelStatus().then((status) => {
+            return status.includes("Idle");
+        });
+    }
+
+    restartKernel(restartTimeout: number) {
+        return cy
+            .getIframeBody(selectors.wrapper)
+            .find('button[data-command="kernelmenu:restart"]', {
+                timeout: restartTimeout,
+            })
+            .click({ multiple: true, force: true })
+            .then(() => {
+                cy.get(".jp-Dialog-button.jp-mod-accept", {
+                    timeout: 2000,
+                }).click({ multiple: true, force: true });
+                return cy.wait(restartTimeout);
+            });
+    }
+
     waitForKernelIdleWithRestart(timeout = 120000, attempt = 1) {
-        const maxAttempts = 3; // Max attempts to check for kernel idle status
+        const maxAttempts = 3;
         const restartTimeout = 8000; // Specific timeout to wait for restart action
         const checkInterval = 12000; // Interval between checks
 
-        cy.getIframeBody(selectors.wrapper)
-            .find(selectors.main, { timeout })
-            .then(($main) => {
-                cy.wait(checkInterval).then(() => {
-                    const $status = $main.find(".p-Widget:contains('Python (Pyodide) | Idle')");
-                    if ($status.length > 0) {
-                        // If the kernel is idle, we are successful
-                    } else if (attempt < maxAttempts) {
-                        // If the kernel is not idle and we have attempts left, try to restart
-                        cy.getIframeBody(selectors.wrapper)
-                            .find('button[data-command="kernelmenu:restart"]', {
-                                timeout: restartTimeout,
-                            })
-                            .click({ multiple: true, force: true })
-                            .then(() => {
-                                cy.get(".jp-Dialog-button.jp-mod-accept", {
-                                    timeout: 2000,
-                                }).click({ multiple: true, force: true });
-                                // Wait a bit for the kernel to potentially restart
-                                cy.wait(restartTimeout).then(() => {
-                                    this.waitForKernelIdleWithRestart(
-                                        timeout - (attempt * checkInterval + restartTimeout),
-                                        attempt + 1,
-                                    );
-                                });
-                            });
-                    } else {
-                        throw new Error("Kernel did not become idle after maximum attempts.");
-                    }
-                });
+        cy.wait(checkInterval).then(() => {
+            this.isKernelIdle().then((isIdle) => {
+                if (isIdle) {
+                    // If the kernel is idle, we are successful, function will return
+                } else if (attempt < maxAttempts) {
+                    this.restartKernel(restartTimeout).then(() => {
+                        this.waitForKernelIdleWithRestart(
+                            timeout - (attempt * checkInterval + restartTimeout),
+                            attempt + 1,
+                        );
+                    });
+                } else {
+                    throw new Error("Kernel did not become idle after maximum attempts.");
+                }
             });
+        });
     }
 }
