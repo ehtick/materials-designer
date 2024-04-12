@@ -1,5 +1,5 @@
 import Widget from "./Widget";
-// TODO: celanup eveyrthing
+// TODO: cleanup everything
 const selectors = {
     wrapper: "iframe#jupyter-lite-iframe",
     main: "#main",
@@ -80,12 +80,6 @@ export default class JupyterLiteSession extends Widget {
             });
     }
 
-    // getKernelStatus() {
-    //     return this.browser
-    //         .iframe(selectors.wrapper, "lg")
-    //         .getElementText("#jp-main-statusbar span");
-    // }
-
     getKernelStatus() {
         return cy
             .getIframeBody(selectors.wrapper)
@@ -93,15 +87,6 @@ export default class JupyterLiteSession extends Widget {
             .contains(/Python \(Pyodide\)/)
             .invoke("text");
     }
-
-    // waitForKernelIdle(timeout = 120000) {
-    //     return cy
-    //         .getIframeBody(selectors.wrapper)
-    //         .find(selectors.main)
-    //         .find(".p-Widget", { timeout })
-    //         .contains("Python (Pyodide) | Idle", { timeout })
-    //         .should("exist", { timeout });
-    // }
 
     waitForKernelIdleWithRestart(timeout = 120000, attempt = 1) {
         const maxAttempts = 3; // Max attempts to check for kernel idle status
@@ -123,7 +108,7 @@ export default class JupyterLiteSession extends Widget {
                             })
                             .click({ multiple: true, force: true })
                             .then(() => {
-                                cy.get(".jp-Dialog-button div:contains('Restart')", {
+                                cy.get(".jp-Dialog-button.jp-mod-accept", {
                                     timeout: 2000,
                                 }).click({ multiple: true, force: true });
                                 // Wait a bit for the kernel to potentially restart
