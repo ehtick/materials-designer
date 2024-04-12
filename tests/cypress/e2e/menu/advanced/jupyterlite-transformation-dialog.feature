@@ -48,7 +48,9 @@ USE_CONVENTIONAL_CELL = True
     """
 
     # Run
-    When I Run All Cells
+    When I see kernel status is "Idle"
+    And I Run All Cells
+    And I see kernel status is "Idle"
     And I submit materials
     Then material with following data exists in state
       | path              | index   |

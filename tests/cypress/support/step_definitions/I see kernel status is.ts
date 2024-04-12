@@ -7,7 +7,7 @@ When("I see kernel status is {string}", (expectedStatus: string) => {
 
     cy.until({
         it: () => {
-            return jupyterLiteSession.getStatusText().then((status: string) => {
+            return jupyterLiteSession.getKernelStatus().then((status: string) => {
                 const baseStatus = status.split(" | ")[1];
                 return baseStatus === expectedStatus;
             });
