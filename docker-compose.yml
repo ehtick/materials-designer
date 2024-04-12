@@ -30,3 +30,17 @@ services:
     volumes:
       - ./tests/cypress:/opt/test/cypress
       - ./entrypoint.sh:/opt/test/entrypoint.sh
+  # For local testing with access via VNC
+  materials-designer-test-vnc:
+    image: materials-designer-test:${IMAGE_TAG}
+    build:
+      args:
+        BASE_TAG: ${IMAGE_TAG}
+      context: .
+      dockerfile: ./dockerfiles/app/test/Dockerfile-vnc
+      # - materials-designer
+    ports:
+      - 5920:5920
+    volumes:
+      - ./tests/cypress:/opt/test/cypress
+      - ./entrypoint.sh:/opt/test/entrypoint.sh
