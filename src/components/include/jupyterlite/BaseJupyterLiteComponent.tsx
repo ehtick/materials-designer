@@ -1,6 +1,7 @@
-import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
-import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
-import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
+import JupyterLiteSession, {
+    IMessageHandlerConfigItem,
+} from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
+import { Action, MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
@@ -23,14 +24,9 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
     P & BaseJupyterLiteProps,
     S
 > {
-    messageHandler = new MessageHandler();
-
     DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
 
-    componentDidMount() {
-        this.messageHandler.addHandlers("set-data", [this.handleSetMaterials]);
-        this.messageHandler.addHandlers("get-data", [this.getMaterialsForMessage]);
-    }
+    jupyterLiteSessionRef = React.createRef<JupyterLiteSession>();
 
     componentDidUpdate(prevProps: P & BaseJupyterLiteProps, prevState: S) {
         const { materials } = this.props;
@@ -39,13 +35,9 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         }
     }
 
-    componentWillUnmount() {
-        this.messageHandler.destroy();
-    }
-
     sendMaterials = () => {
         const materialsData = this.getMaterialsForMessage();
-        this.messageHandler.sendData(materialsData);
+        this.jupyterLiteSessionRef.current?.sendData(materialsData);
     };
 
     getMaterialsForMessage = () => {
@@ -86,6 +78,18 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         }
     };
 
+    // eslint-disable-next-line react/sort-comp
+    messageHandlerConfigs: IMessageHandlerConfigItem[] = [
+        {
+            action: Action.setData,
+            handlers: [this.handleSetMaterials],
+        },
+        {
+            action: Action.getData,
+            handlers: [this.getMaterialsForMessage],
+        },
+    ];
+
     setMaterials = (materials: Made.Material[]): void => {
         const { onMaterialsUpdate } = this.props;
         onMaterialsUpdate(materials);
@@ -95,7 +99,8 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         return (
             <JupyterLiteSession
                 defaultNotebookPath={this.DEFAULT_NOTEBOOK_PATH}
-                messageHandler={this.messageHandler}
+                messageHandlerConfigs={this.messageHandlerConfigs}
+                ref={this.jupyterLiteSessionRef}
             />
         );
     }

@@ -1,4 +1,4 @@
-import MessageHandler from "@exabyte-io/cove.js/dist/other/iframe-messaging";
+import JupyterLiteSession, { IMessageHandlerConfigItem } from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import React from "react";
@@ -11,11 +11,9 @@ export interface BaseJupyterLiteProps {
     containerRef?: React.RefObject<HTMLDivElement>;
 }
 declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Component<P & BaseJupyterLiteProps, S> {
-    messageHandler: MessageHandler;
     DEFAULT_NOTEBOOK_PATH: string;
-    componentDidMount(): void;
+    jupyterLiteSessionRef: React.RefObject<JupyterLiteSession>;
     componentDidUpdate(prevProps: P & BaseJupyterLiteProps, prevState: S): void;
-    componentWillUnmount(): void;
     sendMaterials: () => void;
     getMaterialsForMessage: () => import("@mat3ra/made/dist/js/types").MaterialJSON[];
     getMaterialsToUse: () => (P & BaseJupyterLiteProps)["materials"];
@@ -213,6 +211,7 @@ declare class BaseJupyterLiteSessionComponent<P = never, S = never> extends Reac
         validationErrors: string[];
     };
     handleSetMaterials: (data: any) => void;
+    messageHandlerConfigs: IMessageHandlerConfigItem[];
     setMaterials: (materials: Made.Material[]) => void;
     render(): import("react/jsx-runtime").JSX.Element;
 }
