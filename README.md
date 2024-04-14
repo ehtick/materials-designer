@@ -166,6 +166,20 @@ sleep 30  # let the app actually start
 docker-compose run materials-designer-test
 ```
 
+To run tests in the container use default profile by not specifying it:
+  
+```bash
+docker-compose up -d --build
+```
+
+For debugging purposes, Materials Designer and test container can be run interactively with access via VNC:
+
+```bash
+docker-compose --profile use-vnc up -d --build
+```
+
+Then connect to `vnc://localhost:5920` with a VNC client. The password is `123`.
+
 ### 3.5. Using Cove.js for local development
 
 If need to link Cove.js into the app for local development, you need
