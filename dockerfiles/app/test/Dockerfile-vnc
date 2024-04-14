@@ -24,4 +24,4 @@ RUN apt-get install -y /tmp/google-chrome.deb
 
 ENV CYPRESS_BASE_URL=${CYPRESS_BASE_URL:-'http://host.docker.internal:3001'}
 
-ENTRYPOINT ["/opt/test/entrypoint.sh"]
+ENTRYPOINT ["/opt/test/entrypoint-vnc.sh"]

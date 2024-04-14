@@ -178,7 +178,7 @@ For debugging purposes, Materials Designer and test container can be run interac
 docker-compose --profile use-vnc up -d --build
 ```
 
-Then connect to `vnc://localhost:5920` with a VNC client. The password is `123`.
+Then connect to `vnc://localhost:5920` with a VNC client. The password is `123`. Make sure to have it installed on the system, when address is typed in the Chrome browser, the VNC prompt will appear.
 
 ### 3.5. Using Cove.js for local development
 
