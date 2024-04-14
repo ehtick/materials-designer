@@ -29,18 +29,18 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickOnLink(link: string) {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find(selectors.notebook)
+        return this.browser
+            .iframe(selectors.wrapper)
+            .waitForVisible(selectors.notebook)
             .contains(link)
             .scrollIntoView()
             .click();
     }
 
     setCodeInCell(cellIndex: number, code: string) {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find(selectors.notebook)
+        return this.browser
+            .iframe(selectors.wrapper)
+            .waitForVisible(selectors.notebook)
             .find(selectors.cellIn)
             .eq(cellIndex)
             .find(".CodeMirror")
@@ -55,18 +55,19 @@ export default class JupyterLiteSession extends Widget {
     }
 
     getCodeFromCell(cellIndex: number): Cypress.Chainable<string> {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find(selectors.notebook)
+        return this.browser
+            .iframe(selectors.wrapper)
+            .waitForVisible(selectors.notebook)
             .find(selectors.cellIn)
             .eq(cellIndex)
             .invoke("text");
     }
 
     clickMenuTab(tabName: string) {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .contains(selectors.menuItem, tabName)
+        return this.browser
+            .iframe(selectors.wrapper)
+            .waitForVisible(selectors.menuItem)
+            .contains(tabName)
             .click()
             .then(($li) => {
                 if ($li.find(".lm-Menu").length > 0) {
