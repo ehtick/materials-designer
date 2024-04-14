@@ -1,7 +1,7 @@
 import JupyterLiteSession, {
     IMessageHandlerConfigItem,
 } from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
-import { MaterialSchema } from "@mat3ra/esse/dist/js/types";
+import { Action, MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
@@ -81,11 +81,11 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
     // eslint-disable-next-line react/sort-comp
     messageHandlerConfigs: IMessageHandlerConfigItem[] = [
         {
-            action: "set-data",
+            action: Action.setData,
             handlers: [this.handleSetMaterials],
         },
         {
-            action: "get-data",
+            action: Action.getData,
             handlers: [this.getMaterialsForMessage],
         },
     ];
