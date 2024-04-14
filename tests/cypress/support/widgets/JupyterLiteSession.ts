@@ -76,9 +76,9 @@ export default class JupyterLiteSession extends Widget {
     }
 
     getKernelStatus() {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find("#jp-main-statusbar span")
+        return this.browser
+            .iframe(selectors.wrapper)
+            .waitForVisible("#jp-main-statusbar span")
             .contains(/Python \(Pyodide\)/)
             .invoke("text");
     }
@@ -90,16 +90,14 @@ export default class JupyterLiteSession extends Widget {
     }
 
     restartKernel(restartTimeout: number) {
-        return cy
-            .getIframeBody(selectors.wrapper)
-            .find('button[data-command="kernelmenu:restart"]', {
-                timeout: restartTimeout,
-            })
+        return this.browser
+            .iframe(selectors.wrapper)
+            .waitForVisible('button[data-command="kernelmenu:restart"]', "md")
             .click({ multiple: true, force: true })
             .then(() => {
-                cy.get(".jp-Dialog-button.jp-mod-accept", {
-                    timeout: 2000,
-                }).click({ multiple: true, force: true });
+                this.browser
+                    .waitForVisible(".jp-Dialog-button.jp-mod-accept", "md")
+                    .click({ multiple: true, force: true });
                 return cy.wait(restartTimeout);
             });
     }
