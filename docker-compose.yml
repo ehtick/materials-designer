@@ -47,6 +47,6 @@ services:
       - 5920:5920
     volumes:
       - ./tests/cypress:/opt/test/cypress
-      - ./dockerfiles/app/test/entrypoint-vnc.sh:/opt/test/entrypoint.sh
+      - ./entrypoint-vnc.sh:/opt/test/entrypoint.sh
     profiles:
       - use-vnc
