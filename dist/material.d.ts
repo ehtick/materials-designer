@@ -256,21 +256,21 @@ export class Material extends Material_base {
                 }, {
                     id?: number | undefined;
                 }] | undefined;
-                bondType?: "double" | "single" | "triple" | "quadruple" | "aromatic" | "tautomeric" | "dative" | "other" | undefined;
+                bondType?: "double" | "other" | "single" | "triple" | "quadruple" | "aromatic" | "tautomeric" | "dative" | undefined;
             }[] | undefined;
         };
         lattice: {
             name?: "lattice" | undefined;
             vectors?: {
                 alat?: number | undefined;
-                units?: "m" | "alat" | "bohr" | "angstrom" | "crystal" | "km" | "pm" | "nm" | "a.u." | "fractional" | "cartesian" | undefined;
+                units?: "m" | "angstrom" | "crystal" | "km" | "pm" | "nm" | "a.u." | "bohr" | "fractional" | "cartesian" | "alat" | undefined;
                 a: [number, number, number];
                 b: [number, number, number];
                 c: [number, number, number];
             } | undefined;
             type: "CUB" | "BCC" | "FCC" | "TET" | "MCL" | "ORC" | "ORCC" | "ORCF" | "ORCI" | "HEX" | "BCT" | "TRI" | "MCLC" | "RHL";
             units?: {
-                length?: "bohr" | "angstrom" | undefined;
+                length?: "angstrom" | "bohr" | undefined;
                 angle?: "degree" | "radian" | undefined;
             } | undefined;
             a: number;
@@ -333,7 +333,7 @@ export class Material extends Material_base {
         consistencyChecks?: {
             key: string;
             name: "default" | "atomsTooClose" | "atomsOverlap";
-            severity: "info" | "warning" | "error";
+            severity: "error" | "warning" | "info";
             message: string;
         }[] | undefined;
         schemaVersion?: string | undefined;
