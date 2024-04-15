@@ -97,6 +97,7 @@ export default class JupyterLiteSession extends Widget {
             .click({ multiple: true, force: true })
             .then(() => {
                 this.browser
+                    .iframe(selectors.wrapper)
                     .waitForVisible(".jp-Dialog-button.jp-mod-accept", "md")
                     .click({ multiple: true, force: true });
                 return cy.wait(restartTimeout);
