@@ -1,118 +1,63 @@
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
-import { Made } from "@exabyte-io/made.js";
+import { Made } from "@mat3ra/made";
 import { darkScrollbar } from "@mui/material";
-import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import React from "react";
 
 import { theme } from "../../../../settings";
+import BaseJupyterLiteSessionComponent, {
+    BaseJupyterLiteProps,
+} from "../../../include/jupyterlite/BaseJupyterLiteComponent";
 import MaterialsSelector from "./MaterialsSelector";
 
-interface JupyterLiteTransformationProps {
-    title: string;
-    materials: Made.Material[];
-    show: boolean;
-    onSubmit: (newMaterials: Made.Material[]) => void;
-    onHide: () => void;
-}
-
-interface JupyterLiteTransformationState {
-    materials: Made.Material[];
+interface JupyterLiteTransformationDialogState {
     selectedMaterials: Made.Material[];
     newMaterials: Made.Material[];
 }
 
-const ORIGIN_URL = "https://jupyterlite.mat3ra.com";
-const IFRAME_ID = "jupyter-lite-iframe";
-const DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
-
-class JupyterLiteTransformation extends React.Component<
-    JupyterLiteTransformationProps,
-    JupyterLiteTransformationState
+class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComponent<
+    BaseJupyterLiteProps,
+    JupyterLiteTransformationDialogState
 > {
-    constructor(props: JupyterLiteTransformationProps) {
+    constructor(props: BaseJupyterLiteProps) {
         super(props);
         this.state = {
-            materials: props.materials,
-            selectedMaterials: [props.materials[0]],
+            selectedMaterials: [this.props.materials[0]],
             newMaterials: [],
         };
     }
 
-    componentDidMount() {
-        window.addEventListener("message", this.handleReceiveMessage, false);
-    }
+    componentDidUpdate(
+        prevProps: BaseJupyterLiteProps,
+        prevState: JupyterLiteTransformationDialogState,
+    ) {
+        if (prevProps.materials !== this.props.materials) {
+            this.setState({ selectedMaterials: [this.props.materials[0]] });
+        }
 
-    componentDidUpdate(prevProps: JupyterLiteTransformationProps) {
-        const { materials } = this.props;
-        if (prevProps.materials !== materials) {
-            // eslint-disable-next-line react/no-did-update-set-state
-            this.setState({ materials });
+        if (prevState.selectedMaterials !== this.state.selectedMaterials) {
+            this.sendMaterials();
         }
     }
 
-    componentWillUnmount() {
-        window.removeEventListener("message", this.handleReceiveMessage, false);
-    }
-
-    handleReceiveMessage = (event: any) => {
-        // Check if the message is from the expected source
-        // TODO: check for partial URL match, e.g. with "/" at the end
-        if (event.origin !== ORIGIN_URL) {
-            return;
-        }
-        if (event.data.type === "from-iframe-to-host") {
-            try {
-                // TODO: add check for Material config type
-                const configs = event.data.data.materials;
-                if (Array.isArray(configs)) {
-                    this.setState({
-                        newMaterials: configs.map((config) => new Made.Material(config)),
-                    });
-                }
-            } catch (err) {
-                console.log(err);
-            }
-            if (event.data.requestData === true && event.data.variableName === "materials_in") {
-                this.sendMaterialsToIFrame();
-            }
-        }
-    };
-
-    handleSubmit = async () => {
-        const { onSubmit, materials } = this.props;
+    handleSubmit = () => {
         const { newMaterials } = this.state;
-
-        onSubmit(newMaterials);
-        this.setState({ selectedMaterials: [materials[0]], newMaterials: [] });
+        this.props.onMaterialsUpdate(newMaterials);
     };
 
-    sendMaterialsToIFrame() {
-        const { selectedMaterials } = this.state;
-        const data = selectedMaterials.map((material) => material.toJSON());
-        this.sendDataToIFrame(data, "materials_in");
-    }
+    setMaterials = (newMaterials: Made.Material[]) => {
+        this.setState({ newMaterials });
+    };
 
-    // eslint-disable-next-line class-methods-use-this
-    sendDataToIFrame(data: any, variableName = "data") {
-        const message = {
-            type: "from-host-to-iframe",
-            data,
-            variableName,
-        };
-        const iframe = document.getElementById(IFRAME_ID) as HTMLIFrameElement;
-        if (iframe.contentWindow) {
-            iframe.contentWindow.postMessage(message, ORIGIN_URL);
-        } else {
-            console.error("JupyterLite iframe not found");
-        }
-    }
+    getMaterialsToUse = () => {
+        return this.state.selectedMaterials;
+    };
 
     render() {
-        const { materials, selectedMaterials, newMaterials } = this.state;
-        const { title, show, onHide } = this.props;
+        const { title, show, onHide, materials } = this.props;
+        const { selectedMaterials, newMaterials } = this.state;
 
         return (
             <Dialog
@@ -164,15 +109,7 @@ class JupyterLiteTransformation extends React.Component<
                                 height: "100%",
                             }}
                         >
-                            <iframe
-                                name="jupyterlite"
-                                title="JupyterLite"
-                                id={IFRAME_ID}
-                                src={`${ORIGIN_URL}/lab/tree?path=${DEFAULT_NOTEBOOK_PATH}`}
-                                sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-top-navigation-by-user-activation allow-downloads"
-                                width="100%"
-                                height="100%"
-                            />
+                            {super.render()}
                         </Paper>
                     </Grid>
                     <Grid item container xs={12} md={4} alignItems="center">
@@ -193,4 +130,4 @@ class JupyterLiteTransformation extends React.Component<
     }
 }
 
-export default JupyterLiteTransformation;
+export default JupyterLiteTransformationDialog;

@@ -1,8 +1,6 @@
 // Load styling, bootstrap needs to be loaded first
-import "react-s-alert/dist/s-alert-default.css";
-import "react-s-alert/dist/s-alert-css-effects/stackslide.css";
 import "@exabyte-io/wave.js/dist/stylesheets/main.css";
-import "./stylesheets/main.scss";
+import "./stylesheets/main.css";
 
 // eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 import React from "react";

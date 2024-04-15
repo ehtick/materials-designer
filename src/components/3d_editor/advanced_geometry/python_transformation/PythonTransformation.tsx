@@ -1,7 +1,7 @@
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
 import IconByName from "@exabyte-io/cove.js/dist/mui/components/icon/IconByName";
 import PyodideLoader from "@exabyte-io/cove.js/dist/other/pyodide";
-import { Made } from "@exabyte-io/made.js";
+import { Made } from "@mat3ra/made";
 import { darkScrollbar } from "@mui/material";
 import Button from "@mui/material/Button";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,8 +9,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { enqueueSnackbar } from "notistack";
 import React from "react";
-import NPMsAlert from "react-s-alert";
 
 import { theme } from "../../../../settings";
 import { exportToDisk } from "../../../../utils/downloader";
@@ -173,7 +173,8 @@ class PythonTransformation extends React.Component<
             if (error instanceof Error) {
                 errorMessage = error.message;
             }
-            NPMsAlert.error(errorMessage);
+
+            enqueueSnackbar(errorMessage, { variant: "error" });
         }
     };
 
