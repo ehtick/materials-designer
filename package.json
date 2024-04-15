@@ -8,7 +8,7 @@
         "prepare": "husky install",
         "transpile-tests": "babel --presets @babel/preset-env --out-dir dist/tests-legacy/cucumber tests-legacy/cucumber",
         "transpile": "tsc && npm run copy-css",
-        "copy-css": "cp src/stylesheets/* dist/stylesheets/",
+        "copy-css": "mkdir -p dist/stylesheets && cp src/stylesheets/* dist/stylesheets/",
         "test": "echo 'Tests are in the tests subfolder. Use Node 20 (`nvm use 20`) and run `npm i` && `npm test` there'",
         "lint": "eslint src tests-legacy && prettier --write src tests-legacy",
         "lint:fix": "eslint src tests-legacy --fix && prettier --write src tests-legacy",
