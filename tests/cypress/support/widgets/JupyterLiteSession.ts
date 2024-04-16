@@ -5,7 +5,8 @@ const selectors = {
     wrapper: "#main",
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell .jp-InputArea-editor`,
-    cellInIndex: (index: number) => `.jp-Notebook`,
+    cellInIndex: (index: number) =>
+        `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
     menuItem: 'li[role="menuitem"]',
     runTab: 'li[role="menuitem"] > div:contains("Run")',
     runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
@@ -35,14 +36,13 @@ export default class JupyterLiteSession extends Widget {
     }
 
     setCodeInCell(cellIndex: number, code: string) {
-        console.log(">>>>>>>>>> selector:", selectors.cellInIndex(cellIndex));
         this.browser.iframe(selectors.iframe, "md").waitForExist(selectors.cellInIndex(cellIndex));
-        const cell = this.browser
-            .iframe(selectors.iframe, "md")
-            .getElement(selectors.cellInIndex(cellIndex));
-        this.browser.execute(() => {
-            console.log(cell);
-            const codeMirrorInstance = cell[0].CodeMirror;
+
+        this.browser.execute((win) => {
+            const iframe = win.document.querySelector(selectors.iframe);
+            const selector = selectors.cellInIndex(cellIndex);
+            const cell = iframe.contentWindow.document.body.querySelector(selector);
+            const codeMirrorInstance = cell.CodeMirror;
             if (!codeMirrorInstance) {
                 throw new Error("Unable to access CodeMirror instance.");
             }
