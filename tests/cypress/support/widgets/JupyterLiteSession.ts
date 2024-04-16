@@ -8,6 +8,7 @@ const selectors = {
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
     menuItem: 'li[role="menuitem"]',
+    menuItemNew: (tabName: string) => `li[role="menuitem"] > div:contains("${tabName}")`,
     runTab: 'li[role="menuitem"] > div:contains("Run")',
     runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
 };
@@ -64,17 +65,13 @@ export default class JupyterLiteSession extends Widget {
         });
     }
 
-    clickMenuTab(tabName: string) {
-        return this.browser
-            .iframe(selectors.iframe)
-            .waitForVisible(selectors.menuItem)
-            .contains(tabName)
-            .click()
-            .then(($li) => {
-                if ($li.find(".lm-Menu").length > 0) {
-                    cy.contains(selectors.menuItem, tabName).should("be.visible").click();
-                }
-            });
+    clickMenu(tabName: string, subItemName?: string) {
+        const menuTabSelector = selectors.menuItemNew(tabName);
+        this.browser.iframe(selectors.iframe).clickFirst(menuTabSelector);
+        if (subItemName) {
+            const submenuItemSelector = selectors.menuItemNew(subItemName);
+            this.browser.iframe(selectors.iframe).clickFirst(submenuItemSelector);
+        }
     }
 
     getKernelStatus() {
