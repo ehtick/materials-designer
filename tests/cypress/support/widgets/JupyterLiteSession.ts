@@ -1,10 +1,12 @@
 import Widget from "./Widget";
 // TODO: cleanup everything
 const selectors = {
-    wrapper: "iframe#jupyter-lite-iframe",
-    main: "#main",
+    iframe: "iframe#jupyter-lite-iframe",
+    wrapper: "#main",
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell-inputWrapper .jp-InputArea-editor`,
+    cellInIndex: (index: number) =>
+        `.jp-Notebook:nth-child(${index}) .jp-Cell-inputWrapper .jp-InputArea-editor`,
     menuItem: 'li[role="menuitem"]',
     runTab: 'li[role="menuitem"] > div:contains("Run")',
     runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
@@ -14,49 +16,49 @@ export default class JupyterLiteSession extends Widget {
     wrappedSelectors: typeof selectors;
 
     constructor() {
-        super(selectors.wrapper);
+        super(selectors.iframe);
         this.wrappedSelectors = this.getWrappedSelectors(selectors);
     }
 
     waitForVisible() {
-        return this.browser.iframe(selectors.wrapper, "md").waitForVisible(selectors.main, "md");
+        return this.browser.iframe(selectors.iframe, "md").waitForVisible(selectors.wrapper, "md");
     }
 
     checkFileOpened(fileName: string) {
         return this.browser
-            .iframe(selectors.wrapper, "md")
+            .iframe(selectors.iframe, "md")
             .waitForVisible(`li[title*='${fileName}']`);
     }
 
     clickOnLink(link: string) {
-        return this.browser
-            .iframe(selectors.wrapper)
-            .waitForVisible(selectors.notebook)
-            .contains(link)
-            .scrollIntoView()
-            .click();
+        this.browser.iframe(selectors.iframe).waitForVisible(selectors.notebook);
+        this.browser.iframe(selectors.iframe).clickOnText(link);
     }
 
     setCodeInCell(cellIndex: number, code: string) {
-        return this.browser
-            .iframe(selectors.wrapper)
-            .waitForVisible(selectors.notebook)
-            .find(selectors.cellIn)
-            .eq(cellIndex)
-            .find(".CodeMirror")
-            .then((element) => {
-                const codeMirrorInstance = element[0].CodeMirror;
-                if (codeMirrorInstance) {
-                    codeMirrorInstance.setValue(code);
-                } else {
+        const cellSelector = `${this.wrappedSelectors.cellInIndex(cellIndex)} .CodeMirror`;
+        const cell = this.browser.iframe(selectors.iframe, "md").waitForExist(cellSelector);
+
+        cell.then((cell: any) => {
+            this.browser.execute(() => {
+                const codeMirrorInstance = cell[0].CodeMirror;
+                if (!codeMirrorInstance) {
                     throw new Error("Unable to access CodeMirror instance.");
                 }
+                codeMirrorInstance.setValue(code);
             });
+        });
     }
 
     getCodeFromCell(cellIndex: number): Cypress.Chainable<string> {
+        const cellSelector = `${this.wrappedSelectors.cellInIndex(cellIndex)}`;
+        console.log(">>>>>>>", cellSelector);
+        return this.browser.iframe(selectors.iframe).getElementText(cellSelector);
+    }
+
+    getCodeFromCell_(cellIndex: number): Cypress.Chainable<string> {
         return this.browser
-            .iframe(selectors.wrapper)
+            .iframe(selectors.iframe)
             .waitForVisible(selectors.notebook)
             .find(selectors.cellIn)
             .eq(cellIndex)
@@ -65,7 +67,7 @@ export default class JupyterLiteSession extends Widget {
 
     clickMenuTab(tabName: string) {
         return this.browser
-            .iframe(selectors.wrapper)
+            .iframe(selectors.iframe)
             .waitForVisible(selectors.menuItem)
             .contains(tabName)
             .click()
@@ -78,7 +80,7 @@ export default class JupyterLiteSession extends Widget {
 
     getKernelStatus() {
         return this.browser
-            .iframe(selectors.wrapper)
+            .iframe(selectors.iframe)
             .waitForVisible("#jp-main-statusbar span")
             .contains(/Python \(Pyodide\)/)
             .invoke("text");
@@ -92,12 +94,12 @@ export default class JupyterLiteSession extends Widget {
 
     restartKernel(restartTimeout: number) {
         return this.browser
-            .iframe(selectors.wrapper)
+            .iframe(selectors.iframe)
             .waitForVisible('button[data-command="kernelmenu:restart"]', "md")
             .click({ multiple: true, force: true })
             .then(() => {
                 this.browser
-                    .iframe(selectors.wrapper)
+                    .iframe(selectors.iframe)
                     .waitForVisible(".jp-Dialog-button.jp-mod-accept", "md")
                     .click({ multiple: true, force: true });
                 return cy.wait(restartTimeout);
