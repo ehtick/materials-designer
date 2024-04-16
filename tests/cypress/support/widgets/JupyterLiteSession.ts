@@ -51,18 +51,17 @@ export default class JupyterLiteSession extends Widget {
     }
 
     getCodeFromCell(cellIndex: number): Cypress.Chainable<string> {
-        const cellSelector = `${selectors.cellInIndex(cellIndex)}`;
-        console.log(">>>>>>>", cellSelector);
-        return this.browser.iframe(selectors.iframe).getElementText(cellSelector);
-    }
-
-    getCodeFromCell_(cellIndex: number): Cypress.Chainable<string> {
-        return this.browser
-            .iframe(selectors.iframe)
-            .waitForVisible(selectors.notebook)
-            .find(selectors.cellIn)
-            .eq(cellIndex)
-            .invoke("text");
+        const cellSelector = selectors.cellInIndex(cellIndex);
+        this.browser.iframe(selectors.iframe).waitForExist(cellSelector);
+        return this.browser.execute((win) => {
+            const iframe = win.document.querySelector(selectors.iframe);
+            const cell = iframe.contentWindow.document.body.querySelector(cellSelector);
+            const codeMirrorInstance = cell.CodeMirror;
+            if (!codeMirrorInstance) {
+                throw new Error("Unable to access CodeMirror instance.");
+            }
+            return codeMirrorInstance.getValue();
+        });
     }
 
     clickMenuTab(tabName: string) {
