@@ -4,9 +4,8 @@ const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
     notebook: ".jp-Notebook",
-    cellIn: `.jp-Cell-inputWrapper .jp-InputArea-editor`,
-    cellInIndex: (index: number) =>
-        `.jp-Notebook:nth-child(${index}) .jp-Cell-inputWrapper .jp-InputArea-editor`,
+    cellIn: `.jp-Cell .jp-InputArea-editor`,
+    cellInIndex: (index: number) => `.jp-Notebook`,
     menuItem: 'li[role="menuitem"]',
     runTab: 'li[role="menuitem"] > div:contains("Run")',
     runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
@@ -36,22 +35,23 @@ export default class JupyterLiteSession extends Widget {
     }
 
     setCodeInCell(cellIndex: number, code: string) {
-        const cellSelector = `${this.wrappedSelectors.cellInIndex(cellIndex)} .CodeMirror`;
-        const cell = this.browser.iframe(selectors.iframe, "md").waitForExist(cellSelector);
-
-        cell.then((cell: any) => {
-            this.browser.execute(() => {
-                const codeMirrorInstance = cell[0].CodeMirror;
-                if (!codeMirrorInstance) {
-                    throw new Error("Unable to access CodeMirror instance.");
-                }
-                codeMirrorInstance.setValue(code);
-            });
+        console.log(">>>>>>>>>> selector:", selectors.cellInIndex(cellIndex));
+        this.browser.iframe(selectors.iframe, "md").waitForExist(selectors.cellInIndex(cellIndex));
+        const cell = this.browser
+            .iframe(selectors.iframe, "md")
+            .getElement(selectors.cellInIndex(cellIndex));
+        this.browser.execute(() => {
+            console.log(cell);
+            const codeMirrorInstance = cell[0].CodeMirror;
+            if (!codeMirrorInstance) {
+                throw new Error("Unable to access CodeMirror instance.");
+            }
+            codeMirrorInstance.setValue(code);
         });
     }
 
     getCodeFromCell(cellIndex: number): Cypress.Chainable<string> {
-        const cellSelector = `${this.wrappedSelectors.cellInIndex(cellIndex)}`;
+        const cellSelector = `${selectors.cellInIndex(cellIndex)}`;
         console.log(">>>>>>>", cellSelector);
         return this.browser.iframe(selectors.iframe).getElementText(cellSelector);
     }
