@@ -2,15 +2,12 @@ import { When } from "@badeball/cypress-cucumber-preprocessor";
 
 import MaterialDesignerPage from "../../widgets/MaterialDesignerPage";
 
-When("I see kernel status is {string}", (expectedStatus: string) => {
+When("I see kernel status is Idle", () => {
     const { jupyterLiteSession } = new MaterialDesignerPage().designerWidget;
 
     cy.until({
         it: () => {
-            return jupyterLiteSession.getKernelStatus().then((status: string) => {
-                const baseStatus = status.split(" | ")[1];
-                return baseStatus === expectedStatus;
-            });
+            return jupyterLiteSession.isKernelIdle();
         },
         timeout: 100000,
     });
