@@ -69,62 +69,54 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickMenu(tabName: string, subItemName?: string) {
-        const menuTabSelector = selectors.menuItemNew(tabName);
+        const menuTabSelector = selectors.menuItem(tabName);
         this.browser.iframe(selectors.iframe).clickFirst(menuTabSelector);
         if (subItemName) {
-            const submenuItemSelector = selectors.menuItemNew(subItemName);
+            const submenuItemSelector = selectors.menuItem(subItemName);
             this.browser.iframe(selectors.iframe).clickFirst(submenuItemSelector);
         }
     }
 
-    getKernelStatus() {
+    isKernelIdle() {
         return this.browser
             .iframe(selectors.iframe)
-            .waitForVisible("#jp-main-statusbar span")
-            .contains(/Python \(Pyodide\)/)
-            .invoke("text");
+            .getElementTextByXpath(selectors.kernelStatus)
+            .then((text) => {
+                return text === selectors.statusIdle;
+            });
     }
 
-    isKernelIdle(): Cypress.Chainable<boolean> {
-        return this.getKernelStatus().then((status) => {
-            return status.includes("Idle");
-        });
-    }
-
-    restartKernel(restartTimeout: number) {
+    restartKernel() {
         return this.browser
             .iframe(selectors.iframe)
-            .waitForVisible('button[data-command="kernelmenu:restart"]', "md")
-            .click({ multiple: true, force: true })
+            .clickFirst(selectors.restartKernel, { force: true })
             .then(() => {
-                this.browser
+                return this.browser
                     .iframe(selectors.iframe)
-                    .waitForVisible(".jp-Dialog-button.jp-mod-accept", "md")
-                    .click({ multiple: true, force: true });
-                return cy.wait(restartTimeout);
+                    .waitForVisible(selectors.dialogAccept, "md")
+                    .then(() => {
+                        return this.browser
+                            .iframe(selectors.iframe)
+                            .clickFirst(selectors.dialogAccept);
+                    });
             });
     }
 
-    waitForKernelIdleWithRestart(timeout = 120000, attempt = 1) {
-        const maxAttempts = 3;
-        const restartTimeout = 8000; // Specific timeout to wait for restart action
-        const checkInterval = 12000; // Interval between checks
+    waitForKernelIdleWithRestart() {
+        const checkInterval = 15000; // 15 seconds to check if kernel becomes idle
+        const totalTimeout = 60000; // Total timeout of 60 seconds
 
-        cy.wait(checkInterval).then(() => {
-            this.isKernelIdle().then((isIdle) => {
-                if (isIdle) {
-                    // If the kernel is idle, we are successful, function will return
-                } else if (attempt < maxAttempts) {
-                    this.restartKernel(restartTimeout).then(() => {
-                        this.waitForKernelIdleWithRestart(
-                            timeout - (attempt * checkInterval + restartTimeout),
-                            attempt + 1,
-                        );
-                    });
-                } else {
-                    throw new Error("Kernel did not become idle after maximum attempts.");
-                }
-            });
+        cy.until({
+            it: () =>
+                this.isKernelIdle().then((isIdle) => {
+                    if (!isIdle) {
+                        return this.restartKernel().then(() => false);
+                    }
+                    return true;
+                }),
+            become: true,
+            delay: checkInterval,
+            timeout: totalTimeout,
         });
     }
 }
