@@ -7,8 +7,11 @@ const selectors = {
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
-    menuItem: (tabName: string) => `li[role="menuitem"] > div:contains("${tabName}")`,
-    kernelStatus: '//span[contains(text(), "Python (Pyodide) | Idle")]',
+    menuTab: (tabName: string) =>
+        `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
+    menuItem: (tabName: string) => `li[role="menuitem"] > div.p-Menu-item:contains("${tabName}")`,
+    runAllCellsXpath: `//*[@id="jp-mainmenu-run"]/ul/li[12]/div[2]`,
+    kernelStatus: '//span[contains(text(), "Python (Pyodide) | ")]',
     statusIdle: "Python (Pyodide) | Idle",
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
@@ -71,18 +74,19 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickMenu(tabName: string, subItemName?: string) {
-        const menuTabSelector = selectors.menuItem(tabName);
-        this.browser.iframe(selectors.iframe).clickFirst(menuTabSelector);
+        this.browser.iframe(selectors.iframe).clickFirst(selectors.menuTab(tabName));
         if (subItemName) {
-            const submenuItemSelector = selectors.menuItem(subItemName);
-            this.browser.iframe(selectors.iframe).clickFirst(submenuItemSelector);
+            this.browser
+                .iframe(selectors.iframe)
+                .getElementByXpath(selectors.runAllCellsXpath)
+                .click({ force: true });
         }
     }
 
     isKernelIdle() {
         return this.browser
             .iframe(selectors.iframe)
-            .getElementTextByXpath(selectors.kernelStatus)
+            .getElementTextByXpath(selectors.kernelStatus, "md")
             .then((text) => {
                 return text === selectors.statusIdle;
             });
@@ -105,8 +109,15 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForKernelIdleWithRestart() {
-        const isIdle = this.isKernelIdle().then((idle) => idle);
-        if (!isIdle) this.restartKernel();
-        this.isKernelIdle();
+        // We need to wait some time to allow kernel to start on its own, if there's and issue, we restart and wait for some time again
+        cy.wait(12000);
+        this.isKernelIdle().then((idle) => {
+            if (!idle) {
+                return this.restartKernel().then(() => {
+                    return this.isKernelIdle();
+                });
+            }
+            return idle;
+        });
     }
 }
