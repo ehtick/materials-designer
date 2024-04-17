@@ -7,8 +7,11 @@ const selectors = {
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
-    menuItem: 'li[role="menuitem"]',
-    menuItemNew: (tabName: string) => `li[role="menuitem"] > div:contains("${tabName}")`,
+    menuItem: (tabName: string) => `li[role="menuitem"] > div:contains("${tabName}")`,
+    kernelStatus: '//span[contains(text(), "Python (Pyodide)")]',
+    statusIdle: "Python (Pyodide) | Idle",
+    restartKernel: 'button[data-command="kernelmenu:restart"]',
+    dialogAccept: ".jp-Dialog-button.jp-mod-accept",
     runTab: 'li[role="menuitem"] > div:contains("Run")',
     runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
 };
