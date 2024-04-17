@@ -15,8 +15,6 @@ const selectors = {
     statusIdle: "Python (Pyodide) | Idle",
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
-    runTab: 'li[role="menuitem"] > div:contains("Run")',
-    runAllCells: 'li[role="menuitem"] > div:contains("Run All Cells")',
 };
 
 export default class JupyterLiteSession extends Widget {
@@ -93,19 +91,9 @@ export default class JupyterLiteSession extends Widget {
     }
 
     restartKernel() {
-        return this.browser
-            .iframe(selectors.iframe)
-            .clickFirst(selectors.restartKernel, { force: true })
-            .then(() => {
-                return this.browser
-                    .iframe(selectors.iframe)
-                    .waitForVisible(selectors.dialogAccept, "md")
-                    .then(() => {
-                        return this.browser
-                            .iframe(selectors.iframe)
-                            .clickFirst(selectors.dialogAccept);
-                    });
-            });
+        this.browser.iframe(selectors.iframe).clickFirst(selectors.restartKernel, { force: true });
+        this.browser.iframe(selectors.iframe).waitForVisible(selectors.dialogAccept, "md");
+        this.browser.iframe(selectors.iframe).clickFirst(selectors.dialogAccept);
     }
 
     waitForKernelIdleWithRestart() {
@@ -113,9 +101,8 @@ export default class JupyterLiteSession extends Widget {
         cy.wait(12000);
         this.isKernelIdle().then((idle) => {
             if (!idle) {
-                return this.restartKernel().then(() => {
-                    return this.isKernelIdle();
-                });
+                this.restartKernel();
+                this.isKernelIdle();
             }
             return idle;
         });
