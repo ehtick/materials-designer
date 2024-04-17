@@ -1,5 +1,5 @@
 import Widget from "./Widget";
-
+// TODO: Figure out how to click menu in the JL (pointerdown event?) and use the generalized clickMenu method instead of literal Xpath
 const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
@@ -97,7 +97,8 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForKernelIdleWithRestart() {
-        // We need to wait some time to allow kernel to start on its own, if there's and issue, we restart and wait for some time again
+        // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
+        // Times are empirically determined.
         cy.wait(15000);
         this.isKernelIdle().then((idle) => {
             if (!idle) {
