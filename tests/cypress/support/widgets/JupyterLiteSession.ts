@@ -1,5 +1,5 @@
 import Widget from "./Widget";
-// TODO: cleanup everything
+
 const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
@@ -8,7 +8,7 @@ const selectors = {
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
     menuItem: (tabName: string) => `li[role="menuitem"] > div:contains("${tabName}")`,
-    kernelStatus: '//span[contains(text(), "Python (Pyodide)")]',
+    kernelStatus: '//span[contains(text(), "Python (Pyodide) | Idle")]',
     statusIdle: "Python (Pyodide) | Idle",
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
@@ -43,6 +43,7 @@ export default class JupyterLiteSession extends Widget {
         this.browser.iframe(selectors.iframe, "md").waitForExist(selectors.cellInIndex(cellIndex));
 
         this.browser.execute((win) => {
+            // @ts-ignore
             const iframe = win.document.querySelector(selectors.iframe);
             const selector = selectors.cellInIndex(cellIndex);
             const cell = iframe.contentWindow.document.body.querySelector(selector);
@@ -58,6 +59,7 @@ export default class JupyterLiteSession extends Widget {
         const cellSelector = selectors.cellInIndex(cellIndex);
         this.browser.iframe(selectors.iframe).waitForExist(cellSelector);
         return this.browser.execute((win) => {
+            // @ts-ignore
             const iframe = win.document.querySelector(selectors.iframe);
             const cell = iframe.contentWindow.document.body.querySelector(cellSelector);
             const codeMirrorInstance = cell.CodeMirror;
@@ -103,20 +105,8 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForKernelIdleWithRestart() {
-        const checkInterval = 15000; // 15 seconds to check if kernel becomes idle
-        const totalTimeout = 60000; // Total timeout of 60 seconds
-
-        cy.until({
-            it: () =>
-                this.isKernelIdle().then((isIdle) => {
-                    if (!isIdle) {
-                        return this.restartKernel().then(() => false);
-                    }
-                    return true;
-                }),
-            become: true,
-            delay: checkInterval,
-            timeout: totalTimeout,
-        });
+        const isIdle = this.isKernelIdle().then((idle) => idle);
+        if (!isIdle) this.restartKernel();
+        this.isKernelIdle();
     }
 }
