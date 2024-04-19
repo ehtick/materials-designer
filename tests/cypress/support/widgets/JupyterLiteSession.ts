@@ -1,4 +1,11 @@
 import Widget from "./Widget";
+
+const menuItemXpathMap = {
+    "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
+    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[3]`,
+    "Restart Kernel and Clear All Outputs": `//*[@id="jp-mainmenu-kernel"]/ul/li[4]`,
+};
+
 // TODO: Figure out how to click menu in the JL (pointerdown event?) and use the generalized clickMenu method instead of literal Xpath
 const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
@@ -14,12 +21,6 @@ const selectors = {
     kernelStatusLiteral: (status: string) => `Python (Pyodide) | ${status}`,
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
-};
-
-const menuItemXpathMap = {
-    "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
-    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[3]`,
-    "Restart Kernel and Clear All Outputs": `//*[@id="jp-mainmenu-kernel"]/ul/li[4]`,
 };
 
 export default class JupyterLiteSession extends Widget {
