@@ -9,14 +9,14 @@ const selectors = {
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
     menuTab: (tabName: string) =>
         `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
-    menuItem: (name: string | number) => menuItemXpathMap[name],
+    menuItem: (name: string) => menuItemXpathMap[name],
     kernelStatus: '//span[contains(text(), "Python (Pyodide) | ")]',
     kernelStatusLiteral: (status: string) => `Python (Pyodide) | ${status}`,
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
 };
 
-const menuItemXpathMap = {
+const menuItemXpathMap: Record<string, string> = {
     "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
     "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[3]`,
     "Restart Kernel and Clear All Outputs": `//*[@id="jp-mainmenu-kernel"]/ul/li[4]`,
