@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import "@mat3ra/tede/src/js/cypress/commands/until";
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
