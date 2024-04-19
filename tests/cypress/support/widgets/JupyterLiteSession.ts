@@ -99,14 +99,18 @@ export default class JupyterLiteSession extends Widget {
     waitForKernelIdleWithRestart() {
         // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
         // Times are empirically determined.
-        cy.wait(15000);
-        this.isKernelIdle().then((idle) => {
-            if (!idle) {
-                this.restartKernel();
-                cy.wait(15000);
-                this.isKernelIdle();
-            }
-            return idle;
-        });
+        this.browser.retry(
+            () => {
+                return this.isKernelIdle().then((isIdle) => {
+                    if (!isIdle) {
+                        this.restartKernel();
+                    }
+                    return isIdle;
+                });
+            },
+            true,
+            15000,
+            60000,
+        );
     }
 }
