@@ -10,7 +10,6 @@ const selectors = {
     menuTab: (tabName: string) =>
         `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
     menuItem: (name: string | number) => menuItemXpathMap[name],
-    runAllCellsXpath: `//*[@id="jp-mainmenu-run"]/ul/li[12]/div[2]`,
     kernelStatus: '//span[contains(text(), "Python (Pyodide) | ")]',
     kernelStatusLiteral: (status: string) => `Python (Pyodide) | ${status}`,
     restartKernel: 'button[data-command="kernelmenu:restart"]',
@@ -19,7 +18,8 @@ const selectors = {
 
 const menuItemXpathMap = {
     "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
-    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[2]/div[2]`,
+    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[3]`,
+    "Restart Kernel and Clear All Outputs": `//*[@id="jp-mainmenu-kernel"]/ul/li[4]`,
 };
 
 export default class JupyterLiteSession extends Widget {
