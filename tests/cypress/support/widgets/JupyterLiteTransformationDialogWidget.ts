@@ -28,7 +28,6 @@ export default class JupyterLiteTransformationDialog extends Widget {
     verifyMaterialsOut(index: number) {
         this.browser.click(this.wrappedSelectors.materialsOutSelector);
         this.browser.waitForVisible(selectors.materialsOutSelectorItem(index), "xl");
-        // this.browser.click(selectors.materialsOutSelectorItem(index));
     }
 
     submit() {
