@@ -124,8 +124,8 @@ export default class JupyterLiteSession extends Widget {
                 });
             },
             true,
-            15000,
-            60000,
+            "md",
+            "xl",
         );
     }
 }
