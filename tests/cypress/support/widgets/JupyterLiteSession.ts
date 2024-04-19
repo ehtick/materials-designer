@@ -9,12 +9,17 @@ const selectors = {
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
     menuTab: (tabName: string) =>
         `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
-    menuItem: (tabName: string) => `li[role="menuitem"] > div.p-Menu-item:contains("${tabName}")`,
+    menuItem: (name: string | number) => menuItemXpathMap[name],
     runAllCellsXpath: `//*[@id="jp-mainmenu-run"]/ul/li[12]/div[2]`,
     kernelStatus: '//span[contains(text(), "Python (Pyodide) | ")]',
-    statusIdle: "Python (Pyodide) | Idle",
+    kernelStatusLiteral: (status: string) => `Python (Pyodide) | ${status}`,
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
+};
+
+const menuItemXpathMap = {
+    "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
+    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[2]/div[2]`,
 };
 
 export default class JupyterLiteSession extends Widget {
@@ -76,7 +81,7 @@ export default class JupyterLiteSession extends Widget {
         if (subItemName) {
             this.browser
                 .iframe(selectors.iframe)
-                .getElementByXpath(selectors.runAllCellsXpath)
+                .getElementByXpath(selectors.menuItem(subItemName))
                 .click({ force: true });
         }
     }
@@ -86,7 +91,16 @@ export default class JupyterLiteSession extends Widget {
             .iframe(selectors.iframe)
             .getElementTextByXpath(selectors.kernelStatus, "md")
             .then((text) => {
-                return text === selectors.statusIdle;
+                return text === selectors.kernelStatusLiteral("Idle");
+            });
+    }
+
+    isKernelBusy() {
+        return this.browser
+            .iframe(selectors.iframe)
+            .getElementTextByXpath(selectors.kernelStatus, "md")
+            .then((text) => {
+                return text === selectors.kernelStatusLiteral("Busy");
             });
     }
 
