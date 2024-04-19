@@ -32,7 +32,7 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForVisible() {
-        return this.browser.iframe(selectors.iframe, "md").waitForVisible(selectors.wrapper, "md");
+        return this.browser.iframe(selectors.iframe, "lg").waitForVisible(selectors.wrapper, "lg");
     }
 
     checkFileOpened(fileName: string) {
