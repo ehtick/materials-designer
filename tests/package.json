@@ -34,7 +34,7 @@
         "@babel/runtime-corejs3": "^7.16.8",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
         "@exabyte-io/code.js": "2024.1.16-0",
-        "@mat3ra/tede": "https://github.com/Exabyte-io/tede.git#82ac403bd8ca7f325093156bb81c891034bc3ef5",
+        "@mat3ra/tede": "https://github.com/Exabyte-io/tede.git#cc0acd682d9d8c46f3d32652139af3f3abb09d1a",
         "@types/mocha": "^10.0.1",
         "@typescript-eslint/eslint-plugin": "^5.9.1",
         "@typescript-eslint/parser": "^5.9.1",
