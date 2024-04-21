@@ -7,7 +7,6 @@ const menuItemXpathMap: Record<string, string> = {
 };
 
 const selectors = {
-    // TODO: remove unused selectors
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
     notebook: ".jp-Notebook",
@@ -17,12 +16,17 @@ const selectors = {
     menuTab: (tabName: string) =>
         `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
     menuItem: (name: string) => menuItemXpathMap[name],
-    kernelStatus: '//span[contains(text(), "Python (Pyodide) | ")]',
-    kernelStatusLiteral: (status: string) => `Python (Pyodide) | ${status}`,
+    kernelStatusSpan: '//span[contains(text(), "Python (Pyodide) | ")]',
+    kernelStatusLiteral: (status: kernelStatus) => `Python (Pyodide) | ${status}`,
     restartKernel: 'button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
     fileSelectorByFileName: (fileName: string) => `li[title*='${fileName}']`,
 };
+
+export enum kernelStatus {
+    Idle = "Idle",
+    Busy = "Busy",
+}
 
 export default class JupyterLiteSession extends Widget {
     wrappedSelectors: typeof selectors;
@@ -32,20 +36,18 @@ export default class JupyterLiteSession extends Widget {
     constructor() {
         super(selectors.iframe);
         this.wrappedSelectors = this.getWrappedSelectors(selectors);
-        // TODO: use enums for timeouts
-        this.iframeAnchor = this.browser.iframe(selectors.iframe, "lg");
+        this.iframeAnchor = this.browser.iframe(selectors.iframe, Widget.TimeoutType.md);
     }
 
     waitForVisible() {
-        return this.iframeAnchor.waitForVisible(selectors.wrapper, "lg");
+        return this.iframeAnchor.waitForVisible(selectors.wrapper, Widget.TimeoutType.md);
     }
 
     checkFileOpened(fileName: string) {
         return this.iframeAnchor.waitForVisible(selectors.fileSelectorByFileName(fileName));
     }
 
-    // TODO: change name to clickLinkInNotebookByItsTextContent
-    clickOnLink(link: string) {
+    clickLinkInNotebookByItsTextContent(link: string) {
         this.iframeAnchor.waitForVisible(selectors.notebook);
         this.iframeAnchor.clickOnText(link, selectors.notebook);
     }
@@ -88,32 +90,31 @@ export default class JupyterLiteSession extends Widget {
         }
     }
 
-    isKernelInStatus(status: string) {
+    isKernelInStatus(status: kernelStatus) {
         return this.iframeAnchor
-            .getElementTextByXpath(selectors.kernelStatus)
+            .getElementTextByXpath(selectors.kernelStatusSpan)
             .then((text: string) => {
                 return text === selectors.kernelStatusLiteral(status);
             });
     }
 
     isKernelIdle() {
-        // TODO: use enums for statuses
-        return this.isKernelInStatus("Idle");
+        return this.isKernelInStatus(kernelStatus.Idle);
     }
 
     isKernelBusy() {
-        return this.isKernelInStatus("Busy");
+        return this.isKernelInStatus(kernelStatus.Busy);
     }
 
     restartKernel() {
         this.iframeAnchor.clickFirst(selectors.restartKernel, { force: true });
-        this.iframeAnchor.waitForVisible(selectors.dialogAccept, "md");
+        this.iframeAnchor.waitForVisible(selectors.dialogAccept, Widget.TimeoutType.md);
         this.iframeAnchor.clickFirst(selectors.dialogAccept);
     }
 
     waitForKernelIdleWithRestart() {
         // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
-        // Times are empirically determined.
+        // Times are empirically determined. Usually takes 12-15 seconds for kernel to start.
         this.browser.retry(
             () => {
                 return this.isKernelIdle().then((isIdle: boolean) => {
@@ -124,9 +125,8 @@ export default class JupyterLiteSession extends Widget {
                 });
             },
             true,
-            // TODO: use enums for delay, timeout
-            "md",
-            "xl",
+            Widget.TimeoutType.md,
+            Widget.TimeoutType.xl,
         );
     }
 }
