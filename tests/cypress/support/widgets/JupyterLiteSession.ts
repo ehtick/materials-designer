@@ -1,18 +1,20 @@
 import Widget from "./Widget";
 
-const menuTabXpathMap: Record<string, string> = {
-    File: '//*[@id="jp-MainMenu"]/ul/li[1]',
-    Edit: '//*[@id="jp-MainMenu"]/ul/li[2]',
-    View: '//*[@id="jp-MainMenu"]/ul/li[3]',
+const menuTabSelectorMap: Record<string, string> = {
+    File: "#jp-MainMenu ul li:nth-child(1) div:nth-child(2)",
+    Edit: "#jp-MainMenu ul li:nth-child(2) div:nth-child(2)",
+    View: "#jp-MainMenu ul li:nth-child(3) div:nth-child(2)",
     Run: "#jp-MainMenu ul li:nth-child(4) div:nth-child(2)",
-    Kernel: '//*[@id="jp-MainMenu"]/ul/li[5]',
-    Tabs: '//*[@id="jp-MainMenu"]/ul/li[6]',
-    Settings: '//*[@id="jp-MainMenu"]/ul/li[7]',
+    Kernel: "#jp-MainMenu ul li:nth-child(5) div:nth-child(2)",
+    Tabs: "#jp-MainMenu ul li:nth-child(6) div:nth-child(2)",
+    Settings: "#jp-MainMenu ul li:nth-child(7) div:nth-child(2)",
+    Help: "#jp-MainMenu ul li:nth-child(8) div:nth-child(2)",
 };
-const menuItemXpathMap: Record<string, string> = {
-    "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
-    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[3]`,
-    "Restart Kernel and Clear All Outputs": `//*[@id="jp-mainmenu-kernel"]/ul/li[4]`,
+
+const menuItemSelectorMap: Record<string, string> = {
+    "Run All Cells": `#jp-mainmenu-run ul li:nth-child(12)`,
+    "Restart Kernel": "#jp-mainmenu-kernel ul li:nth-child(3)",
+    "Restart Kernel and Clear All Outputs": "#jp-mainmenu-kernel ul li:nth-child(4)",
 };
 
 const selectors = {
@@ -22,8 +24,8 @@ const selectors = {
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
-    menuTab: (tabName: string) => menuTabXpathMap[tabName],
-    menuItem: (name: string) => menuItemXpathMap[name],
+    menuTab: (tabName: string) => menuTabSelectorMap[tabName],
+    menuItem: (name: string) => menuItemSelectorMap[name],
     kernelStatusSpan: "#jp-bottom-panel #jp-main-statusbar div:nth-child(5) span",
     restartKernel:
         '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
@@ -89,12 +91,10 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickMenu(tabName: string, subItemName?: string) {
-        this.iframeAnchor.getElement(selectors.menuTab(tabName)).click();
-        // console.log("TAB", selectors.menuTab(tabName));
+        this.iframeAnchor.waitForVisible(selectors.menuTab(tabName)).click();
         if (subItemName) {
-            // console.log("XPATH", selectors.menuItem(subItemName));
             return this.iframeAnchor
-                .getElementByXpath(selectors.menuItem(subItemName))
+                .waitForVisible(selectors.menuItem(subItemName))
                 .click({ force: true });
         }
     }
