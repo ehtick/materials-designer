@@ -16,9 +16,9 @@ const selectors = {
     menuTab: (tabName: string) =>
         `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
     menuItem: (name: string) => menuItemXpathMap[name],
-    kernelStatusSpan: '//span[contains(text(), "Python (Pyodide) | ")]',
-    kernelStatusLiteral: (status: kernelStatus) => `Python (Pyodide) | ${status}`,
-    restartKernel: 'button[data-command="kernelmenu:restart"]',
+    kernelStatusSpan: "#jp-bottom-panel #jp-main-statusbar div:nth-child(5) span",
+    restartKernel:
+        '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
     fileSelectorByFileName: (fileName: string) => `li[title*='${fileName}']`,
 };
@@ -91,11 +91,9 @@ export default class JupyterLiteSession extends Widget {
     }
 
     isKernelInStatus(status: kernelStatus) {
-        return this.iframeAnchor
-            .getElementTextByXpath(selectors.kernelStatusSpan)
-            .then((text: string) => {
-                return text === selectors.kernelStatusLiteral(status);
-            });
+        return this.iframeAnchor.getElementText(selectors.kernelStatusSpan).then((text: string) => {
+            return text.includes(status);
+        });
     }
 
     isKernelIdle() {
@@ -107,19 +105,18 @@ export default class JupyterLiteSession extends Widget {
     }
 
     restartKernel() {
-        this.iframeAnchor.clickFirst(selectors.restartKernel, { force: true });
+        this.iframeAnchor.waitForVisible(selectors.restartKernel).click();
         this.iframeAnchor.waitForVisible(selectors.dialogAccept, Widget.TimeoutType.md);
-        this.iframeAnchor.clickFirst(selectors.dialogAccept);
+        this.iframeAnchor.waitForVisible(selectors.dialogAccept).click();
     }
 
-    waitForKernelIdleWithRestart() {
-        // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
-        // Times are empirically determined. Usually takes 12-15 seconds for kernel to start.
+    waitForKernelInStatusWithCallback(status: kernelStatus, callback: () => void) {
         this.browser.retry(
             () => {
-                return this.isKernelIdle().then((isIdle: boolean) => {
+                return this.isKernelInStatus(status).then((isIdle: boolean) => {
+                    console.log("Kernel idle: ", isIdle);
                     if (!isIdle) {
-                        this.restartKernel();
+                        callback();
                     }
                     return isIdle;
                 });
@@ -128,5 +125,17 @@ export default class JupyterLiteSession extends Widget {
             Widget.TimeoutType.md,
             Widget.TimeoutType.xl,
         );
+    }
+
+    waitForKernelIdleWithRestart() {
+        // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
+        // Times are empirically determined. Usually takes 12-15 seconds for kernel to start.
+        this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {
+            this.restartKernel();
+        });
+    }
+
+    waitForKernelIdle() {
+        this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {});
     }
 }
