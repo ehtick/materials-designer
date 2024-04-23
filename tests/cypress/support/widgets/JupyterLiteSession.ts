@@ -146,4 +146,8 @@ export default class JupyterLiteSession extends Widget {
     waitForKernelIdle() {
         this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {});
     }
+
+    waitForKernelBusy() {
+        this.waitForKernelInStatusWithCallback(kernelStatus.Busy, () => {});
+    }
 }
