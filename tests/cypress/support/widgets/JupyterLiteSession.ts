@@ -1,9 +1,20 @@
 import Widget from "./Widget";
 
-const menuItemXpathMap: Record<string, string> = {
-    "Run All Cells": `//*[@id="jp-mainmenu-run"]/ul/li[12]`,
-    "Restart Kernel": `//*[@id="jp-mainmenu-kernel"]/ul/li[3]`,
-    "Restart Kernel and Clear All Outputs": `//*[@id="jp-mainmenu-kernel"]/ul/li[4]`,
+const menuTabSelectorMap: Record<string, string> = {
+    File: "#jp-MainMenu ul li:nth-child(1) div:nth-child(2)",
+    Edit: "#jp-MainMenu ul li:nth-child(2) div:nth-child(2)",
+    View: "#jp-MainMenu ul li:nth-child(3) div:nth-child(2)",
+    Run: "#jp-MainMenu ul li:nth-child(4) div:nth-child(2)",
+    Kernel: "#jp-MainMenu ul li:nth-child(5) div:nth-child(2)",
+    Tabs: "#jp-MainMenu ul li:nth-child(6) div:nth-child(2)",
+    Settings: "#jp-MainMenu ul li:nth-child(7) div:nth-child(2)",
+    Help: "#jp-MainMenu ul li:nth-child(8) div:nth-child(2)",
+};
+
+const menuItemSelectorMap: Record<string, string> = {
+    "Run All Cells": `#jp-mainmenu-run ul li:nth-child(12)`,
+    "Restart Kernel": "#jp-mainmenu-kernel ul li:nth-child(3)",
+    "Restart Kernel and Clear All Outputs": "#jp-mainmenu-kernel ul li:nth-child(4)",
 };
 
 const selectors = {
@@ -13,12 +24,11 @@ const selectors = {
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
-    menuTab: (tabName: string) =>
-        `li[role="menuitem"] > div.p-MenuBar-itemLabel:contains("${tabName}")`,
-    menuItem: (name: string) => menuItemXpathMap[name],
-    kernelStatusSpan: '//span[contains(text(), "Python (Pyodide) | ")]',
-    kernelStatusLiteral: (status: kernelStatus) => `Python (Pyodide) | ${status}`,
-    restartKernel: 'button[data-command="kernelmenu:restart"]',
+    menuTab: (tabName: string) => menuTabSelectorMap[tabName],
+    menuItem: (name: string) => menuItemSelectorMap[name],
+    kernelStatusSpan: "#jp-bottom-panel #jp-main-statusbar div:nth-child(5) span",
+    restartKernel:
+        '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
     fileSelectorByFileName: (fileName: string) => `li[title*='${fileName}']`,
 };
@@ -81,21 +91,18 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickMenu(tabName: string, subItemName?: string) {
-        this.iframeAnchor.clickFirst(selectors.menuTab(tabName));
+        this.iframeAnchor.waitForVisible(selectors.menuTab(tabName)).click();
         if (subItemName) {
-            this.browser
-                .iframe(selectors.iframe)
-                .getElementByXpath(selectors.menuItem(subItemName))
+            return this.iframeAnchor
+                .waitForVisible(selectors.menuItem(subItemName))
                 .click({ force: true });
         }
     }
 
     isKernelInStatus(status: kernelStatus) {
-        return this.iframeAnchor
-            .getElementTextByXpath(selectors.kernelStatusSpan)
-            .then((text: string) => {
-                return text === selectors.kernelStatusLiteral(status);
-            });
+        return this.iframeAnchor.getElementText(selectors.kernelStatusSpan).then((text: string) => {
+            return text.includes(status);
+        });
     }
 
     isKernelIdle() {
@@ -107,26 +114,40 @@ export default class JupyterLiteSession extends Widget {
     }
 
     restartKernel() {
-        this.iframeAnchor.clickFirst(selectors.restartKernel, { force: true });
+        this.iframeAnchor.waitForVisible(selectors.restartKernel).click();
         this.iframeAnchor.waitForVisible(selectors.dialogAccept, Widget.TimeoutType.md);
-        this.iframeAnchor.clickFirst(selectors.dialogAccept);
+        this.iframeAnchor.waitForVisible(selectors.dialogAccept).click();
     }
 
-    waitForKernelIdleWithRestart() {
-        // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
-        // Times are empirically determined. Usually takes 12-15 seconds for kernel to start.
+    waitForKernelInStatusWithCallback(status: kernelStatus, callback: () => void) {
         this.browser.retry(
             () => {
-                return this.isKernelIdle().then((isIdle: boolean) => {
-                    if (!isIdle) {
-                        this.restartKernel();
+                return this.isKernelInStatus(status).then((isInStatus: boolean) => {
+                    if (!isInStatus) {
+                        callback();
                     }
-                    return isIdle;
+                    return isInStatus;
                 });
             },
             true,
             Widget.TimeoutType.md,
             Widget.TimeoutType.xl,
         );
+    }
+
+    waitForKernelIdleWithRestart() {
+        // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
+        // Times are empirically determined. Usually takes 12-15 seconds for kernel to start.
+        this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {
+            this.restartKernel();
+        });
+    }
+
+    waitForKernelIdle() {
+        this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {});
+    }
+
+    waitForKernelBusy() {
+        this.waitForKernelInStatusWithCallback(kernelStatus.Busy, () => {});
     }
 }

@@ -6,5 +6,5 @@ When("I Run All Cells", () => {
     const { jupyterLiteSession } = new MaterialDesignerPage().designerWidget;
     jupyterLiteSession.waitForKernelIdleWithRestart();
     jupyterLiteSession.clickMenu("Run", "Run All Cells");
-    jupyterLiteSession.isKernelBusy();
+    jupyterLiteSession.waitForKernelBusy();
 });
