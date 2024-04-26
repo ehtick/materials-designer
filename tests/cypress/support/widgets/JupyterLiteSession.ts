@@ -122,11 +122,11 @@ export default class JupyterLiteSession extends Widget {
     waitForKernelInStatusWithCallback(status: kernelStatus, callback: () => void) {
         this.browser.retry(
             () => {
-                return this.isKernelInStatus(status).then((isIdle: boolean) => {
-                    if (!isIdle) {
+                return this.isKernelInStatus(status).then((isInStatus: boolean) => {
+                    if (!isInStatus) {
                         callback();
                     }
-                    return isIdle;
+                    return isInStatus;
                 });
             },
             true,
