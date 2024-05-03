@@ -52,8 +52,9 @@ USE_CONVENTIONAL_CELL = True
     And I submit materials
     Then material with following data exists in state
       | path              | index   |
-      | si-interface.json | $INT{2} |
+      | si-interface.json | $INT{3} |
 
 
     # Reset the materials list
     And I delete materials with index "3"
+    And I delete materials with index "2"
