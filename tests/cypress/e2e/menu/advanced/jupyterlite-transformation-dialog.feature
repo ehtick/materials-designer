@@ -18,17 +18,14 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     # Change code
     When I set code in the cell "3" to:
     """
-SUBSTRATE_PARAMETERS = {
-    "MILLER_INDICES": (1, 1, 1),
-    "THICKNESS": 1,
-}
-
-LAYER_PARAMETERS = {
-    "MILLER_INDICES": (1, 1, 1),
-    "THICKNESS": 1,
-}
-
-USE_CONVENTIONAL_CELL = True
+from mat3ra.made.tools.build.interface import InterfaceSettings
+interface_builder_settings = InterfaceSettings() # default
+interface_builder_settings.SubstrateParameters.miller_indices = (1, 1, 1)
+interface_builder_settings.SubstrateParameters.thickness = 1
+interface_builder_settings.LayerParameters.miller_indices = (1, 1, 1)
+interface_builder_settings.LayerParameters.thickness = 1
+IS_TERMINATION_SELECTION_INTERACTIVE = False
+TERMINATION_INDEX = 0
     """
 
     When I set code in the cell "5" to:
