@@ -87,7 +87,7 @@ class UploadDialog extends React.Component {
         files.forEach((file) => {
             try {
                 const materialConfig = Made.parsers.nativeFormatParsers.convertFromNativeFormat(file.text);
-                const extension = path.extname(file.name).replace(".", "");
+                const extension = path.extname(file.fileName).replace(".", "");
                 newMaterialConfigs.push({
                     ...materialConfig,
                     src: Made.Material.constructMaterialFileSource(file.fileName, file.text, extension),
