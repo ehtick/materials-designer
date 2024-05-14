@@ -72,7 +72,7 @@
         "@exabyte-io/eslint-config": "^2023.8.29-1",
         "@mat3ra/esse": "2024.4.9-0",
         "@mat3ra/code": "2024.3.25-3",
-        "@mat3ra/made": "2024.3.27-1",
+        "@mat3ra/made": "git+https://github.com/Exabyte-io/made.git#d79329a5e4d42ec15bcb9a10a84b8ee38a316378",
         "@mat3ra/standata": "^2024.2.21-0",
         "@mat3ra/tsconfig": "^2024.3.23-2",
         "@types/debug": "^4.1.12",
