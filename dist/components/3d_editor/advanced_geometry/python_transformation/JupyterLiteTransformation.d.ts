@@ -12,12 +12,7 @@ declare class JupyterLiteTransformationDialog extends BaseJupyterLiteSessionComp
     getMaterialsToUse: () => ({
         _json: import("@mat3ra/made/dist/js/material").MaterialSchemaJSON;
         toJSON(): import("@mat3ra/made/dist/js/types").MaterialJSON;
-        src: {
-            extension?: string | undefined;
-            filename: string;
-            text: string;
-            hash: string;
-        } | undefined;
+        src: import("@mat3ra/esse/dist/js/types").FileSourceSchema | undefined;
         updateFormula(): void;
         isNonPeriodic: boolean;
         getDerivedPropertyByName(name: string): {

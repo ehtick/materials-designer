@@ -2,12 +2,7 @@ declare const Material_base: {
     new (...config: any[]): {
         _json: import("@mat3ra/made/dist/js/material").MaterialSchemaJSON;
         toJSON(): import("@mat3ra/made/dist/js/types").MaterialJSON;
-        src: {
-            extension?: string | undefined;
-            filename: string;
-            text: string;
-            hash: string;
-        } | undefined;
+        src: import("@mat3ra/esse/dist/js/types").FileSourceSchema | undefined;
         updateFormula(): void;
         isNonPeriodic: boolean;
         getDerivedPropertyByName(name: string): {
@@ -131,7 +126,7 @@ declare const Material_base: {
             };
         };
     };
-    getMaterialFileConfig(fileName: string, fileContent: string, fileExtension: string): import("@mat3ra/made/dist/js/material").MaterialFileConfig;
+    constructMaterialFileSource(fileName: string, fileContent: string, fileExtension: string): import("@mat3ra/esse/dist/js/types").FileSourceSchema;
 } & (new (...args: any[]) => {
     consistencyChecks: object[];
     addConsistencyChecks(array: object[]): void;
