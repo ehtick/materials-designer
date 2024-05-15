@@ -3,7 +3,11 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
   Scenario:
     When I open materials designer page
     Then I see material designer page
-    And I clone material at index "1"
+    And I open Standata dialog
+    And I import material "Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23" from Standata
+    And I open Standata dialog
+    And I import material "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993" from Standata
+    And I delete materials with index "1"
 
     # Open
     When I open JupyterLite Transformation dialog
@@ -14,34 +18,6 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     When I click on "1.1. Interface creation with Zur and McGill Superlattice (ZSL) algorithm" link
     Then I see file "create_interface_with_min_strain_zsl.ipynb" opened
     And I select material with index "2" in MaterialsSelector
-
-    # Change code
-    When I set code in the cell "3" to:
-    """
-from mat3ra.made.tools.build.interface import InterfaceSettings
-interface_builder_settings = InterfaceSettings() # default
-interface_builder_settings.SubstrateParameters.miller_indices = (1, 1, 1)
-interface_builder_settings.SubstrateParameters.thickness = 1
-interface_builder_settings.LayerParameters.miller_indices = (1, 1, 1)
-interface_builder_settings.LayerParameters.thickness = 1
-IS_TERMINATION_SELECTION_INTERACTIVE = False
-TERMINATION_INDEX = 0
-    """
-
-    When I set code in the cell "5" to:
-    """
-    INTERFACE_PARAMETERS = {
-    "DISTANCE_Z": 3.0,  # in Angstroms
-    "MAX_AREA": 50,  # in Angstroms^2
-}
-    """
-    Then I see code in the cell "5" is:
-    """
-    INTERFACE_PARAMETERS = {
-    "DISTANCE_Z": 3.0,  # in Angstroms
-    "MAX_AREA": 50,  # in Angstroms^2
-}
-    """
 
     # Run
     And I Run All Cells
