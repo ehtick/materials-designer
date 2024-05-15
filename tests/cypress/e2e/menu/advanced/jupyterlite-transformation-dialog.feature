@@ -25,7 +25,7 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     And I submit materials
     Then material with following data exists in state
       | path              | index   |
-      | si-interface.json | $INT{3} |
+      | zsl-gr-ni-interface.json | $INT{3} |
 
 
     # Reset the materials list
