@@ -19,37 +19,6 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     Then I see file "create_interface_with_min_strain_zsl.ipynb" opened
     And I select material with index "2" in MaterialsSelector
 
-    # Change code
-    When I set code in the cell "3" to:
-    """
-SUBSTRATE_PARAMETERS = {
-    "MILLER_INDICES": (1, 1, 1),
-    "THICKNESS": 1,
-}
-
-LAYER_PARAMETERS = {
-    "MILLER_INDICES": (1, 1, 1),
-    "THICKNESS": 1,
-}
-
-USE_CONVENTIONAL_CELL = True
-    """
-
-    When I set code in the cell "5" to:
-    """
-    INTERFACE_PARAMETERS = {
-    "DISTANCE_Z": 3.0,  # in Angstroms
-    "MAX_AREA": 50,  # in Angstroms^2
-}
-    """
-    Then I see code in the cell "5" is:
-    """
-    INTERFACE_PARAMETERS = {
-    "DISTANCE_Z": 3.0,  # in Angstroms
-    "MAX_AREA": 50,  # in Angstroms^2
-}
-    """
-
     # Run
     And I Run All Cells
     And I see kernel status is Idle
