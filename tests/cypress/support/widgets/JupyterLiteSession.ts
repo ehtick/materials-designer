@@ -97,7 +97,7 @@ export default class JupyterLiteSession extends Widget {
         this.iframeAnchor.click(selectors.menuTab(tabName));
         if (subItemName) {
             this.iframeAnchor.waitForVisible(selectors.menuItem(subItemName));
-            this.iframeAnchor.click(selectors.menuItem(subItemName), { force: true });
+            this.iframeAnchor.click(selectors.menuItem(subItemName));
         }
     }
 
