@@ -16,8 +16,6 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         };
         this.getMaterialsForMessage = () => {
             const materials = this.getMaterialsToUse();
-            console.log(materials);
-            materials.forEach((material) => console.log(typeof material));
             return materials.map((material) => material.toJSON());
         };
         this.getMaterialsToUse = () => {
@@ -29,7 +27,6 @@ class BaseJupyterLiteSessionComponent extends React.Component {
             const validatedMaterials = configs.reduce((validMaterials, config) => {
                 try {
                     const material = new Made.Material(config);
-                    console.log("validating material", material);
                     material.validate();
                     validMaterials.push(material);
                 }
@@ -76,7 +73,7 @@ class BaseJupyterLiteSessionComponent extends React.Component {
         }
     }
     render() {
-        return (_jsx(JupyterLiteSession, { originURL: "http://localhost:8000", defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: this.messageHandlerConfigs, ref: this.jupyterLiteSessionRef }));
+        return (_jsx(JupyterLiteSession, { defaultNotebookPath: this.DEFAULT_NOTEBOOK_PATH, messageHandlerConfigs: this.messageHandlerConfigs, ref: this.jupyterLiteSessionRef }));
     }
 }
 export default BaseJupyterLiteSessionComponent;
