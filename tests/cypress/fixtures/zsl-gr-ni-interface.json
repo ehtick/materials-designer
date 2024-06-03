@@ -1,5 +1,5 @@
 {
-    "name": "Ni3 C2, Interface, Strain:0.127%",
+    "name": "C2(001)-Ni4(111), Interface, Strain 0.127%",
     "basis": {
         "elements": [
             {
@@ -36,7 +36,7 @@
                 "id": 1,
                 "value": [
                     0,
-                    1,
+                    0,
                     0.4257018
                 ]
             },
@@ -127,12 +127,12 @@
         "interface_properties": {
             "film_sl_vectors": [
                 [
-                    1.23247775,
-                    -2.134714082,
+                    2.4649555,
+                    0,
                     0
                 ],
                 [
-                    -1.23247775,
+                    1.23247775,
                     -2.134714082,
                     0
                 ]
@@ -151,12 +151,12 @@
             ],
             "film_vectors": [
                 [
-                    1.23247775,
-                    -2.134714082,
+                    2.4649555,
+                    0,
                     0
                 ],
                 [
-                    1.23247775,
+                    -1.23247775,
                     2.134714082,
                     0
                 ]
@@ -210,12 +210,13 @@
                     0
                 ]
             ],
-            "von_mises_strain": 0.003802195063923023,
+            "von_mises_strain": 0.0038021951465708748,
             "termination": "('C_P6/mmm_2', 'Ni_R-3m_1')",
             "film_thickness": 1,
             "substrate_thickness": 3,
             "mean_abs_strain": 0.00127
-        }
+        },
+        "mean_abs_strain": 0.00127
     },
     "isUpdated": true
 }
