@@ -2,23 +2,6 @@ import { IframeBrowser } from "@mat3ra/tede/src/js/cypress/Browser";
 
 import Widget from "./Widget";
 
-const menuTabSelectorMap: Record<string, string> = {
-    File: "#jp-MainMenu ul li:nth-child(1) div:nth-child(2)",
-    Edit: "#jp-MainMenu ul li:nth-child(2) div:nth-child(2)",
-    View: "#jp-MainMenu ul li:nth-child(3) div:nth-child(2)",
-    Run: "#jp-MainMenu ul li:nth-child(4) div:nth-child(2)",
-    Kernel: "#jp-MainMenu ul li:nth-child(5) div:nth-child(2)",
-    Tabs: "#jp-MainMenu ul li:nth-child(6) div:nth-child(2)",
-    Settings: "#jp-MainMenu ul li:nth-child(7) div:nth-child(2)",
-    Help: "#jp-MainMenu ul li:nth-child(8) div:nth-child(2)",
-};
-
-const menuItemSelectorMap: Record<string, string> = {
-    "Run All Cells": `#jp-mainmenu-run ul li:nth-child(12)`,
-    "Restart Kernel": "#jp-mainmenu-kernel ul li:nth-child(3)",
-    "Restart Kernel and Clear All Outputs": "#jp-mainmenu-kernel ul li:nth-child(4)",
-};
-
 const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
@@ -26,8 +9,8 @@ const selectors = {
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
         `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
-    menuTab: (tabName: string) => menuTabSelectorMap[tabName],
-    menuItem: (name: string) => menuItemSelectorMap[name],
+    menuTab: "#jp-MainMenu ul li",
+    menuItem: "#jp-mainmenu-run ul li",
     kernelStatusSpan: "#jp-bottom-panel #jp-main-statusbar div:nth-child(5) span",
     restartKernel:
         '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
@@ -93,11 +76,9 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickMenu(tabName: string, subItemName?: string) {
-        this.iframeAnchor.waitForVisible(selectors.menuTab(tabName));
-        this.iframeAnchor.click(selectors.menuTab(tabName));
+        this.iframeAnchor.clickOnText(tabName, selectors.menuTab);
         if (subItemName) {
-            this.iframeAnchor.waitForVisible(selectors.menuItem(subItemName));
-            this.iframeAnchor.click(selectors.menuItem(subItemName));
+            this.iframeAnchor.clickOnText(subItemName, selectors.menuItem);
         }
     }
 
@@ -121,11 +102,11 @@ export default class JupyterLiteSession extends Widget {
         this.iframeAnchor.click(selectors.dialogAccept);
     }
 
-    waitForKernelInStatusWithCallback(status: kernelStatus, callback: () => void) {
+    waitForKernelInStatusWithCallback(status: kernelStatus, callback?: () => void) {
         this.browser.retry(
             () => {
                 return this.isKernelInStatus(status).then((isInStatus: boolean) => {
-                    if (!isInStatus) {
+                    if (!isInStatus && callback) {
                         callback();
                     }
                     return isInStatus;
@@ -146,10 +127,10 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForKernelIdle() {
-        this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {});
+        this.waitForKernelInStatusWithCallback(kernelStatus.Idle);
     }
 
     waitForKernelBusy() {
-        this.waitForKernelInStatusWithCallback(kernelStatus.Busy, () => {});
+        this.waitForKernelInStatusWithCallback(kernelStatus.Busy);
     }
 }
