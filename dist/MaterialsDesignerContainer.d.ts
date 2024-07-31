@@ -1,8 +1,12 @@
 /// <reference types="redux-undo" />
 export class MaterialsDesignerContainer extends React.Component<any, any, any> {
     constructor(props: any);
-    store: import("redux").Store<import("redux-undo").StateWithHistory<any>>;
-    container: import("react-redux").ConnectedComponent<React.JSXElementConstructor<never>, any>;
+    store: import("redux").Store<import("redux-undo").StateWithHistory<any>, import("redux").AnyAction> & {
+        dispatch: any;
+    };
+    container: import("react-redux").ConnectedComponent<React.ComponentType<never>, {
+        [x: string]: any;
+    }>;
     render(): import("react/jsx-runtime").JSX.Element;
 }
 export namespace MaterialsDesignerContainer {

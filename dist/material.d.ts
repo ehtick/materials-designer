@@ -335,7 +335,7 @@ export class Material extends Material_base {
         consistencyChecks?: {
             key: string;
             name: "default" | "atomsTooClose" | "atomsOverlap";
-            severity: "error" | "warning" | "info";
+            severity: "error" | "info" | "warning";
             message: string;
         }[] | undefined;
         schemaVersion?: string | undefined;

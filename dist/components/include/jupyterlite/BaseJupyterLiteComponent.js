@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { Action } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
-import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import React from "react";
 class BaseJupyterLiteSessionComponent extends React.Component {
     constructor() {

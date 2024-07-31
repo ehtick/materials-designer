@@ -1,6 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
 import IconByName from "@exabyte-io/cove.js/dist/mui/components/icon/IconByName";
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import PyodideLoader from "@exabyte-io/cove.js/dist/other/pyodide";
 import { Made } from "@mat3ra/made";
 import { darkScrollbar } from "@mui/material";
@@ -10,7 +11,6 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import React from "react";
 import { theme } from "../../../../settings";
 import { exportToDisk } from "../../../../utils/downloader";
