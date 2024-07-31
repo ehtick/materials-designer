@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { enqueueSnackbar } from "notistack";
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import React from "react";
 import { theme } from "../../../../settings";
 import { exportToDisk } from "../../../../utils/downloader";
@@ -107,7 +107,7 @@ class PythonTransformation extends React.Component {
                 if (error instanceof Error) {
                     errorMessage = error.message;
                 }
-                enqueueSnackbar(errorMessage, { variant: "error" });
+                showErrorAlert(errorMessage);
             }
         };
         this.executeAllExecutionCells = async () => {

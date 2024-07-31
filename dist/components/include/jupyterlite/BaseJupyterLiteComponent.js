@@ -2,7 +2,7 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import JupyterLiteSession from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { Action } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
-import { enqueueSnackbar } from "notistack";
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import React from "react";
 class BaseJupyterLiteSessionComponent extends React.Component {
     constructor() {
@@ -42,12 +42,10 @@ class BaseJupyterLiteSessionComponent extends React.Component {
             if (Array.isArray(configs)) {
                 const { validatedMaterials, validationErrors } = this.validateMaterialConfigs(configs);
                 this.setMaterials(validatedMaterials);
-                validationErrors.forEach((errorMessage) => {
-                    enqueueSnackbar(errorMessage, { variant: "error" });
-                });
+                validationErrors.forEach(showErrorAlert);
             }
             else {
-                enqueueSnackbar("Invalid material data received", { variant: "error" });
+                showErrorAlert("Invalid material data received");
             }
         };
         // eslint-disable-next-line react/sort-comp

@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
+import { showWarningAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { Made } from "@mat3ra/made";
-import { enqueueSnackbar } from "notistack";
 import PropTypes from "prop-types";
 import React from "react";
 import _ from "underscore";
@@ -60,7 +60,7 @@ class CombinatorialBasisDialog extends React.Component {
     assertCombinatorialBasesCount(bases) {
         const { maxCombinatorialBasesCount } = this.props;
         if (bases.length > maxCombinatorialBasesCount) {
-            enqueueSnackbar(displayMessage("combinatorialBasesCountExceeded", maxCombinatorialBasesCount), { variant: "warning" });
+            showWarningAlert(displayMessage("combinatorialBasesCountExceeded", maxCombinatorialBasesCount));
             return false;
         }
         return true;

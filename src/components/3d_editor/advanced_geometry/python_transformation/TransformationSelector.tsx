@@ -1,7 +1,7 @@
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { fetchFilesFromGitHubAPI } from "@mat3ra/code/dist/js/utils";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { enqueueSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 
 export interface Transformation {
@@ -58,7 +58,7 @@ function TransformationSelector(props: TransformationSelectorProps) {
                     setIsDataFetched(true);
                 })
                 .catch((error) => {
-                    enqueueSnackbar("Error fetching transformations", { variant: "error" });
+                    showErrorAlert("Error fetching transformations");
                     console.error(error);
                     setTransformations([emptyTransformation]);
                 });

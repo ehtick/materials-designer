@@ -70,7 +70,7 @@
         "react-dom": "^17.0.0"
     },
     "devDependencies": {
-        "@exabyte-io/cove.js": "git+https://github.com/Exabyte-io/cove.js.git#9053b10da33f4b95eb2eb4ee1a157450abb0b8fe",
+        "@exabyte-io/cove.js": "git+https://github.com/Exabyte-io/cove.js.git#006f2a4c7e68ba8b43c4ae74f481e560c4517833",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
         "@mat3ra/code": "2024.3.25-3",
         "@mat3ra/esse": "2024.6.4-1",
