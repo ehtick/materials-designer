@@ -7,7 +7,7 @@ exports.retry = retry;
 exports.shallowDeepAlmostEqual = shallowDeepAlmostEqual;
 var _sleep = _interopRequireDefault(require("sleep"));
 var _logger = require("../logger");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-throw-literal */
 // eslint-disable-next-line import/no-unresolved
 

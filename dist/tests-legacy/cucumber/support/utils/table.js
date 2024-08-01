@@ -9,7 +9,7 @@ var _lodash = _interopRequireDefault(require("lodash"));
 var _randomSeed = _interopRequireDefault(require("random-seed"));
 var _underscore = _interopRequireDefault(require("underscore"));
 var _cache = require("./cache");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 // eslint-disable-next-line import/no-unresolved

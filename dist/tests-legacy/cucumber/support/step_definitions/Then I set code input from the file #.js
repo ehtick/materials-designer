@@ -8,7 +8,7 @@ var _path = _interopRequireDefault(require("path"));
 var _selectors = require("../selectors");
 var _file = require("../utils/file");
 var _material_designer_page = require("../widgets/material_designer_page");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function _default() {
   this.Then(/^I set code input from the file "(.*)"$/, file => {
     const {

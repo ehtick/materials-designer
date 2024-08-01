@@ -1,5 +1,6 @@
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
 import IconByName from "@exabyte-io/cove.js/dist/mui/components/icon/IconByName";
+import { showErrorAlert, showWarningAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { Made } from "@mat3ra/made";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,7 +10,6 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { DataGrid } from "@mui/x-data-grid";
-import { enqueueSnackbar } from "notistack";
 import path from "path";
 import PropTypes from "prop-types";
 import React from "react";
@@ -74,9 +74,7 @@ class UploadDialog extends React.Component {
         });
 
         if (errors.length > 0) {
-            enqueueSnackbar(`Failed to convert some files: ${errors.join(", ")}`, {
-                variant: "error",
-            });
+            showErrorAlert(`Failed to convert some files: ${errors.join(", ")}`);
             return;
         }
 
@@ -118,9 +116,7 @@ class UploadDialog extends React.Component {
         // Filter out invalid files
         const validFiles = Array.from(files).filter((file) => file && file.size);
         if (validFiles.length === 0) {
-            enqueueSnackbar("Error: file(s) cannot be read (inaccessible?)", {
-                variant: "warning",
-            });
+            showWarningAlert("Error: file(s) cannot be read (inaccessible?)");
             return;
         }
 

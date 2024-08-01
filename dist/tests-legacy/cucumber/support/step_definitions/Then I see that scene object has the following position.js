@@ -8,7 +8,7 @@ var _assert = _interopRequireDefault(require("assert"));
 var _isEqual = _interopRequireDefault(require("lodash/isEqual"));
 var _table = require("../utils/table");
 var _material_designer_page = require("../widgets/material_designer_page");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function _default() {
   this.Then(/^I see that scene object has the following position:$/, function (table) {
     const config = (0, _table.parseTable)(table, this)[0];

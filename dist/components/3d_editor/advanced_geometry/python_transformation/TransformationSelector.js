@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { fetchFilesFromGitHubAPI } from "@mat3ra/code/dist/js/utils";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 const emptyTransformation = {
     id: "custom-transformation",
@@ -37,7 +37,7 @@ function TransformationSelector(props) {
                 setIsDataFetched(true);
             })
                 .catch((error) => {
-                enqueueSnackbar("Error fetching transformations", { variant: "error" });
+                showErrorAlert("Error fetching transformations");
                 console.error(error);
                 setTransformations([emptyTransformation]);
             });

@@ -7,7 +7,7 @@ exports.dateToString = dateToString;
 exports.dateToUnix = dateToUnix;
 var _moment = _interopRequireDefault(require("moment"));
 var _underscore = _interopRequireDefault(require("underscore"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // eslint-disable-next-line import/no-unresolved
 
 function dateToUnix(date) {
