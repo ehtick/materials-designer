@@ -35,7 +35,7 @@
         "@babel/runtime-corejs2": "7.16.7",
         "@emotion/react": "^11.13.0",
         "@emotion/styled": "^11.13.0",
-        "@exabyte-io/wave.js": "git+https://github.com/Exabyte-io/wave.js.git#88ab0fe27afb405ccebe590b9842642c497b773d",
+        "@exabyte-io/wave.js": "2024.8.1-0",
         "@mui/icons-material": "^5.11.0",
         "@mui/material": "^5.11.9",
         "@mui/styles": "^5.11.7",
@@ -70,7 +70,7 @@
         "react-dom": "^17.0.0"
     },
     "devDependencies": {
-        "@exabyte-io/cove.js": "git+https://github.com/Exabyte-io/cove.js.git#006f2a4c7e68ba8b43c4ae74f481e560c4517833",
+        "@exabyte-io/cove.js": "2024.7.31-0",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
         "@mat3ra/code": "2024.3.25-3",
         "@mat3ra/esse": "2024.6.4-1",
