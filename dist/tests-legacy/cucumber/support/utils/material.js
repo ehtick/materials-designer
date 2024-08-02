@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.xyzEqual = xyzEqual;
 var _underscore = _interopRequireDefault(require("underscore.string"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @summary Returns true if passed XYZ lines are equal.
  * E.g. "Si 0.25 0.25 0.25" and "Si 0.250000000 0.250000000 0.250000000" are equal.

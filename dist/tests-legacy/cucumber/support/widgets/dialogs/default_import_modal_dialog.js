@@ -8,7 +8,7 @@ var _utils = require("@mat3ra/code/dist/js/utils");
 var _path = _interopRequireDefault(require("path"));
 var _selectors = require("../../selectors");
 var _widget = require("../../widget");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 class DefaultImportModalDialogWidget extends _widget.Widget {
   constructor(selector) {
     super(selector);

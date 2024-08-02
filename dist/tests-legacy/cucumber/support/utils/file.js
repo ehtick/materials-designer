@@ -9,7 +9,7 @@ exports.writeFileSync = writeFileSync;
 var _fs = _interopRequireDefault(require("fs"));
 var _path = _interopRequireDefault(require("path"));
 var _template = require("./template");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // eslint-disable-next-line no-shadow
 function readFileSync(path) {
   let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {

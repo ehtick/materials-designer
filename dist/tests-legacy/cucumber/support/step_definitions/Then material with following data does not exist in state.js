@@ -8,7 +8,7 @@ var _path = _interopRequireDefault(require("path"));
 var _utils = require("../utils");
 var _file = require("../utils/file");
 var _table = require("../utils/table");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function _default() {
   this.Then(/^material with following data does not exist in state$/, function (table) {
     const config = (0, _table.parseTable)(table, this)[0];

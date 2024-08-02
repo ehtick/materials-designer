@@ -1,5 +1,5 @@
+import { showWarningAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { Made } from "@mat3ra/made";
-import { enqueueSnackbar } from "notistack";
 
 import {
     MATERIALS_CLONE_ONE,
@@ -40,9 +40,8 @@ function materialsToggleIsNonPeriodicForOne(state, action) {
     const newMaterial = state.materials[state.index].clone({ hash: "", scaledHash: "" });
     // clone check
     if (newMaterial.id) {
-        enqueueSnackbar(
+        showWarningAlert(
             "Prevented Toggle 'isNonPeriodic' action. Please start from a cloned material",
-            { variant: "warning" },
         );
         return state;
     }
@@ -73,11 +72,7 @@ function _setMetadataForSlabConfig(
     { h, k, l, thickness, vacuumRatio, vx, vy, material },
 ) {
     const bulkId = material && (material.id || material._id);
-    if (!bulkId)
-        enqueueSnackbar(displayMessage("surface.noBulkId"), {
-            variant: "warning",
-            autoHideDuration: 10000,
-        });
+    if (!bulkId) showWarningAlert(displayMessage("surface.noBulkId"));
 
     Object.assign(slabConfig, {
         metadata: {

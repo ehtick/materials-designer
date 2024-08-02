@@ -1,9 +1,9 @@
+import { showErrorAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import JupyterLiteSession, {
     IMessageHandlerConfigItem,
 } from "@exabyte-io/cove.js/dist/other/jupyterlite/JupyterLiteSession";
 import { Action, MaterialSchema } from "@mat3ra/esse/dist/js/types";
 import { Made } from "@mat3ra/made";
-import { enqueueSnackbar } from "notistack";
 import React from "react";
 
 export interface BaseJupyterLiteProps {
@@ -70,11 +70,9 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
         if (Array.isArray(configs)) {
             const { validatedMaterials, validationErrors } = this.validateMaterialConfigs(configs);
             this.setMaterials(validatedMaterials);
-            validationErrors.forEach((errorMessage) => {
-                enqueueSnackbar(errorMessage, { variant: "error" });
-            });
+            validationErrors.forEach(showErrorAlert);
         } else {
-            enqueueSnackbar("Invalid material data received", { variant: "error" });
+            showErrorAlert("Invalid material data received");
         }
     };
 

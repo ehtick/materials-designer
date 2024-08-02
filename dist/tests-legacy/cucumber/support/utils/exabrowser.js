@@ -10,7 +10,7 @@ var _url = _interopRequireDefault(require("url"));
 var _logger = require("../logger");
 var _settings = require("../settings");
 var _2 = require(".");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-shadow */
 /* eslint-disable class-methods-use-this */
 

@@ -1,5 +1,5 @@
+import { showWarningAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { Made } from "@mat3ra/made";
-import { enqueueSnackbar } from "notistack";
 import { MATERIALS_CLONE_ONE, MATERIALS_GENERATE_SUPERCELL_FOR_ONE, MATERIALS_GENERATE_SURFACE_FOR_ONE, MATERIALS_SET_BOUNDARY_CONDITIONS_FOR_ONE, MATERIALS_TOGGLE_IS_NON_PERIODIC_FOR_ONE, MATERIALS_UPDATE_INDEX, MATERIALS_UPDATE_NAME_FOR_ONE, MATERIALS_UPDATE_ONE, } from "../actions";
 import { displayMessage } from "../i18n/messages";
 import { Material } from "../material";
@@ -27,7 +27,7 @@ function materialsToggleIsNonPeriodicForOne(state, action) {
     const newMaterial = state.materials[state.index].clone({ hash: "", scaledHash: "" });
     // clone check
     if (newMaterial.id) {
-        enqueueSnackbar("Prevented Toggle 'isNonPeriodic' action. Please start from a cloned material", { variant: "warning" });
+        showWarningAlert("Prevented Toggle 'isNonPeriodic' action. Please start from a cloned material");
         return state;
     }
     newMaterial.isNonPeriodic = !newMaterial.isNonPeriodic;
@@ -52,10 +52,7 @@ function materialsGenerateSupercellForOne(state, action) {
 function _setMetadataForSlabConfig(slabConfig, { h, k, l, thickness, vacuumRatio, vx, vy, material }) {
     const bulkId = material && (material.id || material._id);
     if (!bulkId)
-        enqueueSnackbar(displayMessage("surface.noBulkId"), {
-            variant: "warning",
-            autoHideDuration: 10000,
-        });
+        showWarningAlert(displayMessage("surface.noBulkId"));
     Object.assign(slabConfig, {
         metadata: {
             isSlab: true,

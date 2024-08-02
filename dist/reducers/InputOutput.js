@@ -1,4 +1,4 @@
-import { enqueueSnackbar } from "notistack";
+import { showSuccessAlert, showWarningAlert } from "@exabyte-io/cove.js/dist/other/alerts";
 import { MATERIALS_ADD, MATERIALS_EXPORT, MATERIALS_REMOVE, MATERIALS_SAVE } from "../actions";
 import { exportToDisk } from "../utils/downloader";
 // eslint-disable-next-line no-unused-vars
@@ -25,16 +25,14 @@ export function materialsRemove(state, action) {
     indices = indices.sort();
     // sanity check
     if (materials.length === 1) {
-        enqueueSnackbar("Prevented remove action: only one material in set.", {
-            variant: "warning",
-        });
+        showWarningAlert("Prevented remove action: only one material in set.");
         return state;
     }
     // remove elements at indices (array is modified in place => subtract idx within `each`)
     indices.forEach((indicesArrayElement, idx) => {
         const currentMaterial = materials[indicesArrayElement - idx];
         const { formula } = currentMaterial;
-        enqueueSnackbar(`Removed material with index ${indicesArrayElement} and formula ${formula} from set.`, { variant: "success" });
+        showSuccessAlert(`Removed material with index ${indicesArrayElement} and formula ${formula} from set.`);
         materials.splice(indicesArrayElement - idx, 1);
         // lower the current index if it is above the deleted material's index
         if (index > 0)
