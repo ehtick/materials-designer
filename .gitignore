@@ -6,9 +6,6 @@ node_modules/
 .eslintcache
 .husky/_/
 .nyc_output/
-tests-legacy/node_modules/
-tests-legacy/.screenshots/*
-tests-legacy/cucumber/screenshots/
 tests/cypress/videos/*
 !tests/cypress/videos/.gitignore
 tests/cypress/screenshots/*
