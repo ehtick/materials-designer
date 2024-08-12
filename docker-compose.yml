@@ -44,7 +44,7 @@ services:
       context: .
       dockerfile: ./dockerfiles/app/test/Dockerfile-vnc
     ports:
-      - 5920:5920
+      - ${VNC_PORT}:${VNC_PORT}
     volumes:
       - ./tests/cypress:/opt/test/cypress
       - ./entrypoint-vnc.sh:/opt/test/entrypoint-vnc.sh
