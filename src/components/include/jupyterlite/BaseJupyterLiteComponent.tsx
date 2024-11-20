@@ -24,7 +24,7 @@ class BaseJupyterLiteSessionComponent<P = never, S = never> extends React.Compon
     P & BaseJupyterLiteProps,
     S
 > {
-    DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
+    DEFAULT_NOTEBOOK_PATH = "other/materials_designer/Introduction.ipynb";
 
     jupyterLiteSessionRef = React.createRef<JupyterLiteSession>();
 
