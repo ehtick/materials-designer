@@ -28,7 +28,7 @@ runs:
       uses: ./actions/docker/build
       with:
         image-name: materials-designer-test
-        dockerfile: ./dockerfiles/app/test/Dockerfile
+        dockerfile: ./dockerfiles/tests/Dockerfile
         cli-args: --build-arg BASE_IMAGE=node
 
     - name: Run tests
