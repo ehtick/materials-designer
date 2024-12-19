@@ -7,7 +7,7 @@ import React from "react";
 class BaseJupyterLiteSessionComponent extends React.Component {
     constructor() {
         super(...arguments);
-        this.DEFAULT_NOTEBOOK_PATH = "api-examples/other/materials_designer/Introduction.ipynb";
+        this.DEFAULT_NOTEBOOK_PATH = "made/Introduction.ipynb";
         this.jupyterLiteSessionRef = React.createRef();
         this.sendMaterials = () => {
             var _a;

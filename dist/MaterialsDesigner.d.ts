@@ -50,4 +50,1194 @@ declare namespace MaterialsDesigner {
 }
 import React from "react";
 import PropTypes from "prop-types";
-declare const materialConfigs: any[];
+declare const materialConfigs: ({
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: null;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: null;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: null;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: null;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: null;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+} | {
+    name: string;
+    lattice: {
+        type: string;
+        a: number;
+        b: number;
+        c: number;
+        alpha: number;
+        beta: number;
+        gamma: number;
+        units: {
+            length: string;
+            angle: string;
+        };
+    };
+    basis: {
+        units: string;
+        elements: {
+            id: number;
+            value: string;
+        }[];
+        coordinates: {
+            id: number;
+            value: number[];
+        }[];
+    };
+    external: {
+        id: string;
+        source: string;
+        doi: string;
+        url: string;
+        origin: boolean;
+    };
+    isNonPeriodic: boolean;
+})[];

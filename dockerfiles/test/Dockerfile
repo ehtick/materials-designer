@@ -12,8 +12,8 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_x86_
     && yum localinstall -y google-chrome-stable_current_x86_64.rpm
 
 # Tests run on an older version of node currently
-ENV NODE_VERSION 14.19.3
-ENV NPM_VERSION 6.14.18
+ENV NODE_VERSION 20.18.0
+ENV NPM_VERSION 10.2.3
 RUN source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm use $NODE_VERSION \
@@ -34,7 +34,7 @@ RUN git config --global url."https://".insteadOf git://
 # compiled node modules as part of the install
 RUN cd tests \
     && source scl_source enable devtoolset-8 \
-    && npm install
+    && npm install --legacy-peer-deps
 
 # This is an interesting hack. There is a bug in the function
 # to getLinuxChromeDriverArchitecture causing a comparison between
