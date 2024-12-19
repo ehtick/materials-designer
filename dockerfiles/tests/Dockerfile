@@ -8,6 +8,6 @@ COPY ./tests/package-lock.json package-lock.json
 COPY ./tests/cypress.config.ts cypress.config.ts
 COPY ./tests/cypress cypress
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 ENTRYPOINT ["npm", "run", "test:headless"]
