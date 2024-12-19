@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=node
 # Not using "alpine" to allow node gyp to work with package installations from "https://github.com" directly
-ARG IMAGE_TAG=14
+ARG IMAGE_TAG=20
 FROM ${BASE_IMAGE}:${IMAGE_TAG}
 
 WORKDIR /opt/app
@@ -11,7 +11,7 @@ WORKDIR /opt/app
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 

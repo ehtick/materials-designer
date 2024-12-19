@@ -3,10 +3,8 @@
     "version": "0.0.0",
     "description": "Materials Designer",
     "scripts": {
-        "start": "cross-env PORT=3001 SKIP_PREFLIGHT_CHECK=true react-scripts start",
-        "start-20": "cross-env PORT=3001 SKIP_PREFLIGHT_CHECK=true react-scripts --openssl-legacy-provider start",
-        "build": "react-scripts build",
-        "build-20": "react-scripts --openssl-legacy-provider build",
+        "start": "cross-env PORT=3001 SKIP_PREFLIGHT_CHECK=true react-scripts --openssl-legacy-provider start",
+        "build": "react-scripts --openssl-legacy-provider build",
         "prepare": "husky install",
         "transpile": "tsc && npm run copy-css",
         "copy-css": "mkdir -p dist/stylesheets && cp src/stylesheets/* dist/stylesheets/",

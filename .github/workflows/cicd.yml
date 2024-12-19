@@ -51,7 +51,7 @@ jobs:
       - name: Validate test dockerfile
         uses: ./actions/docker/validate
         with:
-          dockerfile: ./dockerfiles/app/test/Dockerfile
+          dockerfile: ./dockerfiles/tests/Dockerfile
 
   publish:
     needs: run-tests

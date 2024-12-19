@@ -22,7 +22,7 @@ services:
       args:
         BASE_TAG: ${IMAGE_TAG}
       context: .
-      dockerfile: ./dockerfiles/app/test/Dockerfile
+      dockerfile: dockerfiles/tests/Dockerfile
     depends_on:
       - materials-designer
     network_mode: host
@@ -42,7 +42,7 @@ services:
     image: materials-designer-test-vnc:${IMAGE_TAG}
     build:
       context: .
-      dockerfile: ./dockerfiles/app/test/Dockerfile-vnc
+      dockerfile: dockerfiles/tests/Dockerfile-vnc
     ports:
       - ${VNC_PORT}:${VNC_PORT}
     volumes:
