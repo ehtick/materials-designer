@@ -3,7 +3,7 @@ import IconByName from "@exabyte-io/cove.js/dist/mui/components/icon/IconByName"
 import FullscreenComponentMixin from "@exabyte-io/cove.js/dist/other/fullscreen";
 import ThemeProvider from "@exabyte-io/cove.js/dist/theme/provider";
 // eslint-disable-next-line import/no-unresolved
-import data from "@mat3ra/standata/lib/runtime_data/materials";
+import { MaterialStandata } from "@mat3ra/standata";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -25,6 +25,7 @@ import BasisEditor from "./components/source_editor/Basis";
 import LatticeEditor from "./components/source_editor/Lattice";
 import { Material } from "./material";
 import { theme } from "./settings";
+const data = MaterialStandata.runtimeData;
 const materialConfigs = Object.values(data.filesMapByName);
 const APP_BAR_HEIGHT = 54;
 const GRID_CONFIG_BY_VISIBILITY = {
