@@ -74,7 +74,7 @@
         "@mat3ra/code": "2024.3.25-3",
         "@mat3ra/esse": "2024.6.4-1",
         "@mat3ra/made": "2024.7.31-1",
-        "@mat3ra/standata": "2024.12.19-0",
+        "@mat3ra/standata": "2024.12.19-1",
         "@mat3ra/tsconfig": "^2024.3.23-2",
         "@types/debug": "^4.1.12",
         "@types/mocha": "^10.0.1",
