@@ -78,6 +78,7 @@ jobs:
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
           verify-tests: false
+          npm-options: '--legacy-peer-deps'
 
       - name: Publish tests package
         uses: ./actions/js/publish
@@ -88,3 +89,4 @@ jobs:
           package-directory: ./tests
           verify-tests: false
           publish-tag: false
+          npm-options: '--legacy-peer-deps'
