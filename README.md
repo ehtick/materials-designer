@@ -27,7 +27,7 @@ Or use https, if no SSH authentication is set up with GitHub:
 git clone https://github.com/Exabyte-io/materials-designer.git
 ```
 
-then start the application using Node v14.19:
+then start the application using Node v20.18:
 
 ```bash
 cd materials-designer

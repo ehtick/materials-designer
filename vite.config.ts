@@ -17,7 +17,7 @@ export default defineConfig({
         __dirname: JSON.stringify(__dirname), // fix for node.js modules in client bundle
     },
     server: {
-        port: 3002,
+        port: 3001,
     },
     build: {
         outDir: "build",

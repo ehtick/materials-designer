@@ -35,13 +35,8 @@ runs:
       shell: bash -l {0}
       run: |
         docker run -d -p 3001:3001 --name=materials-designer materials-designer:latest
-        while ! docker logs materials-designer 2>&1 | grep "Compiled"; do
-            failed=$(docker logs materials-designer 2>&1 | grep "Failed")
-            if [[ "$failed" != "" ]]; then
-                # print logs to understand what went wrong
-                docker logs materials-designer 2>&1
-                exit 1
-            fi
-            sleep 5
+        while ! docker logs materials-designer 2>&1 | grep "Local:   http://localhost:3001/"; do
+            docker logs materials-designer 2>&1
+            sleep 1
         done
         docker run --network=host materials-designer-test
