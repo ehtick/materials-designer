@@ -5,6 +5,13 @@ import Widget from "./Widget";
 const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
+    sidebarPath: ".jp-FileBrowser-crumbs:nth-of-type(1)",
+    // TODO: specify top-level selector for the sidebar
+    sidebarEntryByIndexInTree: (index: number) =>
+        `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
+    sidebarEntryByTitle: (title: string) =>
+        `#jp-left-stack .jp-DirListing-content li[title*='${title}']`,
+
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
@@ -15,6 +22,7 @@ const selectors = {
     restartKernel:
         '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
+    // TODO: specify top-level selector for the open tabs
     fileSelectorByFileName: (fileName: string) => `li[title*='${fileName}']`,
 };
 
@@ -36,6 +44,24 @@ export default class JupyterLiteSession extends Widget {
 
     waitForVisible() {
         return this.iframeAnchor.waitForVisible(selectors.wrapper, Widget.TimeoutType.md);
+    }
+
+    doubleclickEntryInSidebar(sidebarEntry: string) {
+        this.iframeAnchor.dblclick(selectors.fileSelectorByFileName(sidebarEntry));
+    }
+
+    assertPathInSidebar(path: string) {
+        const value = this.getPathInSidebar();
+        return value === path;
+    }
+
+    getPathInSidebar() {
+        this.iframeAnchor.waitForVisible(selectors.sidebarPath);
+        return this.iframeAnchor.getElementText(selectors.sidebarPath);
+    }
+
+    checkEntryPresentInSidebar(sidebarEntry: string) {
+        return this.iframeAnchor.waitForVisible(selectors.fileSelectorByFileName(sidebarEntry));
     }
 
     checkFileOpened(fileName: string) {
