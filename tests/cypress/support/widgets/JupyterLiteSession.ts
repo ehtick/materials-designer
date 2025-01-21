@@ -5,12 +5,12 @@ import Widget from "./Widget";
 const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
-    sidebarPath: ".jp-FileBrowser-crumbs:nth-of-type(1)",
+    sidebarPath: ".jp-FileBrowser-crumbs",
     // TODO: specify top-level selector for the sidebar
     sidebarEntryByIndexInTree: (index: number) =>
         `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
     sidebarEntryByTitle: (title: string) =>
-        `#jp-left-stack .jp-DirListing-content li[title*='${title}']`,
+        `#jp-left-stack .jp-DirListing-content li[title*='Name: ${title}']`,
 
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell .jp-InputArea-editor`,
@@ -47,16 +47,23 @@ export default class JupyterLiteSession extends Widget {
     }
 
     doubleclickEntryInSidebar(sidebarEntry: string) {
-        this.iframeAnchor.dblclick(selectors.fileSelectorByFileName(sidebarEntry));
+        const selector = selectors.sidebarEntryByTitle(sidebarEntry);
+        this.iframeAnchor.waitForVisible(selector);
+        this.iframeAnchor.doubleclick(selector);
     }
 
     assertPathInSidebar(path: string) {
         const value = this.getPathInSidebar();
-        return value === path;
+        return value.then((text: string) => {
+            expect(text).to.equal(path);
+        });
     }
 
     getPathInSidebar() {
         this.iframeAnchor.waitForVisible(selectors.sidebarPath);
+        this.iframeAnchor
+            .getElementText(selectors.sidebarPath)
+            .then((text: string) => console.log(text));
         return this.iframeAnchor.getElementText(selectors.sidebarPath);
     }
 
