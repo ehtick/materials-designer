@@ -4,7 +4,9 @@
       "tutorial_notebook_name": "defect_point_adatom_island_mos2_pt.ipynb.ipynb",
       "tutorial_material_path": "made/specific_examples/defect_point_adatom_island_mos2_pt.ipynb",
       "tutorial_material_index": 0,
-      "output_name": "defect_point_adatom_island_mos2_pt"
+      "template_name": "jupyterlite-api-examples.ftl",
+      "feature_path": "../e2e/health_checks/",
+      "feature_name": "defect_point_adatom_island_mos2_pt"
     }
   ]
 }
