@@ -10,8 +10,7 @@ const selectors = {
     sidebarEntryByIndexInTree: (index: number) =>
         `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
     sidebarEntryByTitle: (title: string) =>
-        `#jp-left-stack .jp-DirListing-content li[title*='Name: ${title}']`,
-
+        `#jp-left-stack .jp-DirListing-content li span:contains('${title}')`,
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
