@@ -18,8 +18,8 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     # Run
     And I Run All Cells
     And I see kernel status is Idle
-    Then I see file "${tutorial_material_path}" on filesystem
+    Then I see file "${tutorial_material_file_name}" on filesystem
     And I submit materials
     Then material with following data exists in state
       | path                      | index                      |
-      | ${tutorial_material_path} | ${tutorial_material_index} |
+      | ${tutorial_material_name} | ${tutorial_material_index} |

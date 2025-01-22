@@ -1,9 +1,10 @@
 {
   "testCases": [
     {
-      "tutorial_notebook_name": "defect_point_adatom_island_mos2_pt.ipynb.ipynb",
-      "tutorial_material_path": "made/specific_examples/defect_point_adatom_island_mos2_pt.ipynb",
-      "tutorial_material_index": 0,
+      "tutorial_notebook_name": "defect_point_adatom_island_mos2_pt.ipynb",
+      "tutorial_material_name": "MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect",
+      "tutorial_material_file_name": "MoS2_Pt_island.json",
+      "tutorial_material_index": 1,
       "template_name": "jupyterlite-api-examples.ftl",
       "feature_path": "../e2e/health_checks/",
       "feature_name": "defect_point_adatom_island_mos2_pt"
