@@ -12,14 +12,14 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     # Open notebook
     When I double click on "specific_examples" entry in sidebar
     Then I see "/made/specific_examples/" in path
-    When I double click on "defect_point_adatom_island_mos2_pt.ipynb.ipynb" entry in sidebar
-    And I see file "defect_point_adatom_island_mos2_pt.ipynb.ipynb" opened
+    When I double click on "defect_point_adatom_island_mos2_pt.ipynb" entry in sidebar
+    And I see file "defect_point_adatom_island_mos2_pt.ipynb" opened
 
     # Run
     And I Run All Cells
     And I see kernel status is Idle
-    Then I see file "made/specific_examples/defect_point_adatom_island_mos2_pt.ipynb" on filesystem
+    Then I see file "MoS2_Pt_island.json" on filesystem
     And I submit materials
     Then material with following data exists in state
       | path                      | index                      |
-      | made/specific_examples/defect_point_adatom_island_mos2_pt.ipynb | 0 |
+      | MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect | 1 |
