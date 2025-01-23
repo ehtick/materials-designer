@@ -48,7 +48,7 @@ export default class JupyterLiteSession extends Widget {
     doubleclickEntryInSidebar(sidebarEntry: string) {
         const selector = selectors.sidebarEntryByTitle(sidebarEntry);
         this.iframeAnchor.waitForVisible(selector);
-        this.iframeAnchor.get(selector).dblclick();
+        this.iframeAnchor.get(selector).dblclick({ force: true });
     }
 
     assertPathInSidebar(path: string) {
