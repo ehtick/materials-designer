@@ -9,8 +9,7 @@ const selectors = {
     // TODO: specify top-level selector for the sidebar
     sidebarEntryByIndexInTree: (index: number) =>
         `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
-    sidebarEntryByTitle: (title: string) =>
-        `#jp-left-stack .jp-DirListing-content li span:contains('${title}')`,
+    sidebarEntryByTitle: (title: string) => `#jp-left-stack .jp-DirListing-content li`,
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
@@ -47,8 +46,8 @@ export default class JupyterLiteSession extends Widget {
 
     doubleclickEntryInSidebar(sidebarEntry: string) {
         const selector = selectors.sidebarEntryByTitle(sidebarEntry);
-        this.iframeAnchor.waitForVisible(selector);
-        this.iframeAnchor.get(selector).dblclick({ force: true });
+        this.iframeAnchor.waitForExist(selector);
+        this.iframeAnchor.doubleClickOnText(sidebarEntry, selector, { force: true });
     }
 
     assertPathInSidebar(path: string) {
