@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create B-vacancy h-BN
 
   Scenario:

@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Pt4(211), termination Pt_Pmmm_4, Slab
 
   Scenario:

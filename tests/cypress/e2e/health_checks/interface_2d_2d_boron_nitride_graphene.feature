@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create C2(001)-BN(001), Interface, Strain 0.401pct
 
   Scenario:

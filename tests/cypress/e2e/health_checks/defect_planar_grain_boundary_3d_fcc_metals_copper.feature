@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Cu4(310)-Cu4(-3-10), Grain Boundary
 
   Scenario:

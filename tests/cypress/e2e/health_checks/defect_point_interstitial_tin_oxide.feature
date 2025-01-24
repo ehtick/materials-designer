@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Sn15 O17, Interstitial O Defect
 
   Scenario:

@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create O3SrTi(011), termination O2_Pmmm_2, Slab
 
   Scenario:

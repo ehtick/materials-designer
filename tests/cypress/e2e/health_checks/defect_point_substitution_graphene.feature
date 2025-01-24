@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create N-doped Graphene
 
   Scenario:

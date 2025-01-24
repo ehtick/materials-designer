@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Graphene_Nickel_interface_optimized_xy
 
   Scenario:

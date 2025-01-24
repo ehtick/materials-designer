@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Interface (C_P6/mmm_2, O2_P6/mmm_1)
 
   Scenario:

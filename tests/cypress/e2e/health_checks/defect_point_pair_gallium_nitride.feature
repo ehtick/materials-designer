@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Mg1 Ga35 N35, Vacancy  Defect, Pair  Defect, Substitution and Vacancy Defect Pair
 
   Scenario:

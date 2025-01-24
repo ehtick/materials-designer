@@ -83,7 +83,7 @@
         },
         {
             "tutorial_notebook_name": "nanocluster_gold.ipynb",
-            "tutorial_material_name": "Au55 Icosahedron",
+            "tutorial_material_name": "Au55 Octahedron",
             "tutorial_material_file_name": "gold_nanocluster_0.json",
             "tutorial_material_index": 2,
             "template_name": "jupyterlite-api-examples.ftl",
@@ -155,7 +155,7 @@
         },
         {
             "tutorial_notebook_name": "passivation_surface_silicon.ipynb",
-            "tutorial_material_name": "Si, Silicon (100) surface (reconstructed), TRI (P1) 2D (Surface), mavrl-si-100-r_passivated",
+            "tutorial_material_name": "Si, Silicon (100) surface (reconstructed), TRI (P1) 2D (Surface), mavrl-si-100-r H-passivated",
             "tutorial_material_file_name": "Si, Silicon (100) surface (reconstructed), TRI (P1) 2D (Surface), mavrl-si-100-r_passivated.json",
             "tutorial_material_index": 2,
             "template_name": "jupyterlite-api-examples.ftl",

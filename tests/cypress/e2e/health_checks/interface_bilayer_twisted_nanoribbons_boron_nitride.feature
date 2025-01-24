@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Twisted Nanoribbon Interface (2.64 degrees)
 
   Scenario:

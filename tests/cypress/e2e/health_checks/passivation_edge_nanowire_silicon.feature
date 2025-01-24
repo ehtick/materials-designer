@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create H-Passivated Silicon Nanowire
 
   Scenario:

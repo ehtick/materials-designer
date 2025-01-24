@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Twisted Bilayer Interface (21.79 degrees)
 
   Scenario:

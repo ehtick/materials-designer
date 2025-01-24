@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create Cu4(001)-O8Si4(001), Interface, Strain 0.444pct
 
   Scenario:

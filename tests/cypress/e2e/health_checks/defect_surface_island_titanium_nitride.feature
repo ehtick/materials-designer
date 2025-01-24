@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create N4Ti4(001), termination TiN_P4/mmm_4, Slab
 
   Scenario:

@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect
 
   Scenario:

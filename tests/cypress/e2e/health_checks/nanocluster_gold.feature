@@ -1,4 +1,5 @@
-Feature: Healthcheck to create Au55 Icosahedron
+@notebook_healthcheck
+Feature: Healthcheck to create Au55 Octahedron
 
   Scenario:
     When I open materials designer page
@@ -22,4 +23,4 @@ Feature: Healthcheck to create Au55 Icosahedron
     And I submit materials
     Then material with following name exists in state
       | name                      | index                      |
-      | Au55 Icosahedron | 2 |
+      | Au55 Octahedron | 2 |
