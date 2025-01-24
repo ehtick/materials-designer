@@ -20,6 +20,6 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     And I see kernel status is Idle
     Then I see file "grain_boundary_2d_boron_nitride.json" on filesystem
     And I submit materials
-    Then material with following data exists in state
-      | path                      | index                      |
-      | BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991, Grain Boundary (9.00°) | 1 |
+    Then material with following name exists in state
+      | name                      | index                      |
+      | BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991, Grain Boundary (9.00°) | 2 |
