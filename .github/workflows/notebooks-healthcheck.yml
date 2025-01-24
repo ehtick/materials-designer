@@ -1,0 +1,59 @@
+name: Notebooks Healthcheck
+
+on:
+  schedule:
+    - cron: '0 0 * * 5' # Run every Friday at midnight
+  workflow_dispatch:
+
+jobs:
+  run-notebook-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Checkout actions repository
+        uses: actions/checkout@v4
+        with:
+          repository: Exabyte-io/actions
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          path: actions
+
+      - name: Login to GitHub Container registry
+        uses: docker/login-action@v3
+        env:
+          GITHUB_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          registry: ghcr.io
+          username: $GITHUB_USER
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build containers
+        uses: ./actions/docker/build
+        with:
+          image-name: materials-designer
+          image-tag: latest
+          dockerfile: ./dockerfiles/app/Dockerfile
+
+      - name: Build test container
+        uses: ./actions/docker/build
+        with:
+          image-name: materials-designer-test
+          dockerfile: ./dockerfiles/tests/Dockerfile
+
+      - name: Run notebook healthchecks
+        shell: bash -l {0}
+        run: |
+          docker run -d -p 3001:3001 --name=materials-designer materials-designer:latest
+          while ! docker logs materials-designer 2>&1 | grep "Compiled"; do
+              failed=$(docker logs materials-designer 2>&1 | grep "Failed")
+              if [[ "$failed" != "" ]]; then
+                  docker logs materials-designer 2>&1
+                  exit 1
+              fi
+              sleep 5
+          done
+          docker run --network=host materials-designer-test -e TAGS='@notebook_healthcheck'

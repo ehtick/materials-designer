@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991, Grain Boundary (9.00°)
 
   Scenario:
