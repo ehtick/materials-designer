@@ -1,4 +1,4 @@
-Feature: User can open JupyterLite Transformation dialog and create an interface with a jupyter notebook
+Feature: Healthcheck to create MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect
 
   Scenario:
     When I open materials designer page

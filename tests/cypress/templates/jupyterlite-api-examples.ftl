@@ -1,4 +1,4 @@
-Feature: User can open JupyterLite Transformation dialog and create an interface with a jupyter notebook
+Feature: Healthcheck to create ${tutorial_material_name}
 
   Scenario:
     When I open materials designer page
