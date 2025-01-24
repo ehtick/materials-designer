@@ -56,4 +56,5 @@ jobs:
               fi
               sleep 5
           done
-          docker run --network=host materials-designer-test -e TAGS='@notebook_healthcheck'
+          docker run --network=host materials-designer-test npm run test:healthcheck
+
