@@ -4,7 +4,7 @@
       "tutorial_notebook_name": "defect_planar_grain_boundary_2d_boron_nitride.ipynb",
       "tutorial_material_name": "BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991, Grain Boundary (9.00°)",
       "tutorial_material_file_name": "grain_boundary_2d_boron_nitride.json",
-      "tutorial_material_index": 1,
+      "tutorial_material_index": 2,
       "template_name": "jupyterlite-api-examples.ftl",
       "feature_path": "../e2e/health_checks/",
       "feature_name": "defect_planar_grain_boundary_2d_boron_nitride"
@@ -22,7 +22,7 @@
       "tutorial_notebook_name": "defect_point_adatom_island_molybdenum_disulfide_platinum.ipynb",
       "tutorial_material_name": "MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect",
       "tutorial_material_file_name": "MoS2_Pt_island.json",
-      "tutorial_material_index": 1,
+      "tutorial_material_index": 2,
       "template_name": "jupyterlite-api-examples.ftl",
       "feature_path": "../e2e/health_checks/",
       "feature_name": "defect_point_adatom_island_mos2_pt"

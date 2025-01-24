@@ -1,4 +1,4 @@
-Feature: User can open JupyterLite Transformation dialog and create an interface with a jupyter notebook
+Feature: Healthcheck to create MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect
 
   Scenario:
     When I open materials designer page
@@ -20,6 +20,6 @@ Feature: User can open JupyterLite Transformation dialog and create an interface
     And I see kernel status is Idle
     Then I see file "MoS2_Pt_island.json" on filesystem
     And I submit materials
-    Then material with following data exists in state
-      | path                      | index                      |
-      | MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect | 1 |
+    Then material with following name exists in state
+      | name                      | index                      |
+      | MoS2(001), termination S_P6/mmm_1, Slab, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect, Adatom Pt Defect | 2 |
