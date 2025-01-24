@@ -1,4 +1,4 @@
-Feature: Healthcheck to create C, Graphene, HEX (P6:mmm) 2D (Monolayer), 2dm-3993, Adatom Li Defect
+Feature: Healthcheck to create C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993, Adatom Li Defect
 
   Scenario:
     When I open materials designer page
@@ -22,4 +22,4 @@ Feature: Healthcheck to create C, Graphene, HEX (P6:mmm) 2D (Monolayer), 2dm-399
     And I submit materials
     Then material with following name exists in state
       | name                      | index                      |
-      | C, Graphene, HEX (P6:mmm) 2D (Monolayer), 2dm-3993, Adatom Li Defect | 2 |
+      | C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993, Adatom Li Defect | 2 |

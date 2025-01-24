@@ -74,7 +74,7 @@
         },
         {
             "tutorial_notebook_name": "defect_surface_island_titanium_nitride.ipynb",
-            "tutorial_material_name": "N4Ti4(001), termination TiN_P4:mmm_4, Slab",
+            "tutorial_material_name": "N4Ti4(001), termination TiN_P4/mmm_4, Slab",
             "tutorial_material_file_name": "TiN_slab_with_island.json",
             "tutorial_material_index": 2,
             "template_name": "jupyterlite-api-examples.ftl",
@@ -110,7 +110,7 @@
         },
         {
             "tutorial_notebook_name": "defect_surface_adatom_graphene.ipynb",
-            "tutorial_material_name": "C, Graphene, HEX (P6:mmm) 2D (Monolayer), 2dm-3993, Adatom Li Defect",
+            "tutorial_material_name": "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993, Adatom Li Defect",
             "tutorial_material_file_name": "Li_adatom.json",
             "tutorial_material_index": 2,
             "template_name": "jupyterlite-api-examples.ftl",
@@ -128,7 +128,7 @@
         },
         {
             "tutorial_notebook_name": "interface_2d_3d_graphene_silicon_dioxide.ipynb",
-            "tutorial_material_name": "Interface (C_P6:mmm_2, O2_P6:mmm_1)",
+            "tutorial_material_name": "Interface (C_P6/mmm_2, O2_P6/mmm_1)",
             "tutorial_material_file_name": "interface_1.json",
             "tutorial_material_index": 2,
             "template_name": "jupyterlite-api-examples.ftl",
@@ -182,7 +182,7 @@
         },
         {
             "tutorial_notebook_name": "perturbation_ripple_graphene.ipynb",
-            "tutorial_material_name": "C, Graphene, HEX (P6:mmm) 2D (Monolayer), 2dm-3993 (Zigzag nanoribbon) (Perturbation: PerturbationFunctionHolder)",
+            "tutorial_material_name": "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993 (Zigzag nanoribbon) (Perturbation: PerturbationFunctionHolder)",
             "tutorial_material_file_name": "Graphene_edge_perturbation.json",
             "tutorial_material_index": 2,
             "template_name": "jupyterlite-api-examples.ftl",

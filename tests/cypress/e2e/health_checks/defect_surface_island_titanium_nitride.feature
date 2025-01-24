@@ -1,4 +1,4 @@
-Feature: Healthcheck to create N4Ti4(001), termination TiN_P4:mmm_4, Slab
+Feature: Healthcheck to create N4Ti4(001), termination TiN_P4/mmm_4, Slab
 
   Scenario:
     When I open materials designer page
@@ -22,4 +22,4 @@ Feature: Healthcheck to create N4Ti4(001), termination TiN_P4:mmm_4, Slab
     And I submit materials
     Then material with following name exists in state
       | name                      | index                      |
-      | N4Ti4(001), termination TiN_P4:mmm_4, Slab | 2 |
+      | N4Ti4(001), termination TiN_P4/mmm_4, Slab | 2 |

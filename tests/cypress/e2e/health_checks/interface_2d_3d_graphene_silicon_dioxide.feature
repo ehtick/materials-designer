@@ -1,4 +1,4 @@
-Feature: Healthcheck to create Interface (C_P6:mmm_2, O2_P6:mmm_1)
+Feature: Healthcheck to create Interface (C_P6/mmm_2, O2_P6/mmm_1)
 
   Scenario:
     When I open materials designer page
@@ -22,4 +22,4 @@ Feature: Healthcheck to create Interface (C_P6:mmm_2, O2_P6:mmm_1)
     And I submit materials
     Then material with following name exists in state
       | name                      | index                      |
-      | Interface (C_P6:mmm_2, O2_P6:mmm_1) | 2 |
+      | Interface (C_P6/mmm_2, O2_P6/mmm_1) | 2 |
