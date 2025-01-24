@@ -161,6 +161,33 @@
             "template_name": "jupyterlite-api-examples.ftl",
             "feature_path": "../e2e/health_checks/",
             "feature_name": "passivation_surface_silicon"
+        },
+        {
+            "tutorial_notebook_name": "passivation_edge_nanowire_silicon.ipynb",
+            "tutorial_material_name": "H-Passivated Silicon Nanowire",
+            "tutorial_material_file_name": "passivated_nanowire.json",
+            "tutorial_material_index": 2,
+            "template_name": "jupyterlite-api-examples.ftl",
+            "feature_path": "../e2e/health_checks/",
+            "feature_name": "passivation_edge_nanowire_silicon"
+        },
+        {
+            "tutorial_notebook_name": "slab_strontium_titanate.ipynb",
+            "tutorial_material_name": "O3SrTi(011), termination O2_Pmmm_2, Slab",
+            "tutorial_material_file_name": "O3SrTi(011), termination O2_Pmmm_2, Slab.json",
+            "tutorial_material_index": 2,
+            "template_name": "jupyterlite-api-examples.ftl",
+            "feature_path": "../e2e/health_checks/",
+            "feature_name": "slab_strontium_titanate"
+        },
+        {
+            "tutorial_notebook_name": "perturbation_ripple_graphene.ipynb",
+            "tutorial_material_name": "C, Graphene, HEX (P6:mmm) 2D (Monolayer), 2dm-3993 (Zigzag nanoribbon) (Perturbation: PerturbationFunctionHolder)",
+            "tutorial_material_file_name": "Graphene_edge_perturbation.json",
+            "tutorial_material_index": 2,
+            "template_name": "jupyterlite-api-examples.ftl",
+            "feature_path": "../e2e/health_checks/",
+            "feature_name": "perturbation_ripple_graphene"
         }
     ]
 }
