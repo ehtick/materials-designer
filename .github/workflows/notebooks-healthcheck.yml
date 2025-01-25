@@ -31,18 +31,8 @@ jobs:
           username: $GITHUB_USER
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build containers
-        uses: ./actions/docker/build
-        with:
-          image-name: materials-designer
-          image-tag: latest
-          dockerfile: ./dockerfiles/app/Dockerfile
-
-      - name: Build test container
-        uses: ./actions/docker/build
-        with:
-          image-name: materials-designer-test
-          dockerfile: ./dockerfiles/tests/Dockerfile
+      - name: Docker build and test
+        uses: ./.github/workflows/docker-build-test
 
       - name: Run notebooks healthcheck
         shell: bash -l {0}
