@@ -2,8 +2,8 @@ name: Build docker containers and run tests
 description: Building docker images using ECR or github containers
 
 inputs:
-  run-test-arguments:
-    description: 'Extra context to pass to tests'
+  run-test-environment:
+    description: '-e VAR1=value1 -e VAR2=value2'
     required: false
     default: ''
   skip_build:
@@ -61,4 +61,4 @@ runs:
             fi
             sleep 5
         done
-        docker run --network=host materials-designer-test ${{ inputs.run-test-arguments }}
+        docker run ${{ inputs.run-test-environment }} --network=host materials-designer-test
