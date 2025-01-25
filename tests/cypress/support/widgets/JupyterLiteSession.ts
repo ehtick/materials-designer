@@ -6,10 +6,10 @@ const selectors = {
     iframe: "iframe#jupyter-lite-iframe",
     wrapper: "#main",
     sidebarPath: ".jp-FileBrowser-crumbs",
-    // TODO: specify top-level selector for the sidebar
+    sidebar: "#jp-left-stack",
     sidebarEntryByIndexInTree: (index: number) =>
-        `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
-    sidebarEntryByTitle: (title: string) => `#jp-left-stack .jp-DirListing-content li`,
+        `${selectors.sidebar} .jp-DirListing-content li:nth-of-type(${index})`,
+    sidebarEntry: () => `${selectors.sidebar} .jp-DirListing-content li`,
     notebook: ".jp-Notebook",
     cellIn: `.jp-Cell .jp-InputArea-editor`,
     cellInIndex: (index: number) =>
@@ -20,8 +20,7 @@ const selectors = {
     restartKernel:
         '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
     dialogAccept: ".jp-Dialog-button.jp-mod-accept",
-    // TODO: specify top-level selector for the open tabs
-    fileSelectorByFileName: (fileName: string) => `li[title*='${fileName}']`,
+    fileTabSelector: ".lm-TabBar-tabLabel.p-TabBar-tabLabel",
 };
 
 export enum kernelStatus {
@@ -45,8 +44,10 @@ export default class JupyterLiteSession extends Widget {
     }
 
     doubleclickEntryInSidebar(sidebarEntry: string) {
-        const selector = selectors.sidebarEntryByTitle(sidebarEntry);
+        const selector = selectors.sidebarEntry();
         this.iframeAnchor.waitForExist(selector);
+        // The force flag is needed because the sidebar is partially covered with other UI elements in JupyterLite layout.
+        // Double-clicking on the sidebar entry does work when visually inspected, but Cypress doesn't register that.
         this.iframeAnchor.doubleClickOnText(sidebarEntry, selector, { force: true });
     }
 
@@ -68,11 +69,12 @@ export default class JupyterLiteSession extends Widget {
     }
 
     checkEntryPresentInSidebar(sidebarEntry: string) {
-        return this.iframeAnchor.waitForVisible(selectors.fileSelectorByFileName(sidebarEntry));
+        this.iframeAnchor.waitForVisible(selectors.sidebarEntry());
+        return this.iframeAnchor.get(selectors.sidebarEntry()).contains(sidebarEntry);
     }
 
     checkFileOpened(fileName: string) {
-        return this.iframeAnchor.waitForVisible(selectors.fileSelectorByFileName(fileName));
+        return this.iframeAnchor.get(selectors.fileTabSelector).contains(fileName);
     }
 
     clickLinkInNotebookByItsTextContent(link: string) {

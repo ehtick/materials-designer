@@ -44,7 +44,7 @@ jobs:
           image-name: materials-designer-test
           dockerfile: ./dockerfiles/tests/Dockerfile
 
-      - name: Run notebook healthchecks
+      - name: Run notebooks healthcheck
         shell: bash -l {0}
         run: |
           docker run -d -p 3001:3001 --name=materials-designer materials-designer:latest
