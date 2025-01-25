@@ -31,9 +31,6 @@ jobs:
           username: $GITHUB_USER
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker build and test
-        uses: ./.github/workflows/docker-build-test
-
       - name: Run notebooks healthcheck
         shell: bash -l {0}
         run: |
