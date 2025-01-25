@@ -61,4 +61,4 @@ runs:
             fi
             sleep 5
         done
-        docker run --network=host materials-designer-test ${{ input.run-test-arguments }}
+        docker run --network=host materials-designer-test ${{ inputs.run-test-arguments }}
