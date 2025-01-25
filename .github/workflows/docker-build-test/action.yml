@@ -6,10 +6,15 @@ inputs:
     description: 'Extra context to pass to tests'
     required: false
     default: ''
-  skip_tests:
-    description: 'Skip running tests, only build container'
+  skip_build:
+    description: 'Skip building container'
     required: false
     default: 'false'
+  skip_tests:
+    description: 'Skip running tests'
+    required: false
+    default: 'false'
+
 
 runs:
   using: composite
@@ -35,6 +40,7 @@ runs:
 #        docker push ghcr.io/exabyte-io/materials-designer_x86_64:latest
 
     - name: Build test container
+      if: inputs.skip_build != 'true'
       uses: ./actions/docker/build
       with:
         image-name: materials-designer-test
