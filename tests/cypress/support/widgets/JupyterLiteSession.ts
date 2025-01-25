@@ -2,26 +2,36 @@ import { IframeBrowser } from "@mat3ra/tede/src/js/cypress/Browser";
 
 import Widget from "./Widget";
 
-const selectors = {
+// Selectors work for JL version https://github.com/Exabyte-io/jupyterlite/blob/7694a77e0a8cd495b0dbe1fb68cff3142fc5d32b/requirements.txt#L3
+const SELECTORS = {
     iframe: "iframe#jupyter-lite-iframe",
-    wrapper: "#main",
-    sidebarPath: ".jp-FileBrowser-crumbs",
-    // TODO: specify top-level selector for the sidebar
-    sidebarEntryByIndexInTree: (index: number) =>
-        `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
-    sidebarEntryByTitle: (title: string) => `#jp-left-stack .jp-DirListing-content li`,
-    notebook: ".jp-Notebook",
-    cellIn: `.jp-Cell .jp-InputArea-editor`,
-    cellInIndex: (index: number) =>
-        `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
-    menuTab: "#jp-MainMenu ul li",
-    menuItem: "#jp-mainmenu-run ul li",
-    kernelStatusSpan: "#jp-bottom-panel #jp-main-statusbar div:nth-child(5) span",
-    restartKernel:
-        '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
-    dialogAccept: ".jp-Dialog-button.jp-mod-accept",
-    // TODO: specify top-level selector for the open tabs
-    fileSelectorByFileName: (fileName: string) => `li[title*='${fileName}']`,
+    main: "#main",
+    sidebar: {
+        root: "#jp-left-stack",
+        crumbs: ".jp-FileBrowser-crumbs",
+        listing: ".jp-DirListing-content li",
+        listingByIndex: (index: number) =>
+            `#jp-left-stack .jp-DirListing-content li:nth-of-type(${index})`,
+    },
+    notebook: {
+        root: ".jp-Notebook",
+        cell: {
+            input: ".jp-Cell .jp-InputArea-editor",
+            byIndex: (index: number) =>
+                `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
+        },
+    },
+    menu: {
+        tab: "#jp-MainMenu ul li",
+        item: "#jp-mainmenu-run ul li",
+    },
+    kernel: {
+        status: "#jp-bottom-panel #jp-main-statusbar div:nth-child(5) span",
+        restart:
+            '.jp-NotebookPanel:not(.p-mod-hidden) .jp-NotebookPanel-toolbar button[data-command="kernelmenu:restart"]',
+    },
+    dialog: ".jp-Dialog-button.jp-mod-accept",
+    fileTab: ".lm-TabBar-tabLabel.p-TabBar-tabLabel",
 };
 
 export enum kernelStatus {
@@ -30,24 +40,25 @@ export enum kernelStatus {
 }
 
 export default class JupyterLiteSession extends Widget {
-    wrappedSelectors: typeof selectors;
+    wrappedSelectors: typeof SELECTORS;
 
     private iframeAnchor: IframeBrowser;
 
     constructor() {
-        super(selectors.iframe);
-        this.wrappedSelectors = this.getWrappedSelectors(selectors);
-        this.iframeAnchor = this.browser.iframe(selectors.iframe, Widget.TimeoutType.md);
+        super(SELECTORS.iframe);
+        this.wrappedSelectors = this.getWrappedSelectors(SELECTORS);
+        this.iframeAnchor = this.browser.iframe(SELECTORS.iframe, Widget.TimeoutType.md);
     }
 
     waitForVisible() {
-        return this.iframeAnchor.waitForVisible(selectors.wrapper, Widget.TimeoutType.md);
+        return this.iframeAnchor.waitForVisible(SELECTORS.main, Widget.TimeoutType.md);
     }
 
     doubleclickEntryInSidebar(sidebarEntry: string) {
-        const selector = selectors.sidebarEntryByTitle(sidebarEntry);
-        this.iframeAnchor.waitForExist(selector);
-        this.iframeAnchor.doubleClickOnText(sidebarEntry, selector, { force: true });
+        this.iframeAnchor.waitForExist(SELECTORS.sidebar.listing);
+        this.iframeAnchor.doubleClickOnText(sidebarEntry, SELECTORS.sidebar.listing, {
+            force: true,
+        });
     }
 
     assertPathInSidebar(path: string) {
@@ -60,35 +71,34 @@ export default class JupyterLiteSession extends Widget {
     }
 
     getPathInSidebar() {
-        this.iframeAnchor.waitForVisible(selectors.sidebarPath);
+        this.iframeAnchor.waitForVisible(SELECTORS.sidebar.crumbs);
         this.iframeAnchor
-            .getElementText(selectors.sidebarPath)
+            .getElementText(SELECTORS.sidebar.crumbs)
             .then((text: string) => console.log(text));
-        return this.iframeAnchor.getElementText(selectors.sidebarPath);
+        return this.iframeAnchor.getElementText(SELECTORS.sidebar.crumbs);
     }
 
     checkEntryPresentInSidebar(sidebarEntry: string) {
-        return this.iframeAnchor.waitForVisible(selectors.fileSelectorByFileName(sidebarEntry));
+        this.iframeAnchor.waitForVisible(SELECTORS.sidebar.listing);
+        return this.iframeAnchor.get(SELECTORS.sidebar.listing).contains(sidebarEntry);
     }
 
     checkFileOpened(fileName: string) {
-        return this.iframeAnchor.waitForVisible(selectors.fileSelectorByFileName(fileName));
+        return this.iframeAnchor.get(SELECTORS.fileTab).contains(fileName);
     }
 
     clickLinkInNotebookByItsTextContent(link: string) {
-        this.iframeAnchor.waitForVisible(selectors.notebook);
-        this.iframeAnchor.clickOnText(link, selectors.notebook);
+        this.iframeAnchor.waitForVisible(SELECTORS.notebook.root);
+        this.iframeAnchor.clickOnText(link, SELECTORS.notebook.root);
     }
 
-    // If `code` is passed - assuming `set`, otherwise - `get`
     getOrSetCodeInCell(cellIndex: number, sourceCode = "") {
-        const cellSelector = selectors.cellInIndex(cellIndex);
+        const cellSelector = SELECTORS.notebook.cell.byIndex(cellIndex);
         this.iframeAnchor.waitForExist(cellSelector);
 
         return this.browser.execute((win) => {
-            // @ts-ignore
-            const iframe = win.document.querySelector(selectors.iframe);
-            const selector = selectors.cellInIndex(cellIndex);
+            const iframe = win.document.querySelector(SELECTORS.iframe);
+            const selector = SELECTORS.notebook.cell.byIndex(cellIndex);
             const cell = iframe.contentWindow.document.body.querySelector(selector);
             const codeMirrorInstance = cell.CodeMirror;
             if (!codeMirrorInstance) {
@@ -109,14 +119,14 @@ export default class JupyterLiteSession extends Widget {
     }
 
     clickMenu(tabName: string, subItemName?: string) {
-        this.iframeAnchor.clickOnText(tabName, selectors.menuTab);
+        this.iframeAnchor.clickOnText(tabName, SELECTORS.menu.tab);
         if (subItemName) {
-            this.iframeAnchor.clickOnText(subItemName, selectors.menuItem);
+            this.iframeAnchor.clickOnText(subItemName, SELECTORS.menu.item);
         }
     }
 
     isKernelInStatus(status: kernelStatus) {
-        return this.iframeAnchor.getElementText(selectors.kernelStatusSpan).then((text: string) => {
+        return this.iframeAnchor.getElementText(SELECTORS.kernel.status).then((text: string) => {
             return text.includes(status);
         });
     }
@@ -130,9 +140,9 @@ export default class JupyterLiteSession extends Widget {
     }
 
     restartKernel() {
-        this.iframeAnchor.click(selectors.restartKernel);
-        this.iframeAnchor.waitForVisible(selectors.dialogAccept, Widget.TimeoutType.md);
-        this.iframeAnchor.click(selectors.dialogAccept);
+        this.iframeAnchor.click(SELECTORS.kernel.restart);
+        this.iframeAnchor.waitForVisible(SELECTORS.dialog, Widget.TimeoutType.md);
+        this.iframeAnchor.click(SELECTORS.dialog);
     }
 
     waitForKernelInStatusWithCallback(status: kernelStatus, callback?: () => void) {
@@ -152,8 +162,6 @@ export default class JupyterLiteSession extends Widget {
     }
 
     waitForKernelIdleWithRestart() {
-        // We need to wait some time to allow kernel to start on its own, if there's an issue, we restart and wait for some time again.
-        // Times are empirically determined. Usually takes 12-15 seconds for kernel to start.
         this.waitForKernelInStatusWithCallback(kernelStatus.Idle, () => {
             this.restartKernel();
         });

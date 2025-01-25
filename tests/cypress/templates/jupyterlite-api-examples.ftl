@@ -1,3 +1,4 @@
+@notebook_healthcheck
 Feature: Healthcheck to create ${tutorial_material_name}
 
   Scenario:
