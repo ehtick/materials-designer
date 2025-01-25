@@ -40,6 +40,6 @@ jobs:
         uses: ./.github/workflows/docker-build-test
         with:
           skip_build: 'true'
-          run-test-arguments: npm run test:healthcheck
+          run-test-arguments: -- -e TAGS='not @ignore and @notebook_healthcheck'
 
       
