@@ -1,6 +1,12 @@
 name: Build docker containers and run tests
 description: Building docker images using ECR or github containers
 
+inputs:
+  skip_tests:
+    description: 'Skip running tests'
+    required: false
+    default: 'false'
+
 runs:
   using: composite
   steps:
@@ -25,6 +31,7 @@ runs:
 #        docker push ghcr.io/exabyte-io/materials-designer_x86_64:latest
 
     - name: Build test container
+      if: inputs.skip_tests != 'true'
       uses: ./actions/docker/build
       with:
         image-name: materials-designer-test
