@@ -8,7 +8,7 @@ const selectors = {
         `[data-tid='select-material']:nth-of-type(${index})`,
     materialsOutSelector: "[data-tid='materials-out-selector']",
     materialsOutSelectorItem: (index: number) =>
-        `[data-tid='select-material']:nth-of-type(${index})`,
+        `[data-tid='materials-out-selector']:nth-of-type(${index})`,
     submitButton: "#jupyterlite-transformation-dialog-submit-button",
 };
 
