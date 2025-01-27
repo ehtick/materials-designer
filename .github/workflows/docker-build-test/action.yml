@@ -27,6 +27,7 @@ runs:
 #        key: docker-${{ runner.os }}-${{ hashFiles('package.json') }}
 
     - name: Build application container
+      if: inputs.skip_build != 'true'
       uses: ./actions/docker/build
       with:
         image-name: materials-designer
@@ -61,4 +62,4 @@ runs:
             fi
             sleep 5
         done
-        docker run ${{ inputs.run-test-environment }} --network=host materials-designer-test
+        docker run --network=host ${{ inputs.run-test-environment }} materials-designer-test npm run test:headless
