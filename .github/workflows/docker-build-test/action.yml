@@ -1,20 +1,19 @@
-name: Build docker containers and run tests
-description: Building docker images using ECR or github containers
+name: Build Docker Containers and Run Tests
+description: Building Docker images using ECR or GitHub Containers
 
 inputs:
-  run-test-environment:
-    description: '-e VAR1=value1 -e VAR2=value2'
+  test-command:
+    description: 'NPM script to run tests, e.g., test:headless or test:healthcheck'
     required: false
-    default: ''
+    default: 'test:headless'
   skip_build:
-    description: 'Skip building container'
+    description: 'Skip building containers'
     required: false
     default: 'false'
   skip_tests:
     description: 'Skip running tests'
     required: false
     default: 'false'
-
 
 runs:
   using: composite
@@ -56,10 +55,17 @@ runs:
         while ! docker logs materials-designer 2>&1 | grep "Compiled"; do
             failed=$(docker logs materials-designer 2>&1 | grep "Failed")
             if [[ "$failed" != "" ]]; then
-                # print logs to understand what went wrong
                 docker logs materials-designer 2>&1
                 exit 1
             fi
             sleep 5
         done
-        docker run --network=host ${{ inputs.run-test-environment }} materials-designer-test npm run NPM_RUN_COMMAND
+
+        echo "Materials Designer is ready. Verifying accessibility on port 3001..."
+        docker exec materials-designer curl -s http://localhost:3001 > /dev/null && echo "Port 3001 is accessible." || { echo "Port 3001 is not accessible."; exit 1; }
+
+        echo "Running tests with command: npm run ${{ inputs.test-command }}"
+        docker run --network md-network \
+          -e CYPRESS_BASE_URL=http://materials-designer:3001 \
+          materials-designer-test npm run ${{ inputs.test-command }}
+
