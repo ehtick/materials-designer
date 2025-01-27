@@ -65,7 +65,7 @@ runs:
         docker exec materials-designer curl -s http://localhost:3001 > /dev/null && echo "Port 3001 is accessible." || { echo "Port 3001 is not accessible."; exit 1; }
 
         echo "Running tests with command: npm run ${{ inputs.test-command }}"
-        docker run --network md-network \
+        docker run --network=host \
           -e CYPRESS_BASE_URL=http://materials-designer:3001 \
           materials-designer-test npm run ${{ inputs.test-command }}
 
