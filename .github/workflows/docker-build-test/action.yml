@@ -62,4 +62,4 @@ runs:
             fi
             sleep 5
         done
-        docker run --network=host ${{ inputs.run-test-environment }} materials-designer-test npm run test:headless
+        docker run --network=host ${{ inputs.run-test-environment }} materials-designer-test npm run NPM_RUN_COMMAND
