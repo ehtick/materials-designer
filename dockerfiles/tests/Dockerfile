@@ -10,6 +10,5 @@ COPY ./tests/cypress cypress
 
 RUN npm install
 
-ENV NPM_RUN_COMMAND="test:headless"
-
-ENTRYPOINT npm run ${NPM_RUN_COMMAND}
+ENTRYPOINT ["npm", "run"]
+CMD ["test:headless"]
