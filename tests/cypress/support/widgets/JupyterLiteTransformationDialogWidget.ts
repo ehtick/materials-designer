@@ -28,7 +28,7 @@ export default class JupyterLiteTransformationDialog extends Widget {
 
     selectMaterialByName(materialName: string) {
         this.browser.click(this.wrappedSelectors.materialsInSelector);
-        this.browser.waitForVisible('.MuiAutocomplete-popper', "xl");
+        this.browser.waitForVisible(".MuiAutocomplete-popper", "xl");
         this.browser.click(selectors.materialsSelectorItem(materialName));
     }
 
