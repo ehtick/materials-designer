@@ -6,9 +6,10 @@ WORKDIR /opt/test
 COPY ./tests/package.json package.json
 COPY ./tests/package-lock.json package-lock.json
 COPY ./tests/cypress.config.ts cypress.config.ts
-COPY ./tests/cypress cypress
 
 RUN npm install
+
+COPY ./tests/cypress cypress
 
 ENV NPM_RUN_COMMAND=${NPM_RUN_COMMAND:-'test:headless'}
 ENV CYPRESS_BASE_URL=${CYPRESS_BASE_URL:-'http://localhost:3001'}
