@@ -8,27 +8,35 @@ const TEMPLATE_DIR = __dirname;
 const configPath = path.join(TEMPLATE_DIR, 'test-cases.json');
 const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 
+// Create a function to generate a table from an array of objects
+const generateTable = (items, columns) => {
+    if (!items || !Array.isArray(items)) {
+        return '';
+    }
+    return items.map(item => {
+        const cells = columns.map(col => item[col]);
+        return `      | ${cells.join(' | ')} |`;
+    }).join('\n');
+};
+
 // Create a function to evaluate the template string
 const expandTemplate = (template, context) => {
     return template.replace(/\${([^}]+)}/g, (match, key) => {
-        // Handle array of materials
-        if (key.trim() === 'materials_table') {
-            if (!context.materials || !Array.isArray(context.materials)) {
-                return '';
+        const trimmedKey = key.trim();
+        
+        // Handle table generation for any key ending with '_table'
+        if (trimmedKey.endsWith('_table')) {
+            const dataKey = trimmedKey.replace('_table', '');
+            const data = context[dataKey];
+            if (data && Array.isArray(data)) {
+                // Infer columns from the first item in the array
+                const columns = data[0] ? Object.keys(data[0]) : [];
+                return generateTable(data, columns);
             }
-            // Generate materials table
-            return context.materials.map(material => 
-                `      | ${material.material_name} | ${material.material_index} |`
-            ).join('\n');
         }
-        // For single material references, use the first material in the array if it exists
-        if (key.trim() === 'material_name' && context.materials && context.materials.length > 0) {
-            return context.materials[0].material_name;
-        }
-        if (key.trim() === 'material_index' && context.materials && context.materials.length > 0) {
-            return context.materials[0].material_index;
-        }
-        return context[key.trim()] ?? match;
+
+        // For all other variables, simply look them up in the context
+        return context[trimmedKey] ?? match;
     });
 };
 
