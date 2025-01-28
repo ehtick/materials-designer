@@ -52,4 +52,4 @@ runs:
       shell: bash -l {0}
       run: |
         # Starting tests
-        ${{ inputs.run-test-environment }} docker-compose up --abort-on-container-exit --exit-code-from materials-designer-test
+        ${{ inputs.run-test-environment }} docker compose up --abort-on-container-exit --exit-code-from materials-designer-test
