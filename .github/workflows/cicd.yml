@@ -49,6 +49,7 @@ jobs:
         uses: ./actions/js/validate
         with:
           node-version: 20.x
+          use-legacy-peer-deps: true
 
       - name: Validate test dockerfile
         uses: ./actions/docker/validate
