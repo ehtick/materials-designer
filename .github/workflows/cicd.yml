@@ -37,6 +37,8 @@ jobs:
 
       - name: Docker build and test
         uses: ./.github/workflows/docker-build-test
+        with:
+          test-command: 'test:headless'
 
       - name: Validate app dockerfile
         uses: ./actions/docker/validate
