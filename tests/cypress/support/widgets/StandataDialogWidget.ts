@@ -8,6 +8,7 @@ const selectors = {
         `li[data-tid='select-material']:contains("${materialName}")`,
     submitButton: "#standata-import-dialog-submit-button",
 };
+
 export default class StandataDialogWidget extends Widget {
     wrappedSelectors: typeof selectors;
 
@@ -20,10 +21,12 @@ export default class StandataDialogWidget extends Widget {
         this.browser.waitForVisible(this.wrappedSelectors.dialog);
     }
 
-    selectMaterial(materialName: string) {
+    openMaterialsDropdown() {
         this.browser.click(this.wrappedSelectors.materialsSelector);
-        const materialSelector = selectors.materialsSelectorItem(materialName);
-        this.browser.click(materialSelector);
+    }
+
+    selectMaterial(materialName: string) {
+        this.browser.click(selectors.materialsSelectorItem(materialName));
     }
 
     submit() {

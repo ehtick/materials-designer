@@ -6,10 +6,10 @@ Feature: Healthcheck to create ${material_name}
     Then I see material designer page
     And I import materials from Standata
       | name | index |
-${materials_table}
+${standata_materials_table}
     Then material with following name exists in state
       | name | index |
-${materials_table}
+${standata_materials_table}
 
     # Open
     When I open JupyterLite Transformation dialog
@@ -20,19 +20,15 @@ ${materials_table}
     When I double click on "${notebook_name}" entry in sidebar
     And I see file "${notebook_name}" opened
 
-    # Select materials
-    When I select materials from dropdown
+    # Select material
+    And I select materials in MaterialsSelector
       | name | index |
-${materials_table}
-    Then I see materials selected
-      | name | index |
-${materials_table}
+${input_materials_table}
 
     # Run
     And I Run All Cells
     And I see kernel status is Idle
-    Then I see file "${material_file_name}" on filesystem
     And I submit materials
     Then material with following name exists in state
       | name | index |
-${materials_table}
+${output_materials_table}
