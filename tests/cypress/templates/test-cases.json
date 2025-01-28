@@ -177,7 +177,25 @@
     "notebooks": [
         {
             "template_name": "jupyterlite-notebooks.ftl",
-            "testCases": []
+            "testCases": [
+                {
+                    "notebook_name": "create_adatom_defect.ipynb",
+                    "materials": [
+                        {
+                            "material_name": "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993",
+                            "material_index": 2
+                        },
+                        {
+                            "material_name": "Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23",
+                            "material_index": 3
+                        }
+                    ],
+                    "material_file_name": "adatom_defect.json",
+                    "feature_path": "../e2e/health_checks/notebooks/",
+                    "feature_name": "create_adatom_defect"
+                }
+            ]
         }
+
     ]
 }
