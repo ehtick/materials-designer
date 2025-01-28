@@ -36,6 +36,9 @@ services:
       - ./entrypoint.sh:/opt/test/entrypoint.sh
     profiles:
       - ""
+    environment:
+      - CYPRESS_BASE_URL=${CYPRESS_BASE_URL:-http://localhost:${PORT}}
+      - NPM_RUN_COMMAND=${NPM_RUN_COMMAND:-test:headless}
 
   # For local testing with access via VNC
   materials-designer-test-vnc:
