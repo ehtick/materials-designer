@@ -168,6 +168,18 @@ To run tests in the container use default profile by not specifying it:
 docker-compose up -d --build
 ```
 
+To run on MacOS, add CYPRESS_BASE_URL=http://host.docker.internal:3001 to the environment variables in the test container
+
+```
+CYRPRESS_BASE_URL=http://host.docker.internal:3001 docker-compose run materials-designer-test
+```
+
+To run both services and execute tests:
+
+```
+CYPRESS_BASE_URL=http://host.docker.internal:3001 docker-compose up --abort-on-container-exit --exit-code-from materials-designer-test
+```
+
 For debugging purposes, Materials Designer and test container can be run interactively with access via VNC:
 
 ```bash
