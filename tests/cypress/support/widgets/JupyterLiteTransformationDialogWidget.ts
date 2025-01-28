@@ -12,6 +12,7 @@ const selectors = {
     materialsOutSelectorItem: (index: number) =>
         `[data-tid='materials-out-selector']:nth-of-type(${index})`,
     submitButton: "#jupyterlite-transformation-dialog-submit-button",
+    autocompletePopper: ".MuiAutocomplete-popper",
 };
 
 export default class JupyterLiteTransformationDialog extends Widget {
@@ -28,7 +29,7 @@ export default class JupyterLiteTransformationDialog extends Widget {
 
     selectMaterialByName(materialName: string) {
         this.browser.click(this.wrappedSelectors.materialsInSelector);
-        this.browser.waitForVisible(".MuiAutocomplete-popper", "xl");
+        this.browser.waitForVisible(selectors.autocompletePopper, "xl");
         this.browser.click(selectors.materialsSelectorItem(materialName));
     }
 
