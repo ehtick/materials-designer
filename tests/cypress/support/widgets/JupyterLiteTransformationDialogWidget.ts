@@ -4,8 +4,10 @@ const selectors = {
     wrapper: "#jupyterlite-transformation-dialog",
     dialog: "div[role='dialog']",
     materialsInSelector: "[data-tid='materials-in-selector']",
-    materialsInSelectorItem: (index: number) =>
-        `[data-tid='select-material']:nth-of-type(${index})`,
+    materialsSelectorItem: (materialName: string) =>
+        `[data-tid='select-material']:contains("${materialName}")`,
+    selectedMaterialChip: (materialName: string) =>
+        `.MuiChip-root:contains("${materialName}") .MuiChip-deleteIcon`,
     materialsOutSelector: "[data-tid='materials-out-selector']",
     materialsOutSelectorItem: (index: number) =>
         `[data-tid='materials-out-selector']:nth-of-type(${index})`,
@@ -20,9 +22,14 @@ export default class JupyterLiteTransformationDialog extends Widget {
         this.wrappedSelectors = this.getWrappedSelectors(selectors);
     }
 
-    selectMaterialsIn(index: number) {
+    removeMaterial(materialName: string) {
+        this.browser.click(selectors.selectedMaterialChip(materialName));
+    }
+
+    selectMaterialByName(materialName: string) {
         this.browser.click(this.wrappedSelectors.materialsInSelector);
-        this.browser.click(selectors.materialsInSelectorItem(index));
+        this.browser.waitForVisible('.MuiAutocomplete-popper', "xl");
+        this.browser.click(selectors.materialsSelectorItem(materialName));
     }
 
     verifyMaterialsOut(index: number) {
