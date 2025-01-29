@@ -192,19 +192,19 @@ cases:
       - material_name: Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149
         material_index: 2
     output_materials:
-      - material_name: Si Nanowire [001]
+      - material_name: Si8(001), termination Si_P4/mmm_2, Slab
         material_index: 3
     feature_name: create_nanowire
 
   - notebook_name: create_slab.ipynb
     standata_materials:
-      - material_name: O3SrTi, Strontium Titanate, CUB (Pm-3m) 3D (Bulk), mp-5229
+      - material_name: SrTiO3, Strontium Titanate, CUB (Pm-3m) 3D (Bulk), mp-5229
         material_index: 2
     input_materials:
-      - material_name: O3SrTi, Strontium Titanate, CUB (Pm-3m) 3D (Bulk), mp-5229
+      - material_name: SrTiO3, Strontium Titanate, CUB (Pm-3m) 3D (Bulk), mp-5229
         material_index: 2
     output_materials:
-      - material_name: O3SrTi(001), termination TiO2_P4/mmm_1, Slab
+      - material_name: O3SrTi(001), termination TiO2_P4/mmm_3, Slab
         material_index: 3
     feature_name: create_slab
 
@@ -216,19 +216,19 @@ cases:
       - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
         material_index: 2
     output_materials:
-      - material_name: Ni32 Supercell
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
         material_index: 3
     feature_name: create_supercell
 
   - notebook_name: create_twisted_interface_with_commensurate_lattices.ipynb
     standata_materials:
-      - material_name: MoS2, Molybdenum Disulfide, HEX (P6/mmm) 2D (Monolayer), 2dm-5142
+      - material_name: BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991
         material_index: 2
     input_materials:
-      - material_name: MoS2, Molybdenum Disulfide, HEX (P6/mmm) 2D (Monolayer), 2dm-5142
+      - material_name: BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991
         material_index: 2
     output_materials:
-      - material_name: Twisted Bilayer Interface (21.79 degrees)
+      - material_name: Twisted Bilayer Interface (17.90 degrees)
         material_index: 3
     feature_name: create_twisted_interface_with_commensurate_lattices
 
@@ -240,41 +240,38 @@ cases:
       - material_name: BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991
         material_index: 2
     output_materials:
-      - material_name: Twisted Nanoribbon Interface (2.64 degrees)
+      - material_name: Twisted Nanoribbon Interface (15.00 degrees)
         material_index: 3
     feature_name: create_twisted_interface_with_nanoribbons
 
   - notebook_name: optimize_film_position.ipynb
 #    Needs an interface material
     standata_materials:
-      - material_name: C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993
+      - material_name: Graphene on Ni(111) Interface
         material_index: 2
-      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
-        material_index: 3
     input_materials:
-      - material_name: C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993
+      - material_name: Graphene on Ni(111) Interface
         material_index: 2
-      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
-        material_index: 3
     output_materials:
-      - material_name: Graphene_Nickel_interface_optimized_xy
+      - material_name: Graphene on Ni(111) Interface Optimized
         material_index: 4
     feature_name: optimize_film_position
 
   - notebook_name: passivate_edge.ipynb
 #    Needs a nanoribbon
     standata_materials:
-      - material_name: Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149
+      - material_name: Graphene Zigzag Nanoribbon (W=4 L=10)
         material_index: 2
     input_materials:
-      - material_name: Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149
+      - material_name: Graphene Zigzag Nanoribbon (W=4 L=10)
         material_index: 2
     output_materials:
-      - material_name: H-Passivated Silicon Nanowire
+      - material_name: Graphene Zigzag Nanoribbon (W=4 L=10) H-passivated
         material_index: 3
     feature_name: passivate_edge
 
   - notebook_name: passivate_slab.ipynb
+#    Need to add a slab
     standata_materials:
       - material_name: Si, Silicon (100) surface (reconstructed), TRI (P1) 2D (Surface), mavrl-si-100-r
         material_index: 2
@@ -286,8 +283,6 @@ cases:
         material_index: 3
     feature_name: passivate_slab
 
-
-
   - notebook_name: create_cutout_box.ipynb
     standata_materials:
       - material_name: Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149
@@ -296,7 +291,7 @@ cases:
       - material_name: Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149
         material_index: 2
     output_materials:
-      - material_name: Si Box Cutout
+      - material_name: Si8(001), termination Si_P4/mmm_2, Slab with box cutout
         material_index: 3
     feature_name: create_cutout_box
 
@@ -315,41 +310,37 @@ cases:
   - notebook_name: create_interface_with_relaxation_ase_emt.ipynb
 #     Needs an interface
     standata_materials:
-      - material_name: Cu, Copper, FCC (Fm-3m) 3D (Bulk), mp-30
+      - material_name: Graphene on Ni(111) Interface
         material_index: 2
-      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
-        material_index: 3
     input_materials:
-      - material_name: Cu, Copper, FCC (Fm-3m) 3D (Bulk), mp-30
+      - material_name: Graphene on Ni(111) Interface
         material_index: 2
-      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
-        material_index: 3
     output_materials:
-      - material_name: Cu-Ni Interface Relaxed
-        material_index: 4
+      - material_name: Graphene on Ni(111) Interface with relaxation
+        material_index: 3
     feature_name: create_interface_with_relaxation_ase_emt
 
   - notebook_name: create_island_defect.ipynb
     standata_materials:
-      - material_name: MoS2, Molybdenum Disulfide, HEX (P6/mmm) 2D (Monolayer), 2dm-5142
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
         material_index: 2
     input_materials:
-      - material_name: MoS2, Molybdenum Disulfide, HEX (P6/mmm) 2D (Monolayer), 2dm-5142
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
         material_index: 2
     output_materials:
-      - material_name: MoS2 with Island Defect
+      - material_name: Ni4(001), termination Ni_P4/mmm_2, Slab
         material_index: 3
     feature_name: create_island_defect
 
   - notebook_name: create_island_defect_custom.ipynb
     standata_materials:
-      - material_name: MoS2, Molybdenum Disulfide, HEX (P6/mmm) 2D (Monolayer), 2dm-5142
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
         material_index: 2
     input_materials:
-      - material_name: MoS2, Molybdenum Disulfide, HEX (P6/mmm) 2D (Monolayer), 2dm-5142
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
         material_index: 2
     output_materials:
-      - material_name: MoS2 with Custom Island Defect
+      - material_name: Ni4(001), termination Ni_P4/mmm_2, Slab
         material_index: 3
     feature_name: create_island_defect_custom
 
