@@ -1,4 +1,4 @@
-template: jupyterlite-notebooks.ftl
+template: template-notebooks.ftl
 feature_path: ../e2e/health_checks/notebooks/
 templateSchema:
   notebook_name:
