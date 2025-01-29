@@ -1,0 +1,74 @@
+template: jupyterlite-notebooks.ftl
+templateSchema:
+  notebook_name:
+    type: string
+    description: Name of the notebook file to run
+  standata_materials:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the material from Standata
+        material_index:
+          type: integer
+          description: Index of the material
+  input_materials:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the input material
+        material_index:
+          type: integer
+          description: Index of the input material
+  output_materials:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the output material
+        material_index:
+          type: integer
+          description: Index of the output material
+  feature_path:
+    type: string
+    description: Path where the feature file will be generated
+  feature_name:
+    type: string
+    description: Name of the feature file without extension
+cases:
+  - notebook_name: create_interface_with_min_strain_zsl.ipynb
+    standata_materials:
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
+        material_index: 2
+      - material_name: C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993
+        material_index: 3
+    input_materials:
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
+        material_index: 2
+      - material_name: C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993
+        material_index: 3
+    output_materials:
+      - material_name: C2(001)-Ni4(001), Interface, Strain 0.244pct
+        material_index: 4
+    material_file_name: zsl-gr-ni-interface.json
+    feature_path: ../e2e/health_checks/notebooks/
+    feature_name: create_interface_with_min_strain_zsl
+  - notebook_name: create_point_defect.ipynb
+    standata_materials:
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
+        material_index: 2
+    input_materials:
+      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
+        material_index: 2
+    output_materials:
+      - material_name: Ni26 C1, Substitution C Defect
+        material_index: 3
+    feature_path: ../e2e/health_checks/notebooks/
+    feature_name: create_point_defect
