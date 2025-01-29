@@ -16,4 +16,4 @@ Feature: User can import files from Standata
       | C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993 | $INT{2} |
 
     # Cleanup
-  Then I delete materials with index "2"
+    Then I delete materials with index "2"
