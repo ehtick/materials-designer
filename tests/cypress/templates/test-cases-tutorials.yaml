@@ -1,5 +1,5 @@
 template: jupyterlite-api-examples.ftl
-feature_path: ../e2e/health_checks/
+feature_path: ../e2e/health_checks/tutorials/
 templateSchema:
   tutorial_notebook_name:
     type: string
