@@ -19,13 +19,21 @@ const expandTemplate = (template, context) => {
     return template.replace(/\${([^}]+)}/g, (match, key) => {
         const trimmedKey = key.trim();
 
-        if (Array.isArray(context[trimmedKey])) {
-            // Infer columns from the first item in the array
-            const columns = context[trimmedKey][0] ? Object.keys(context[trimmedKey][0]) : [];
-            return generateTable(context[trimmedKey], columns);
+        // Handle table generation for arrays with _table suffix
+        if (trimmedKey.endsWith('_table')) {
+            const arrayKey = trimmedKey.replace('_table', '');
+            const array = context[arrayKey];
+            if (array && Array.isArray(array)) {
+                const columns = array[0] ? Object.keys(array[0]) : [];
+                return generateTable(array, columns);
+            }
         }
 
-        return context[trimmedKey] ?? match;
+        if (context[trimmedKey] !== undefined) {
+            return context[trimmedKey];
+        }
+
+        return match;
     });
 };
 
@@ -40,7 +48,12 @@ const processTemplateFile = (yamlPath) => {
         config.cases.forEach(testCase => {
             validateTestCase(testCase, config.templateSchema);
 
-            const expandedContent = expandTemplate(templateContent, testCase);
+            const context = {
+                ...testCase,
+                feature_path: config.feature_path
+            };
+
+            const expandedContent = expandTemplate(templateContent, context);
             const featuresDir = config.feature_path;
             const outputPath = path.join(
                 `${featuresDir}`,
