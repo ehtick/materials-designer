@@ -1,14 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const yaml = require('js-yaml');
+const glob = require('glob');
 
-// Set up paths
 const TEMPLATE_DIR = __dirname;
 
-// Read the test cases from JSON file
-const configPath = path.join(TEMPLATE_DIR, 'test-cases.json');
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-
-// Create a function to generate a table from an array of objects
 const generateTable = (items, columns) => {
     if (!items || !Array.isArray(items)) {
         return '';
@@ -19,50 +15,94 @@ const generateTable = (items, columns) => {
     }).join('\n');
 };
 
-// Create a function to evaluate the template string
 const expandTemplate = (template, context) => {
     return template.replace(/\${([^}]+)}/g, (match, key) => {
         const trimmedKey = key.trim();
-        
-        // Handle table generation for any key ending with '_table'
-        if (trimmedKey.endsWith('_table')) {
-            const dataKey = trimmedKey.replace('_table', '');
-            const data = context[dataKey];
-            if (data && Array.isArray(data)) {
-                // Infer columns from the first item in the array
-                const columns = data[0] ? Object.keys(data[0]) : [];
-                return generateTable(data, columns);
-            }
+
+        if (Array.isArray(context[trimmedKey])) {
+            // Infer columns from the first item in the array
+            const columns = context[trimmedKey][0] ? Object.keys(context[trimmedKey][0]) : [];
+            return generateTable(context[trimmedKey], columns);
         }
 
-        // For all other variables, simply look them up in the context
         return context[trimmedKey] ?? match;
     });
 };
 
-const processTestCases = (categoryData) => {
-    categoryData.forEach(templateGroup => {
-        const templatePath = path.join(TEMPLATE_DIR, templateGroup.template_name);
+const processTemplateFile = (yamlPath) => {
+    try {
+        const yamlContent = fs.readFileSync(yamlPath, 'utf8');
+        const config = yaml.load(yamlContent);
+
+        const templatePath = path.join(TEMPLATE_DIR, config.template);
         const templateContent = fs.readFileSync(templatePath, 'utf8');
 
-        templateGroup.testCases.forEach(testCase => {
+        config.cases.forEach(testCase => {
+            validateTestCase(testCase, config.templateSchema);
+
             const expandedContent = expandTemplate(templateContent, testCase);
-            const featuresDir = testCase.feature_path;
+            const featuresDir = config.feature_path;
             const outputPath = path.join(
-                `${testCase.feature_path}`,
+                `${featuresDir}`,
                 `${testCase.feature_name}.feature`
             );
-            
+
             if (!fs.existsSync(featuresDir)) {
                 fs.mkdirSync(featuresDir, { recursive: true });
             }
-            
+
             fs.writeFileSync(outputPath, expandedContent);
             console.log(`Generated: ${outputPath}`);
         });
-    });
+    } catch (error) {
+        console.error(`Error processing ${yamlPath}:`, error);
+    }
 };
 
-Object.keys(config).forEach(category => {
-    processTestCases(config[category]);
-});
+const validateTestCase = (testCase, schema) => {
+    for (const [field, fieldSchema] of Object.entries(schema)) {
+        const value = testCase[field];
+
+        if (value === undefined) {
+            throw new Error(`Missing required field: ${field}`);
+        }
+
+        if (fieldSchema.type === 'array') {
+            if (!Array.isArray(value)) {
+                throw new Error(`Field ${field} should be an array`);
+            }
+
+            if (fieldSchema.items && value.length > 0) {
+                value.forEach((item, index) => {
+                    for (const [prop, propSchema] of Object.entries(fieldSchema.items.properties)) {
+                        const itemValue = item[prop];
+                        if (itemValue === undefined) {
+                            throw new Error(`Missing required property ${prop} in ${field}[${index}]`);
+                        }
+                        validateType(itemValue, propSchema.type, `${field}[${index}].${prop}`);
+                    }
+                });
+            }
+        } else {
+            validateType(value, fieldSchema.type, field);
+        }
+    }
+};
+
+const validateType = (value, type, field) => {
+    switch (type) {
+        case 'string':
+            if (typeof value !== 'string') {
+                throw new Error(`Field ${field} should be a string`);
+            }
+            break;
+        case 'integer':
+            if (!Number.isInteger(value)) {
+                throw new Error(`Field ${field} should be an integer`);
+            }
+            break;
+    }
+};
+
+const yamlFiles = glob.sync(path.join(TEMPLATE_DIR, '*.yaml'));
+yamlFiles.forEach(processTemplateFile);
