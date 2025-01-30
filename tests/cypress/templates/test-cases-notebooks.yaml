@@ -252,7 +252,7 @@ cases:
       - material_name: Graphene on Ni(111) Interface
         material_index: 2
     output_materials:
-      - material_name: Graphene on Ni(111) Interface Optimized
+      - material_name: Graphene on Ni(111) Interface Optimized XY
         material_index: 4
     feature_name: optimize_film_position
 
@@ -402,32 +402,6 @@ cases:
       - material_name: Pt4(001), termination Pt_P4/mmm_2, Slab, 1-step Terrace [1, 0, 0]
         material_index: 3
     feature_name: create_terrace_defect
-
-  - notebook_name: import_material_from_jarvis_db_entry.ipynb
-    standata_materials: []
-    input_materials: []
-    output_materials:
-      - material_name: Imported JARVIS Material
-        material_index: 2
-    feature_name: import_material_from_jarvis_db_entry
-
-  - notebook_name: import_materials_from_files.ipynb
-    standata_materials: []
-    input_materials: []
-    output_materials:
-      - material_name: Imported Material from File
-        material_index: 2
-    feature_name: import_materials_from_files
-
-  - notebook_name: import_materials_from_standata.ipynb
-    standata_materials:
-      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
-        material_index: 2
-    input_materials: []
-    output_materials:
-      - material_name: Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
-        material_index: 2
-    feature_name: import_materials_from_standata
 
   - notebook_name: custom_transformation.ipynb
     standata_materials:

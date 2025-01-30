@@ -1,0 +1,49 @@
+template: template-notebooks-imports.ftl
+feature_path: ../e2e/health_checks/notebooks/
+templateSchema:
+  notebook_name:
+    type: string
+    description: Name of the notebook file to run
+  material_name:
+    type: string
+    description: Name of the material being imported
+  output_materials:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the output material
+        material_index:
+          type: integer
+          description: Index of the output material
+  feature_name:
+    type: string
+    description: Name of the feature file without extension
+
+cases:
+  - notebook_name: import_material_from_jarvis_db_entry.ipynb
+    material_name: JARVIS Material
+    output_materials:
+      - material_name: Te2 Mo1
+        material_index: 2
+      - material_name: Ga2 Te2
+        material_index: 3
+    feature_name: import_material_from_jarvis_db_entry
+
+  - notebook_name: import_materials_from_files.ipynb
+    material_name: Material from File
+    output_materials:
+      - material_name: Imported Material from File
+        material_index: 2
+    feature_name: import_materials_from_files
+
+  - notebook_name: import_materials_from_standata.ipynb
+    material_name: Material from Standata
+    output_materials:
+      - material_name: C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993
+        material_index: 2
+    feature_name: import_materials_from_standata
+
+    # TODO: Add case with notebooks for deafault import from files
