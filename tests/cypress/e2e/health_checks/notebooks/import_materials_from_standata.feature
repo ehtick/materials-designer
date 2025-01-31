@@ -1,4 +1,4 @@
-@notebooks_healthcheck
+@notebook_healthcheck
 Feature: Healthcheck to import Material from Standata
 
   Scenario:
