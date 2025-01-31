@@ -31,4 +31,4 @@ Feature: Healthcheck to create ${material_name}
     And I submit materials
     Then material with following name exists in state
       | name | index |
-      | Si Custom Cutout | 3 |
+      | Custom Shape - Etching Pattern | 3 |

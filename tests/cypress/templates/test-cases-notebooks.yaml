@@ -302,7 +302,7 @@ cases:
       - material_name: Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149
         material_index: 2
     output_materials:
-      - material_name: Si Custom Cutout
+      - material_name: Custom Shape - Etching Pattern
         material_index: 3
     feature_name: create_cutout_custom_shape
 
