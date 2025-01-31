@@ -1,4 +1,4 @@
-@notebooks
+@notebooks_healthcheck
 Feature: Healthcheck to import JARVIS Material
 
   Scenario:
