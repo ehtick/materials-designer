@@ -13,6 +13,7 @@ const selectors = {
         `[data-tid='materials-out-selector']:nth-of-type(${index})`,
     submitButton: "#jupyterlite-transformation-dialog-submit-button",
     autocompletePopper: ".MuiAutocomplete-popper",
+    selectedMaterials: ".MuiChip-root",
 };
 
 export default class JupyterLiteTransformationDialog extends Widget {
@@ -40,5 +41,16 @@ export default class JupyterLiteTransformationDialog extends Widget {
 
     submit() {
         this.browser.click(this.wrappedSelectors.submitButton, { force: true });
+    }
+
+    /**
+     * Deselects all materials in the JupyterLite materials selector.
+     */
+    deselectAllMaterials() {
+        // Get all selected material chips and remove them
+        cy.get(this.wrappedSelectors.selectedMaterials).each(($chip) => {
+            const materialName = $chip.text().replace("×", "").trim();
+            this.removeMaterial(materialName);
+        });
     }
 }
