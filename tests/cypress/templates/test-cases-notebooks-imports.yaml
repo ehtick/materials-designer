@@ -45,5 +45,3 @@ cases:
       - material_name: C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993
         material_index: 2
     feature_name: import_materials_from_standata
-
-    # TODO: Add case with notebooks for deafault import from files
