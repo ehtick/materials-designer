@@ -6,10 +6,10 @@ Feature: Healthcheck to create ${material_name}
     Then I see material designer page
     And I import materials from Standata
       | name | index |
-      | Graphene Zigzag Nanoribbon (W=4 L=10) | 2 |
+      | C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6 | 2 |
     Then material with following name exists in state
       | name | index |
-      | Graphene Zigzag Nanoribbon (W=4 L=10) | 2 |
+      | C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6 | 2 |
 
     # Open
     When I open JupyterLite Transformation dialog
@@ -23,7 +23,7 @@ Feature: Healthcheck to create ${material_name}
     # Select material
     And I select materials in MaterialsSelector
       | name | index |
-      | Graphene Zigzag Nanoribbon (W=4 L=10) | 2 |
+      | C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6 | 2 |
 
     # Run
     And I Run All Cells
@@ -31,4 +31,4 @@ Feature: Healthcheck to create ${material_name}
     And I submit materials
     Then material with following name exists in state
       | name | index |
-      | Graphene Zigzag Nanoribbon (W=4 L=10) H-passivated | 3 |
+      | C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6 H-passivated | 3 |

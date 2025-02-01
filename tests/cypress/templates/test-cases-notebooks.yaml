@@ -257,13 +257,13 @@ cases:
 
   - notebook_name: passivate_edge.ipynb
     standata_materials:
-      - material_name: Graphene Zigzag Nanoribbon (W=4 L=10)
+      - material_name: C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6
         material_index: 2
     input_materials:
-      - material_name: Graphene Zigzag Nanoribbon (W=4 L=10)
+      - material_name: C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6
         material_index: 2
     output_materials:
-      - material_name: Graphene Zigzag Nanoribbon (W=4 L=10) H-passivated
+      - material_name: C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6 H-passivated
         material_index: 3
     feature_name: passivate_edge
 
