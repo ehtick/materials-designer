@@ -1,4 +1,4 @@
-@healthcheck @ignore
+@notebook_healthcheck @ignore
 Feature: Healthcheck to create ${material_name}
 
   Scenario:

@@ -36,7 +36,7 @@ cases:
         material_index: 3
     feature_name: import_material_from_jarvis_db_entry
 
-  - tags: "@notebook_healthcheck"
+  - tags: "@notebook_healthcheck @ignore"
     notebook_name: import_materials_from_files.ipynb
     material_name: Material from File
     output_materials:

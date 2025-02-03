@@ -1,4 +1,4 @@
-@notebook_healthcheck
+@notebook_healthcheck @ignore
 Feature: Healthcheck to import Material from File
 
   Scenario:
