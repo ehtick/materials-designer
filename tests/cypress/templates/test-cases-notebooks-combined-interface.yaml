@@ -1,6 +1,9 @@
 template: template-notebooks-combined-interface.ftl
 feature_path: ../e2e/health_checks/combined/
 templateSchema:
+  tags:
+    type: string
+    description: Cypress tags for the feature (e.g. @notebook_healthcheck, @ignore)
   workflow_description:
     type: string
     description: Description of the workflow being tested
@@ -51,7 +54,8 @@ templateSchema:
     description: Name of the feature file without extension
 
 cases:
-  - workflow_description: create and optimize Ni-Graphene interface using automatic imports
+  - tags: "@notebook_healthcheck"
+    workflow_description: create and optimize Ni-Graphene interface using automatic imports
     interface_notebook: create_interface_with_min_strain_zsl.ipynb
     optimize_notebook: optimize_film_position.ipynb
     relax_notebook: create_interface_with_relaxation_ase_emt.ipynb

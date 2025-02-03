@@ -1,4 +1,4 @@
-@notebook_healthcheck
+${tags}
 Feature: Combined test to create interface with relaxation and optimization
 
   Scenario:

@@ -1,4 +1,4 @@
-@healthcheck
+${tags}
 Feature: Healthcheck to create ${material_name}
 
   Scenario:

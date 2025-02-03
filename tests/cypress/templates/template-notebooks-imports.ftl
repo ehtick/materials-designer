@@ -1,4 +1,4 @@
-@notebook_healthcheck
+${tags}
 Feature: Healthcheck to import ${material_name}
 
   Scenario:
