@@ -4,4 +4,4 @@ import JupyterLiteTransformationDialogWidget from "../widgets/JupyterLiteTransfo
 When("I deselect all materials", () => {
     const jupyterLiteDialog = new JupyterLiteTransformationDialogWidget();
     jupyterLiteDialog.deselectAllMaterials();
-}); 
+});
