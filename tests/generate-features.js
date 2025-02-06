@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const { TestFeatureGenerator } = require("@mat3ra/tede/src/js/utils/TestFeatureGenerator");
-const { yaml } = require("@mat3ra/utils/server");
+const { generateTestFeaturesFromYAMLConfig } = require("@mat3ra/tede/dist/js/utils/index.js");
+const { Utils } = require("@mat3ra/utils/server");
 
 function generateFeatures(inputDir, outputDir) {
     try {
@@ -10,12 +10,13 @@ function generateFeatures(inputDir, outputDir) {
 
         yamlFiles.forEach(yamlPath => {
             try {
-                const config = yaml.readYAMLFile(yamlPath);
+                const config = Utils.yaml.readYAMLFile(yamlPath);
                 const templatePath = path.join(inputDir, config.template);
                 const templateContent = fs.readFileSync(templatePath, 'utf8');
 
                 const yamlContent = fs.readFileSync(yamlPath, 'utf8');
-                const features = TestFeatureGenerator.generate(yamlContent, templateContent);
+
+                const features = generateTestFeaturesFromYAMLConfig(yamlContent, templateContent);
 
                 if (!fs.existsSync(outputDir)) {
                     fs.mkdirSync(outputDir, { recursive: true });
@@ -32,7 +33,7 @@ function generateFeatures(inputDir, outputDir) {
         });
     } catch (error) {
         console.error('Error generating features:', error);
-        throw error;  // Re-throw to handle it in the calling code if needed
+        throw error;
     }
 }
 
