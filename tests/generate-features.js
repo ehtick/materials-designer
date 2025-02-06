@@ -12,18 +12,19 @@ function generateFeatures(inputDir, outputDir) {
             try {
                 const config = Utils.yaml.readYAMLFile(yamlPath);
                 const templatePath = path.join(inputDir, config.template);
+                const featurePath = path.join(outputDir, config.feature_path);
                 const templateContent = fs.readFileSync(templatePath, 'utf8');
 
                 const yamlContent = fs.readFileSync(yamlPath, 'utf8');
 
                 const features = generateTestFeaturesFromYAMLConfig(yamlContent, templateContent);
 
-                if (!fs.existsSync(outputDir)) {
-                    fs.mkdirSync(outputDir, { recursive: true });
+                if (!fs.existsSync(featurePath)) {
+                    fs.mkdirSync(featurePath, { recursive: true });
                 }
 
                 features.forEach(({ name, content }) => {
-                    const outputPath = path.join(outputDir, `${name}.feature`);
+                    const outputPath = path.join(featurePath, `${name}.feature`);
                     fs.writeFileSync(outputPath, content);
                     console.log(`Generated: ${outputPath}`);
                 });
@@ -37,4 +38,4 @@ function generateFeatures(inputDir, outputDir) {
     }
 }
 
-generateFeatures("./cypress/templates", "./cypress/e2e");
+generateFeatures("./cypress/templates", "./cypress/e2e/");
