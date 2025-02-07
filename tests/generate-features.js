@@ -1,41 +1,16 @@
-const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const { generateTestFeaturesFromYAMLConfig } = require("@mat3ra/tede/dist/js/utils/index.js");
+const { generateFeatureFilesFromConfig } = require("@mat3ra/tede");
 const { Utils } = require("@mat3ra/utils/server");
 
 function generateFeatures(inputDir, outputDir) {
-    try {
-        const yamlFiles = glob.sync(path.join(inputDir, "*.yaml"));
+    const yamlFiles = glob.sync(path.join(inputDir, "*.yaml"));
+    const testConfigs = yamlFiles.map(yamlPath => Utils.yaml.readYAMLFile(yamlPath));
 
-        yamlFiles.forEach(yamlPath => {
-            try {
-                const config = Utils.yaml.readYAMLFile(yamlPath);
-                const templatePath = path.join(inputDir, config.template);
-                const featurePath = path.join(outputDir, config.feature_path);
-                const templateContent = fs.readFileSync(templatePath, 'utf8');
-
-                const yamlContent = fs.readFileSync(yamlPath, 'utf8');
-
-                const features = generateTestFeaturesFromYAMLConfig(yamlContent, templateContent);
-
-                if (!fs.existsSync(featurePath)) {
-                    fs.mkdirSync(featurePath, { recursive: true });
-                }
-
-                features.forEach(({ name, content }) => {
-                    const outputPath = path.join(featurePath, `${name}.feature`);
-                    fs.writeFileSync(outputPath, content);
-                    console.log(`Generated: ${outputPath}`);
-                });
-            } catch (error) {
-                console.error(`Error processing ${yamlPath}:`, error);
-            }
-        });
-    } catch (error) {
-        console.error('Error generating features:', error);
-        throw error;
-    }
+    testConfigs.forEach(testConfig => {
+        generateFeatureFilesFromConfig(testConfig, inputDir, outputDir);
+    });
 }
-
-generateFeatures("./cypress/templates", "./cypress/e2e/");
+inputDir = path.join(__dirname, "cypress/templates");
+outputDir = path.join(__dirname, "cypress/e2e");
+generateFeatures(inputDir, outputDir);
