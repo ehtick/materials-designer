@@ -19,5 +19,4 @@ Feature: Healthcheck to import ${material_name}
     And I see kernel status is Idle
     And I submit materials
     Then material with following name exists in state
-      | name | index |
-${output_materials_table}
+${convertToTable(output_materials)}
