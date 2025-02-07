@@ -1,6 +1,7 @@
-template: template-notebooks.ftl
+template_path: template-notebooks.ftl
 feature_path: ../e2e/health_checks/notebooks/
-templateSchema:
+schema:
+  $id: "test-case-notebooks-schema"
   tags:
     type: string
     description: Cucumber tags for the feature (e.g. @notebook_healthcheck, @ignore)

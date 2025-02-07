@@ -1,6 +1,7 @@
-template: template-tutorials.ftl
+template_path: template-tutorials.ftl
 feature_path: ../e2e/health_checks/tutorials/
-templateSchema:
+schema:
+  $id: "test-case-tutorials-schema"
   tutorial_notebook_name:
     type: string
     description: Name of the tutorial notebook file
