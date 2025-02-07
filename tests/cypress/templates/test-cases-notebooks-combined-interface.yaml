@@ -1,0 +1,71 @@
+template: template-notebooks-combined-interface.ftl
+feature_path: ../e2e/health_checks/combined/
+templateSchema:
+  tags:
+    type: string
+    description: Cypress tags for the feature (e.g. @notebook_healthcheck, @ignore)
+  workflow_description:
+    type: string
+    description: Description of the workflow being tested
+  interface_notebook:
+    type: string
+    description: Name of the notebook for creating interface
+  optimize_notebook:
+    type: string
+    description: Name of the notebook for optimizing film position
+  relax_notebook:
+    type: string
+    description: Name of the notebook for EMT relaxation
+  interface_material:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the interface material
+        material_index:
+          type: integer
+          description: Index of the interface material
+  optimized_material:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the optimized material
+        material_index:
+          type: integer
+          description: Index of the optimized material
+  relaxed_material:
+    type: array
+    items:
+      type: object
+      properties:
+        material_name:
+          type: string
+          description: Name of the relaxed material
+        material_index:
+          type: integer
+          description: Index of the relaxed material
+  feature_name:
+    type: string
+    description: Name of the feature file without extension
+
+cases:
+  - tags: "@notebook_healthcheck"
+    workflow_description: create and optimize Ni-Graphene interface using automatic imports
+    interface_notebook: create_interface_with_min_strain_zsl.ipynb
+    optimize_notebook: optimize_film_position.ipynb
+    relax_notebook: create_interface_with_relaxation_ase_emt.ipynb
+    interface_material:
+      - material_name: C2(001)-Ni4(001), Interface, Strain 0.244pct
+        material_index: 2
+    optimized_material:
+      - material_name: C2(001)-Ni4(001), Interface, Strain 0.244pct Optimized XY
+        material_index: 3
+    relaxed_material:
+      - material_name: C2(001)-Ni4(001), Interface, Strain 0.244pct, Relaxed with EMT
+        material_index: 4
+    feature_name: create_and_optimize_ni_graphene_interface_using_automatic_imports
