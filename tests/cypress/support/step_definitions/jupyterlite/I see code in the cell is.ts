@@ -1,5 +1,5 @@
 import { When } from "@badeball/cypress-cucumber-preprocessor";
-import { sharedUtils } from "utils";
+import { sharedUtils } from "@mat3ra/utils";
 
 import MaterialDesignerPage from "../../widgets/MaterialDesignerPage";
 
