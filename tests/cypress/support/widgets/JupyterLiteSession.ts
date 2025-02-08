@@ -19,6 +19,8 @@ const SELECTORS = {
             input: ".jp-Cell .jp-InputArea-editor",
             byIndex: (index: number) =>
                 `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
+            output: (index: number) =>
+                `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-OutputArea-output pre`,
         },
     },
     menu: {
@@ -116,6 +118,12 @@ export default class JupyterLiteSession extends Widget {
 
     getCodeFromCell(cellIndex: number) {
         return this.getOrSetCodeInCell(cellIndex);
+    }
+
+    getOutputFromCell(cellIndex: number) {
+        const outputSelector = SELECTORS.notebook.cell.output(cellIndex);
+        this.iframeAnchor.waitForExist(outputSelector);
+        return this.iframeAnchor.getElementText(outputSelector);
     }
 
     clickMenu(tabName: string, subItemName?: string) {
