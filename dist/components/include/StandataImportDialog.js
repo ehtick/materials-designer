@@ -1,7 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import Dialog from "@exabyte-io/cove.js/dist/mui/components/dialog/Dialog";
 import IconByName from "@exabyte-io/cove.js/dist/mui/components/icon/IconByName";
-import { Made } from "@mat3ra/made";
 import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
 import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
@@ -10,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
+import { Material } from "../../material";
 class StandataImportDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ class StandataImportDialog extends React.Component {
         };
         this.addMaterials = () => {
             const { selectedMaterialConfigs } = this.state;
-            const materials = selectedMaterialConfigs.map((config) => new Made.Material(config));
+            const materials = selectedMaterialConfigs.map((config) => new Material(config));
             const { onSubmit } = this.props;
             onSubmit(materials);
             this.setState({ selectedMaterialConfigs: [] });
@@ -37,7 +37,7 @@ class StandataImportDialog extends React.Component {
     render() {
         const { show, onClose, defaultMaterialConfigs } = this.props;
         const { selectedMaterialConfigs } = this.state;
-        const selectedMaterials = selectedMaterialConfigs.map((config) => new Made.Material(config));
+        const selectedMaterials = selectedMaterialConfigs.map((config) => new Material(config));
         const columns = [
             { field: "name", headerName: "Name", flex: 1, headerAlign: "center", align: "center" },
             {
