@@ -186,7 +186,10 @@ export default class JupyterLiteSession extends Widget {
     }
 
     enterTextIntoInput(text: string) {
-        this.iframeAnchor.setInputValue(SELECTORS.notebook.cell.stdin, text,  true 
-        );
+        this.iframeAnchor.setInputValue(SELECTORS.notebook.cell.stdin, text, true, {
+            parseSpecialCharSequences: false,
+        });
+
+        this.iframeAnchor.get(SELECTORS.notebook.cell.stdin).type("{enter}");
     }
 }
