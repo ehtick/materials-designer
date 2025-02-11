@@ -17,6 +17,7 @@ const SELECTORS = {
         root: ".jp-Notebook",
         cell: {
             input: ".jp-Cell .jp-InputArea-editor",
+            link: ".jp-Cell .jp-InputArea a",
             byIndex: (index: number) =>
                 `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
             output: (index: number) =>
@@ -91,7 +92,7 @@ export default class JupyterLiteSession extends Widget {
 
     clickLinkInNotebookByItsTextContent(link: string) {
         this.iframeAnchor.waitForVisible(SELECTORS.notebook.root);
-        this.iframeAnchor.clickOnText(link, SELECTORS.notebook.root);
+        this.iframeAnchor.clickOnText(link, SELECTORS.notebook.cell.link);
     }
 
     getOrSetCodeInCell(cellIndex: number, sourceCode = "") {
