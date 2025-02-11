@@ -17,10 +17,12 @@ const SELECTORS = {
         root: ".jp-Notebook",
         cell: {
             input: ".jp-Cell .jp-InputArea-editor",
+            link: ".jp-Cell .jp-InputArea a",
             byIndex: (index: number) =>
                 `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
             output: (index: number) =>
                 `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-OutputArea-output pre`,
+            stdin: ".lm-Widget.p-Widget input.jp-Stdin-input",
         },
     },
     menu: {
@@ -91,7 +93,7 @@ export default class JupyterLiteSession extends Widget {
 
     clickLinkInNotebookByItsTextContent(link: string) {
         this.iframeAnchor.waitForVisible(SELECTORS.notebook.root);
-        this.iframeAnchor.clickOnText(link, SELECTORS.notebook.root);
+        this.iframeAnchor.clickOnText(link, SELECTORS.notebook.cell.link);
     }
 
     getOrSetCodeInCell(cellIndex: number, sourceCode = "") {
@@ -181,5 +183,13 @@ export default class JupyterLiteSession extends Widget {
 
     waitForKernelBusy() {
         this.waitForKernelInStatusWithCallback(kernelStatus.Busy);
+    }
+
+    enterTextIntoInput(text: string) {
+        this.iframeAnchor.setInputValue(SELECTORS.notebook.cell.stdin, text, true, {
+            parseSpecialCharSequences: false,
+        });
+
+        this.iframeAnchor.get(SELECTORS.notebook.cell.stdin).type("{enter}");
     }
 }
