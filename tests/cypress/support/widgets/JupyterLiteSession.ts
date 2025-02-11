@@ -22,6 +22,7 @@ const SELECTORS = {
                 `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-InputArea-editor .CodeMirror`,
             output: (index: number) =>
                 `.jp-Notebook .jp-Cell:nth-child(${index}) .jp-OutputArea-output pre`,
+            stdin: ".lm-Widget.p-Widget input.jp-Stdin-input",
         },
     },
     menu: {
@@ -182,5 +183,10 @@ export default class JupyterLiteSession extends Widget {
 
     waitForKernelBusy() {
         this.waitForKernelInStatusWithCallback(kernelStatus.Busy);
+    }
+
+    enterTextIntoInput(text: string) {
+        this.iframeAnchor.setInputValue(SELECTORS.notebook.cell.stdin, text,  true 
+        );
     }
 }
